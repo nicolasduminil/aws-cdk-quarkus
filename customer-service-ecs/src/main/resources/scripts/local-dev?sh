@@ -1,0 +1,15 @@
+#!/bin/bash
+echo "Starting local development environment..."
+
+# Start local services
+docker-compose up -d
+
+# Wait for services to be ready
+echo "Waiting for PostgreSQL..."
+until docker-compose exec postgres pg_isready -U postgres; do sleep 1; done
+
+echo "Waiting for Redis..."
+until docker-compose exec redis redis-cli ping; do sleep 1; done
+
+echo "Services ready! Starting Quarkus in dev mode..."
+./mvnw quarkus:dev
