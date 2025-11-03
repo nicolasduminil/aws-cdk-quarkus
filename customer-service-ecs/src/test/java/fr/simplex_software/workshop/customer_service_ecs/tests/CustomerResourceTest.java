@@ -8,8 +8,7 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
 @QuarkusTest
-@TestProfile(DevTestProfile.class)
-public class CustomerServiceTest
+public class CustomerResourceTest
 {
   @Test
   void testCreateCustomer()
