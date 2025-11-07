@@ -1,0 +1,13 @@
+{
+  "app": "java -jar target/quarkus-app/quarkus-run.jar",
+  "context": {
+    "aws-cdk:enableDiffNoFail": true,
+    "@aws-cdk/aws-ecs:minHealthyPercent": true
+  },
+  "requireApproval": "never",
+  "output": "cdk.out",
+  "progress": "bar",
+  "ci": true,
+  "verbose": false
+}
+

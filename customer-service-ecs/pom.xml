@@ -9,4 +9,9 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <artifactId>customer-service-ecs</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+    <module>customer-service-ecs-api</module>
+    <module>customer-service-ecs-cdk</module>
+  </modules>
 </project>

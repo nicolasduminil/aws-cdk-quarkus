@@ -1,7 +1,0 @@
-{
-  "app": "java -Dquarkus.profile=cdk -jar target/quarkus-app/quarkus-run.jar",
-  "context": {
-    "aws-cdk:enableDiffNoFail": true
-  }
-}
-

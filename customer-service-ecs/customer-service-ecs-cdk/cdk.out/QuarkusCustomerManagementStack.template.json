@@ -1,0 +1,1543 @@
+{
+ "Resources": {
+  "CustomerVpc467961AF": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/Resource"
+   }
+  },
+  "CustomerVpcPublicSubnet1SubnetA8EF0524": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "eu-west-3a",
+    "CidrBlock": "10.0.0.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet1/Subnet"
+   }
+  },
+  "CustomerVpcPublicSubnet1RouteTable53A2584B": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet1/RouteTable"
+   }
+  },
+  "CustomerVpcPublicSubnet1RouteTableAssociation417CE3A2": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "CustomerVpcPublicSubnet1RouteTable53A2584B"
+    },
+    "SubnetId": {
+     "Ref": "CustomerVpcPublicSubnet1SubnetA8EF0524"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "CustomerVpcPublicSubnet1DefaultRoute6E086AD3": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "CustomerVpcIGW2B29C4F2"
+    },
+    "RouteTableId": {
+     "Ref": "CustomerVpcPublicSubnet1RouteTable53A2584B"
+    }
+   },
+   "DependsOn": [
+    "CustomerVpcVPCGWEEB1A733"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "CustomerVpcPublicSubnet1EIP0DB3E688": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet1/EIP"
+   }
+  },
+  "CustomerVpcPublicSubnet1NATGatewayA2E88A47": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "CustomerVpcPublicSubnet1EIP0DB3E688",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "CustomerVpcPublicSubnet1SubnetA8EF0524"
+    },
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "DependsOn": [
+    "CustomerVpcPublicSubnet1DefaultRoute6E086AD3",
+    "CustomerVpcPublicSubnet1RouteTableAssociation417CE3A2"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet1/NATGateway"
+   }
+  },
+  "CustomerVpcPublicSubnet2Subnet2544DB2F": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "eu-west-3b",
+    "CidrBlock": "10.0.64.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet2"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet2/Subnet"
+   }
+  },
+  "CustomerVpcPublicSubnet2RouteTableDA9D3E81": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet2"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet2/RouteTable"
+   }
+  },
+  "CustomerVpcPublicSubnet2RouteTableAssociation944EB423": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "CustomerVpcPublicSubnet2RouteTableDA9D3E81"
+    },
+    "SubnetId": {
+     "Ref": "CustomerVpcPublicSubnet2Subnet2544DB2F"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet2/RouteTableAssociation"
+   }
+  },
+  "CustomerVpcPublicSubnet2DefaultRouteF04A5152": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "CustomerVpcIGW2B29C4F2"
+    },
+    "RouteTableId": {
+     "Ref": "CustomerVpcPublicSubnet2RouteTableDA9D3E81"
+    }
+   },
+   "DependsOn": [
+    "CustomerVpcVPCGWEEB1A733"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PublicSubnet2/DefaultRoute"
+   }
+  },
+  "CustomerVpcPrivateSubnet1SubnetF1680D43": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "eu-west-3a",
+    "CidrBlock": "10.0.128.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet1/Subnet"
+   }
+  },
+  "CustomerVpcPrivateSubnet1RouteTable1B83D428": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet1/RouteTable"
+   }
+  },
+  "CustomerVpcPrivateSubnet1RouteTableAssociation4D440942": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "CustomerVpcPrivateSubnet1RouteTable1B83D428"
+    },
+    "SubnetId": {
+     "Ref": "CustomerVpcPrivateSubnet1SubnetF1680D43"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet1/RouteTableAssociation"
+   }
+  },
+  "CustomerVpcPrivateSubnet1DefaultRouteAD404DA0": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "CustomerVpcPublicSubnet1NATGatewayA2E88A47"
+    },
+    "RouteTableId": {
+     "Ref": "CustomerVpcPrivateSubnet1RouteTable1B83D428"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet1/DefaultRoute"
+   }
+  },
+  "CustomerVpcPrivateSubnet2Subnet38B8E38D": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "eu-west-3b",
+    "CidrBlock": "10.0.192.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet2"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet2/Subnet"
+   }
+  },
+  "CustomerVpcPrivateSubnet2RouteTable2CE0014C": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet2"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet2/RouteTable"
+   }
+  },
+  "CustomerVpcPrivateSubnet2RouteTableAssociation7A31B9A9": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "CustomerVpcPrivateSubnet2RouteTable2CE0014C"
+    },
+    "SubnetId": {
+     "Ref": "CustomerVpcPrivateSubnet2Subnet38B8E38D"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet2/RouteTableAssociation"
+   }
+  },
+  "CustomerVpcPrivateSubnet2DefaultRoute9EDA32B7": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "CustomerVpcPublicSubnet1NATGatewayA2E88A47"
+    },
+    "RouteTableId": {
+     "Ref": "CustomerVpcPrivateSubnet2RouteTable2CE0014C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/PrivateSubnet2/DefaultRoute"
+   }
+  },
+  "CustomerVpcIGW2B29C4F2": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "QuarkusCustomerManagementStack/CustomerVpc"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/IGW"
+   }
+  },
+  "CustomerVpcVPCGWEEB1A733": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "CustomerVpcIGW2B29C4F2"
+    },
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerVpc/VPCGW"
+   }
+  },
+  "CustomerDatabaseSubnetGroupD1A145E3": {
+   "Type": "AWS::RDS::DBSubnetGroup",
+   "Properties": {
+    "DBSubnetGroupDescription": "Subnet group for CustomerDatabase database",
+    "SubnetIds": [
+     {
+      "Ref": "CustomerVpcPrivateSubnet1SubnetF1680D43"
+     },
+     {
+      "Ref": "CustomerVpcPrivateSubnet2Subnet38B8E38D"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerDatabase/SubnetGroup/Default"
+   }
+  },
+  "CustomerDatabaseSecurityGroupC606C631": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for CustomerDatabase database",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerDatabase/SecurityGroup/Resource"
+   }
+  },
+  "CustomerDatabaseSecurityGroupfromQuarkusCustomerManagementStackCustomerServiceSecurityGroup20AC73C3543252421E38": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "from QuarkusCustomerManagementStackCustomerServiceSecurityGroup20AC73C3:5432",
+    "FromPort": 5432,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "CustomerDatabaseSecurityGroupC606C631",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "CustomerServiceSecurityGroupBFD66355",
+      "GroupId"
+     ]
+    },
+    "ToPort": 5432
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerDatabase/SecurityGroup/from QuarkusCustomerManagementStackCustomerServiceSecurityGroup20AC73C3:5432"
+   }
+  },
+  "QuarkusCustomerManagementStackCustomerDatabaseSecret55A1BE8E3fdaad7efa858a3daf9490cf0a702aeb": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": {
+     "Fn::Join": [
+      "",
+      [
+       "Generated by the CDK for stack: ",
+       {
+        "Ref": "AWS::StackName"
+       }
+      ]
+     ]
+    },
+    "GenerateSecretString": {
+     "ExcludeCharacters": " %+~`#$&*()|[]{}:;<>?!'/@\"\\",
+     "GenerateStringKey": "password",
+     "PasswordLength": 30,
+     "SecretStringTemplate": "{\"username\":\"postgres\"}"
+    },
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerDatabase/Secret/Resource"
+   }
+  },
+  "CustomerDatabaseSecretAttachment204AEE14": {
+   "Type": "AWS::SecretsManager::SecretTargetAttachment",
+   "Properties": {
+    "SecretId": {
+     "Ref": "QuarkusCustomerManagementStackCustomerDatabaseSecret55A1BE8E3fdaad7efa858a3daf9490cf0a702aeb"
+    },
+    "TargetId": {
+     "Ref": "CustomerDatabase306E9FF5"
+    },
+    "TargetType": "AWS::RDS::DBInstance"
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerDatabase/Secret/Attachment/Resource"
+   }
+  },
+  "CustomerDatabase306E9FF5": {
+   "Type": "AWS::RDS::DBInstance",
+   "Properties": {
+    "AllocatedStorage": "100",
+    "CopyTagsToSnapshot": true,
+    "DBInstanceClass": "db.t3.micro",
+    "DBName": "customers",
+    "DBSubnetGroupName": {
+     "Ref": "CustomerDatabaseSubnetGroupD1A145E3"
+    },
+    "DeletionProtection": false,
+    "Engine": "postgres",
+    "EngineVersion": "17.6",
+    "MasterUserPassword": {
+     "Fn::Join": [
+      "",
+      [
+       "{{resolve:secretsmanager:",
+       {
+        "Ref": "QuarkusCustomerManagementStackCustomerDatabaseSecret55A1BE8E3fdaad7efa858a3daf9490cf0a702aeb"
+       },
+       ":SecretString:password::}}"
+      ]
+     ]
+    },
+    "MasterUsername": "postgres",
+    "StorageType": "gp2",
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VPCSecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "CustomerDatabaseSecurityGroupC606C631",
+       "GroupId"
+      ]
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerDatabase/Resource"
+   }
+  },
+  "RedisSubnetGroup": {
+   "Type": "AWS::ElastiCache::SubnetGroup",
+   "Properties": {
+    "Description": "Subnet group for Redis",
+    "SubnetIds": [
+     {
+      "Ref": "CustomerVpcPrivateSubnet1SubnetF1680D43"
+     },
+     {
+      "Ref": "CustomerVpcPrivateSubnet2Subnet38B8E38D"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/RedisSubnetGroup"
+   }
+  },
+  "CustomerCacheSecurityGroup60570E42": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for Redis cluster customer-cache",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "255.255.255.255/32",
+      "Description": "Disallow all traffic",
+      "FromPort": 252,
+      "IpProtocol": "icmp",
+      "ToPort": 86
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "Description": {
+       "Fn::Join": [
+        "",
+        [
+         "Redis access from ",
+         {
+          "Fn::GetAtt": [
+           "CustomerServiceSecurityGroupBFD66355",
+           "GroupId"
+          ]
+         }
+        ]
+       ]
+      },
+      "FromPort": 6379,
+      "IpProtocol": "tcp",
+      "SourceSecurityGroupId": {
+       "Fn::GetAtt": [
+        "CustomerServiceSecurityGroupBFD66355",
+        "GroupId"
+       ]
+      },
+      "ToPort": 6379
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerCache/SecurityGroup/Resource"
+   }
+  },
+  "CustomerCacheReplicationGroupE25E3BDD": {
+   "Type": "AWS::ElastiCache::ReplicationGroup",
+   "Properties": {
+    "AutomaticFailoverEnabled": false,
+    "CacheNodeType": "cache.t3.micro",
+    "CacheSubnetGroupName": {
+     "Ref": "RedisSubnetGroup"
+    },
+    "Engine": "redis",
+    "NumCacheClusters": 1,
+    "ReplicationGroupDescription": "Redis cache for customer service",
+    "ReplicationGroupId": "customer-cache",
+    "SecurityGroupIds": [
+     {
+      "Fn::GetAtt": [
+       "CustomerCacheSecurityGroup60570E42",
+       "GroupId"
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerCache/ReplicationGroup"
+   }
+  },
+  "CustomerCluster7D0FB160": {
+   "Type": "AWS::ECS::Cluster",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerCluster/Resource"
+   }
+  },
+  "CustomerServiceLogGroup9C309927": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/customer-service",
+    "RetentionInDays": 7,
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerServiceLogGroup/Resource"
+   }
+  },
+  "CustomerServiceLB9D4B82F4": {
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     }
+    ],
+    "Scheme": "internet-facing",
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "CustomerServiceLBSecurityGroup70515C84",
+       "GroupId"
+      ]
+     }
+    ],
+    "Subnets": [
+     {
+      "Ref": "CustomerVpcPublicSubnet1SubnetA8EF0524"
+     },
+     {
+      "Ref": "CustomerVpcPublicSubnet2Subnet2544DB2F"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "Type": "application"
+   },
+   "DependsOn": [
+    "CustomerVpcPublicSubnet1DefaultRoute6E086AD3",
+    "CustomerVpcPublicSubnet1RouteTableAssociation417CE3A2",
+    "CustomerVpcPublicSubnet2DefaultRouteF04A5152",
+    "CustomerVpcPublicSubnet2RouteTableAssociation944EB423"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/LB/Resource"
+   }
+  },
+  "CustomerServiceLBSecurityGroup70515C84": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Automatically created Security Group for ELB QuarkusCustomerManagementStackCustomerServiceLBC199A379",
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow from anyone on port 80",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/LB/SecurityGroup/Resource"
+   }
+  },
+  "CustomerServiceLBSecurityGrouptoQuarkusCustomerManagementStackCustomerServiceSecurityGroup20AC73C380803B098E28": {
+   "Type": "AWS::EC2::SecurityGroupEgress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "DestinationSecurityGroupId": {
+     "Fn::GetAtt": [
+      "CustomerServiceSecurityGroupBFD66355",
+      "GroupId"
+     ]
+    },
+    "FromPort": 8080,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "CustomerServiceLBSecurityGroup70515C84",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "ToPort": 8080
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/LB/SecurityGroup/to QuarkusCustomerManagementStackCustomerServiceSecurityGroup20AC73C3:8080"
+   }
+  },
+  "CustomerServiceLBPublicListenerEB84654B": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "CustomerServiceLBPublicListenerECSGroupE27035C4"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "CustomerServiceLB9D4B82F4"
+    },
+    "Port": 80,
+    "Protocol": "HTTP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/LB/PublicListener/Resource"
+   }
+  },
+  "CustomerServiceLBPublicListenerECSGroupE27035C4": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "Port": 80,
+    "Protocol": "HTTP",
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "TargetGroupAttributes": [
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "TargetType": "ip",
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/LB/PublicListener/ECSGroup/Resource"
+   }
+  },
+  "CustomerServiceTaskDefTaskRole5625CED5": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/TaskDef/TaskRole/Resource"
+   }
+  },
+  "CustomerServiceTaskDef6DE54483": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "REDIS_HOST",
+        "Value": {
+         "Fn::GetAtt": [
+          "CustomerCacheReplicationGroupE25E3BDD",
+          "PrimaryEndPoint.Address"
+         ]
+        }
+       },
+       {
+        "Name": "REDIS_PORT",
+        "Value": "6379"
+       },
+       {
+        "Name": "DB_NAME",
+        "Value": "customers"
+       },
+       {
+        "Name": "DB_HOST",
+        "Value": {
+         "Fn::GetAtt": [
+          "CustomerDatabase306E9FF5",
+          "Endpoint.Address"
+         ]
+        }
+       },
+       {
+        "Name": "DB_PORT",
+        "Value": "5432"
+       }
+      ],
+      "Essential": true,
+      "Image": "495913029085.dkr.ecr.eu-west-3.amazonaws.com/customers-api:latest",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "CustomerServiceLogGroup9C309927"
+        },
+        "awslogs-stream-prefix": "ecs",
+        "awslogs-region": "eu-west-3"
+       }
+      },
+      "Name": "web",
+      "PortMappings": [
+       {
+        "ContainerPort": 8080,
+        "Protocol": "tcp"
+       }
+      ],
+      "Secrets": [
+       {
+        "Name": "DB_PASSWORD",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Ref": "CustomerDatabaseSecretAttachment204AEE14"
+           },
+           ":password::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "DB_USERNAME",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Ref": "CustomerDatabaseSecretAttachment204AEE14"
+           },
+           ":username::"
+          ]
+         ]
+        }
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "CustomerServiceTaskDefExecutionRole2AABE999",
+      "Arn"
+     ]
+    },
+    "Family": "QuarkusCustomerManagementStackCustomerServiceTaskDef691BE326",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "CustomerServiceTaskDefTaskRole5625CED5",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/TaskDef/Resource"
+   }
+  },
+  "CustomerServiceTaskDefExecutionRole2AABE999": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/TaskDef/ExecutionRole/Resource"
+   }
+  },
+  "CustomerServiceTaskDefExecutionRoleDefaultPolicy6FB69EA0": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "CustomerServiceLogGroup9C309927",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "CustomerDatabaseSecretAttachment204AEE14"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CustomerServiceTaskDefExecutionRoleDefaultPolicy6FB69EA0",
+    "Roles": [
+     {
+      "Ref": "CustomerServiceTaskDefExecutionRole2AABE999"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/TaskDef/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "CustomerService89704699": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "CustomerCluster7D0FB160"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 2,
+    "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "web",
+      "ContainerPort": 8080,
+      "TargetGroupArn": {
+       "Ref": "CustomerServiceLBPublicListenerECSGroupE27035C4"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "CustomerServiceSecurityGroupBFD66355",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "CustomerVpcPrivateSubnet1SubnetF1680D43"
+       },
+       {
+        "Ref": "CustomerVpcPrivateSubnet2Subnet38B8E38D"
+       }
+      ]
+     }
+    },
+    "ServiceName": "customer-service",
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "TaskDefinition": {
+     "Ref": "CustomerServiceTaskDef6DE54483"
+    }
+   },
+   "DependsOn": [
+    "CustomerServiceLBPublicListenerECSGroupE27035C4",
+    "CustomerServiceLBPublicListenerEB84654B",
+    "CustomerServiceTaskDefTaskRole5625CED5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/Service/Service"
+   }
+  },
+  "CustomerServiceSecurityGroupBFD66355": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "QuarkusCustomerManagementStack/CustomerService/Service/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "application",
+      "Value": "CustomerManagementApp"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "project",
+      "Value": "Containerized Customer Management Application on ECS/Fargate"
+     }
+    ],
+    "VpcId": {
+     "Ref": "CustomerVpc467961AF"
+    }
+   },
+   "DependsOn": [
+    "CustomerServiceTaskDefTaskRole5625CED5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/Service/SecurityGroup/Resource"
+   }
+  },
+  "CustomerServiceSecurityGroupfromQuarkusCustomerManagementStackCustomerServiceLBSecurityGroupEC16549080801434DE24": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "FromPort": 8080,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "CustomerServiceSecurityGroupBFD66355",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "CustomerServiceLBSecurityGroup70515C84",
+      "GroupId"
+     ]
+    },
+    "ToPort": 8080
+   },
+   "DependsOn": [
+    "CustomerServiceTaskDefTaskRole5625CED5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/Service/SecurityGroup/from QuarkusCustomerManagementStackCustomerServiceLBSecurityGroupEC165490:8080"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/31S227bMAz9lr4r2uJ+QS5dkaHoDKfoa0HLrMtFkQyRSlAY/vfBVux46bAnHh4dUkekMp1lS728gzMvTHVYWCp1uxcwBwVnfmvRZLp9bYzavLvXfKPyWFoy+1g6lJ67osJHwRcoLV75K7di9oZAyLtJ3IOHXd6HZ5BHEDzDp8oDnUDw2njnBIPDSZCcXLKVCJiPIzpRezQxkHw+Bh+bwcN/iZ2rAzJ/4R8GulOhYt1uQaAExp1jAWdQJVtTx+16TozqPZqQvG/XY2WneGD5CA5qDLpNF/fCFF4g1CizB02C25NOoQUWMmA+MDX621aBjSUzTHvgOoWGdbuxkQVDrxjhDwg19DviwxbfydG4oVvGOwFyGGbcpXaP4UQmbT3BTllfs26ffD1ZGvFg5a0B6ZfKetVMTp88VGuw/bCqm9aX51oPVTkoyNWnTLf/rg7pvlk+1xELuotmxLPzNOvJ9iztFMFRt4VPP3yIubdkhi+ZUNepAtnHkObxK0oTpVM/4QTfsqX+ru/vfjPRIkQndERdpPgHxbW5koYDAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "CustomerServiceLoadBalancerDNS284F75A2": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CustomerServiceLB9D4B82F4",
+     "DNSName"
+    ]
+   }
+  },
+  "CustomerServiceServiceURL3A02387C": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "http://",
+      {
+       "Fn::GetAtt": [
+        "CustomerServiceLB9D4B82F4",
+        "DNSName"
+       ]
+      }
+     ]
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
