@@ -1121,21 +1121,8 @@
      {
       "Environment": [
        {
-        "Name": "REDIS_HOST",
-        "Value": {
-         "Fn::GetAtt": [
-          "CustomerCacheReplicationGroupE25E3BDD",
-          "PrimaryEndPoint.Address"
-         ]
-        }
-       },
-       {
-        "Name": "REDIS_PORT",
-        "Value": "6379"
-       },
-       {
-        "Name": "DB_NAME",
-        "Value": "customers"
+        "Name": "DB_PORT",
+        "Value": "5432"
        },
        {
         "Name": "DB_HOST",
@@ -1147,8 +1134,21 @@
         }
        },
        {
-        "Name": "DB_PORT",
-        "Value": "5432"
+        "Name": "DB_NAME",
+        "Value": "customers"
+       },
+       {
+        "Name": "REDIS_PORT",
+        "Value": "6379"
+       },
+       {
+        "Name": "REDIS_HOST",
+        "Value": {
+         "Fn::GetAtt": [
+          "CustomerCacheReplicationGroupE25E3BDD",
+          "PrimaryEndPoint.Address"
+         ]
+        }
        }
       ],
       "Essential": true,
@@ -1172,20 +1172,6 @@
       ],
       "Secrets": [
        {
-        "Name": "DB_PASSWORD",
-        "ValueFrom": {
-         "Fn::Join": [
-          "",
-          [
-           {
-            "Ref": "CustomerDatabaseSecretAttachment204AEE14"
-           },
-           ":password::"
-          ]
-         ]
-        }
-       },
-       {
         "Name": "DB_USERNAME",
         "ValueFrom": {
          "Fn::Join": [
@@ -1195,6 +1181,20 @@
             "Ref": "CustomerDatabaseSecretAttachment204AEE14"
            },
            ":username::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "DB_PASSWORD",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Ref": "CustomerDatabaseSecretAttachment204AEE14"
+           },
+           ":password::"
           ]
          ]
         }

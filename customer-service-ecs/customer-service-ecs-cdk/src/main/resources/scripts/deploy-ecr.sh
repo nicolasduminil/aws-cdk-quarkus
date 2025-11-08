@@ -1,17 +1,12 @@
 #!/bin/bash
-#source ../.env
 registry=$CDK_DEFAULT_ACCOUNT.dkr.ecr.$CDK_DEFAULT_REGION.amazonaws.com
 echo ">>> Creating ECR registry $registry"
 aws ecr create-repository --repository-name $CONTAINER_IMAGE_GROUP/$CONTAINER_IMAGE_NAME  --region $CDK_DEFAULT_REGION 2>/dev/null || echo "### Repository already exists"
 echo ">>> Logging into ECR..."
 aws ecr get-login-password --region $CDK_DEFAULT_REGION | docker login --username AWS --password-stdin $registry
-echo ">>> Building and pushing image..."
-mvn clean package -Dquarkus.container-image.push=true \
-  -Dquarkus.container-image.registry=$registry \
-  -DCDK_DEFAULT_ACCOUNT=$CDK_DEFAULT_ACCOUNT \
-  -DCDK_DEFAULT_REGION=$CDK_DEFAULT_REGION \
-  -DCONTAINER_IMAGE_GROUP=$CONTAINER_IMAGE_GROUP \
-  -DCONTAINER_IMAGE_NAME=$CONTAINER_IMAGE_NAME
+echo ">>> Tagging and pushing existing image..."
+docker tag $CONTAINER_IMAGE_GROUP/$CONTAINER_IMAGE_NAME:1.0-SNAPSHOT $registry/$CONTAINER_IMAGE_GROUP/$CONTAINER_IMAGE_NAME:latest
+docker push $registry/$CONTAINER_IMAGE_GROUP/$CONTAINER_IMAGE_NAME:latest
 echo ">>> Checking if stack exists..."
 if aws cloudformation describe-stacks --stack-name QuarkusCustomerManagementStack --region $CDK_DEFAULT_REGION >/dev/null 2>&1; then
   echo ">>> Stack exists - updating ECS service ..."

@@ -45,29 +45,6 @@
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>validate-cdk</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>cdk</executable>
-              <arguments>
-                <argument>synth</argument>
-                <argument>--quiet</argument>
-              </arguments>
-              <environmentVariables>
-                <AWS_ENDPOINT_URL>http://localhost:4566</AWS_ENDPOINT_URL>
-              </environmentVariables>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
         <artifactId>properties-maven-plugin</artifactId>
       </plugin>
       <plugin>
@@ -87,7 +64,10 @@
   </build>
   <profiles>
     <profile>
-      <id>e2e</id>
+      <id>validate</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <build>
         <plugins>
           <plugin>
@@ -96,10 +76,34 @@
             <executions>
               <execution>
                 <id>validate-cdk</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
                 <configuration>
-                  <skip>true</skip>
+                  <executable>cdk</executable>
+                  <arguments>
+                    <argument>synth</argument>
+                    <argument>--quiet</argument>
+                  </arguments>
+                  <environmentVariables>
+                    <AWS_ENDPOINT_URL>http://localhost:4566</AWS_ENDPOINT_URL>
+                  </environmentVariables>
                 </configuration>
               </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>e2e</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
               <execution>
                 <id>deploy-to-aws</id>
                 <phase>pre-integration-test</phase>
