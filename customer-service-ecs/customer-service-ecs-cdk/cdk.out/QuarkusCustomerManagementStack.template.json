@@ -1001,7 +1001,7 @@
     "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/LB/SecurityGroup/Resource"
    }
   },
-  "CustomerServiceLBSecurityGrouptoQuarkusCustomerManagementStackCustomerServiceSecurityGroup20AC73C380803B098E28": {
+  "CustomerServiceLBSecurityGrouptoQuarkusCustomerManagementStackCustomerServiceSecurityGroup20AC73C38090B1881B0D": {
    "Type": "AWS::EC2::SecurityGroupEgress",
    "Properties": {
     "Description": "Load balancer to target",
@@ -1011,7 +1011,7 @@
       "GroupId"
      ]
     },
-    "FromPort": 8080,
+    "FromPort": 8090,
     "GroupId": {
      "Fn::GetAtt": [
       "CustomerServiceLBSecurityGroup70515C84",
@@ -1019,10 +1019,10 @@
      ]
     },
     "IpProtocol": "tcp",
-    "ToPort": 8080
+    "ToPort": 8090
    },
    "Metadata": {
-    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/LB/SecurityGroup/to QuarkusCustomerManagementStackCustomerServiceSecurityGroup20AC73C3:8080"
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/LB/SecurityGroup/to QuarkusCustomerManagementStackCustomerServiceSecurityGroup20AC73C3:8090"
    }
   },
   "CustomerServiceLBPublicListenerEB84654B": {
@@ -1049,6 +1049,7 @@
   "CustomerServiceLBPublicListenerECSGroupE27035C4": {
    "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
    "Properties": {
+    "HealthCheckPath": "/q/health",
     "Port": 80,
     "Protocol": "HTTP",
     "Tags": [
@@ -1121,6 +1122,19 @@
      {
       "Environment": [
        {
+        "Name": "REDIS_PORT",
+        "Value": "6379"
+       },
+       {
+        "Name": "REDIS_HOST",
+        "Value": {
+         "Fn::GetAtt": [
+          "CustomerCacheReplicationGroupE25E3BDD",
+          "PrimaryEndPoint.Address"
+         ]
+        }
+       },
+       {
         "Name": "DB_PORT",
         "Value": "5432"
        },
@@ -1136,23 +1150,10 @@
        {
         "Name": "DB_NAME",
         "Value": "customers"
-       },
-       {
-        "Name": "REDIS_PORT",
-        "Value": "6379"
-       },
-       {
-        "Name": "REDIS_HOST",
-        "Value": {
-         "Fn::GetAtt": [
-          "CustomerCacheReplicationGroupE25E3BDD",
-          "PrimaryEndPoint.Address"
-         ]
-        }
        }
       ],
       "Essential": true,
-      "Image": "495913029085.dkr.ecr.eu-west-3.amazonaws.com/customers-api:latest",
+      "Image": "495913029085.dkr.ecr.eu-west-3.amazonaws.com/nicolasduminil/customers-api:latest",
       "LogConfiguration": {
        "LogDriver": "awslogs",
        "Options": {
@@ -1166,25 +1167,11 @@
       "Name": "web",
       "PortMappings": [
        {
-        "ContainerPort": 8080,
+        "ContainerPort": 8090,
         "Protocol": "tcp"
        }
       ],
       "Secrets": [
-       {
-        "Name": "DB_USERNAME",
-        "ValueFrom": {
-         "Fn::Join": [
-          "",
-          [
-           {
-            "Ref": "CustomerDatabaseSecretAttachment204AEE14"
-           },
-           ":username::"
-          ]
-         ]
-        }
-       },
        {
         "Name": "DB_PASSWORD",
         "ValueFrom": {
@@ -1195,6 +1182,20 @@
             "Ref": "CustomerDatabaseSecretAttachment204AEE14"
            },
            ":password::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "DB_USERNAME",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Ref": "CustomerDatabaseSecretAttachment204AEE14"
+           },
+           ":username::"
           ]
          ]
         }
@@ -1352,7 +1353,7 @@
     "LoadBalancers": [
      {
       "ContainerName": "web",
-      "ContainerPort": 8080,
+      "ContainerPort": 8090,
       "TargetGroupArn": {
        "Ref": "CustomerServiceLBPublicListenerECSGroupE27035C4"
       }
@@ -1443,11 +1444,11 @@
     "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/Service/SecurityGroup/Resource"
    }
   },
-  "CustomerServiceSecurityGroupfromQuarkusCustomerManagementStackCustomerServiceLBSecurityGroupEC16549080801434DE24": {
+  "CustomerServiceSecurityGroupfromQuarkusCustomerManagementStackCustomerServiceLBSecurityGroupEC165490809061684B29": {
    "Type": "AWS::EC2::SecurityGroupIngress",
    "Properties": {
     "Description": "Load balancer to target",
-    "FromPort": 8080,
+    "FromPort": 8090,
     "GroupId": {
      "Fn::GetAtt": [
       "CustomerServiceSecurityGroupBFD66355",
@@ -1461,13 +1462,13 @@
       "GroupId"
      ]
     },
-    "ToPort": 8080
+    "ToPort": 8090
    },
    "DependsOn": [
     "CustomerServiceTaskDefTaskRole5625CED5"
    ],
    "Metadata": {
-    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/Service/SecurityGroup/from QuarkusCustomerManagementStackCustomerServiceLBSecurityGroupEC165490:8080"
+    "aws:cdk:path": "QuarkusCustomerManagementStack/CustomerService/Service/SecurityGroup/from QuarkusCustomerManagementStackCustomerServiceLBSecurityGroupEC165490:8090"
    }
   },
   "CDKMetadata": {

@@ -9,9 +9,12 @@ import software.amazon.awscdk.services.ec2.InstanceType;
 import software.amazon.awscdk.services.ecs.*;
 import software.amazon.awscdk.services.ecs.patterns.*;
 import software.amazon.awscdk.services.elasticache.CfnSubnetGroup;  // Add this import
+import software.amazon.awscdk.services.elasticloadbalancingv2.HealthCheck;
 import software.amazon.awscdk.services.iam.*;
 import software.amazon.awscdk.services.logs.*;
 import software.amazon.awscdk.services.rds.*;
+import software.amazon.awscdk.services.elasticloadbalancingv2.*;
+
 
 import java.util.*;
 
@@ -20,6 +23,8 @@ public class CustomerManagementStack extends Stack
 {
   @ConfigProperty(name = "cdk.image_name")
   String imageName;
+  @ConfigProperty(name = "cdk.container.port", defaultValue = "8080")
+  int containerPort;
   @Inject
   public CustomerManagementStack(final App scope,
     final @ConfigProperty(name = "cdk.stack-id",
@@ -81,7 +86,7 @@ public class CustomerManagementStack extends Stack
         .desiredCount(2)
         .taskImageOptions(ApplicationLoadBalancedTaskImageOptions.builder()
           .image(ContainerImage.fromRegistry(imageName))
-          .containerPort(8080)
+          .containerPort(containerPort)
           .logDriver(LogDriver.awsLogs(AwsLogDriverProps.builder()
             .logGroup(logGroup)
             .streamPrefix("ecs")
@@ -99,8 +104,13 @@ public class CustomerManagementStack extends Stack
           ))
           .build())
         .publicLoadBalancer(true)
+        .healthCheckGracePeriod(Duration.seconds(60))
         .serviceName("customer-service")
         .build();
+    fargateService.getTargetGroup()
+      .configureHealthCheck(HealthCheck.builder()
+      .path("/q/health")
+      .build());
     fargateService.getTaskDefinition().getExecutionRole().addManagedPolicy(
       ManagedPolicy.fromAwsManagedPolicyName("service-role/AmazonECSTaskExecutionRolePolicy"));
     database.getConnections().allowFrom(fargateService.getService(), Port.tcp(5432));

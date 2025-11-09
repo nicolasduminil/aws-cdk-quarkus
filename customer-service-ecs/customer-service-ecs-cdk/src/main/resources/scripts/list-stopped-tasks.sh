@@ -1,5 +1,5 @@
 #!/bin/bash
-source ../.env
+source ../../.env
 stack_resources=$(aws cloudformation describe-stack-resources \
   --stack-name QuarkusCustomerManagementStack \
   --query 'StackResources[?ResourceType==`AWS::ECS::Cluster`].PhysicalResourceId' \

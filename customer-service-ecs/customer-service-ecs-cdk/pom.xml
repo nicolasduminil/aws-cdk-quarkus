@@ -88,6 +88,9 @@
                   </arguments>
                   <environmentVariables>
                     <AWS_ENDPOINT_URL>http://localhost:4566</AWS_ENDPOINT_URL>
+                    <CDK_DEFAULT_ACCOUNT>${CDK_DEFAULT_ACCOUNT}</CDK_DEFAULT_ACCOUNT>
+                    <CDK_DEFAULT_REGION>${CDK_DEFAULT_REGION}</CDK_DEFAULT_REGION>
+                    <CONTAINER_PORT>${CONTAINER_PORT}</CONTAINER_PORT>
                   </environmentVariables>
                 </configuration>
               </execution>
@@ -121,6 +124,7 @@
                     <CDK_DEFAULT_REGION>${CDK_DEFAULT_REGION}</CDK_DEFAULT_REGION>
                     <CONTAINER_IMAGE_GROUP>${CONTAINER_IMAGE_GROUP}</CONTAINER_IMAGE_GROUP>
                     <CONTAINER_IMAGE_NAME>${CONTAINER_IMAGE_NAME}</CONTAINER_IMAGE_NAME>
+                    <CONTAINER_PORT>${CONTAINER_PORT}</CONTAINER_PORT>
                   </environmentVariables>
                 </configuration>
               </execution>
