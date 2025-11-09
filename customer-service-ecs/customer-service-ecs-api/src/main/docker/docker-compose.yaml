@@ -47,7 +47,7 @@ services:
     volumes:
       - redis-insight-data:/db
   customers:
-    image: nicolasduminil/customers-api:1.0-SNAPSHOT
+    image: ${CONTAINER_IMAGE_GROUP}/${CONTAINER_IMAGE_NAME}:1.0-SNAPSHOT
     depends_on:
       database:
         condition: service_healthy

@@ -90,6 +90,8 @@
                     <AWS_ENDPOINT_URL>http://localhost:4566</AWS_ENDPOINT_URL>
                     <CDK_DEFAULT_ACCOUNT>${CDK_DEFAULT_ACCOUNT}</CDK_DEFAULT_ACCOUNT>
                     <CDK_DEFAULT_REGION>${CDK_DEFAULT_REGION}</CDK_DEFAULT_REGION>
+                    <CONTAINER_IMAGE_GROUP>${CONTAINER_IMAGE_GROUP}</CONTAINER_IMAGE_GROUP>
+                    <CONTAINER_IMAGE_NAME>${CONTAINER_IMAGE_NAME}</CONTAINER_IMAGE_NAME>
                     <CONTAINER_PORT>${CONTAINER_PORT}</CONTAINER_PORT>
                   </environmentVariables>
                 </configuration>
@@ -135,10 +137,14 @@
             <artifactId>maven-failsafe-plugin</artifactId>
             <executions>
               <execution>
-                <!--goals>
-                  <goal>integration-test</goal>
-                  <goal>verify</goal>
-                </goals-->
+                <configuration>
+                  <excludes>
+                    <exclude>**/*E2EIT.java</exclude>
+                  </excludes>
+                </configuration>
+              </execution>
+              <execution>
+                <id>e2e-tests</id>
                 <configuration>
                   <includes>
                     <include>**/*E2EIT.java</include>

@@ -67,6 +67,10 @@
                 <argument>up</argument>
                 <argument>-d</argument>
               </arguments>
+              <environmentVariables>
+                <CONTAINER_IMAGE_GROUP>${CONTAINER_IMAGE_GROUP}</CONTAINER_IMAGE_GROUP>
+                <CONTAINER_IMAGE_NAME>${CONTAINER_IMAGE_NAME}</CONTAINER_IMAGE_NAME>
+              </environmentVariables>
             </configuration>
           </execution>
           <execution>
