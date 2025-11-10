@@ -4,11 +4,15 @@ import io.restassured.*;
 import org.junit.jupiter.api.*;
 import software.amazon.awssdk.regions.*;
 import software.amazon.awssdk.services.cloudformation.*;
+import software.amazon.awssdk.services.cloudformation.model.*;
+
+import static io.restassured.RestAssured.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomerServiceE2EIT extends InfrastructureIT
 {
   @BeforeAll
-  static void setupE2E()
+  void setup()
   {
     cfClient = CloudFormationClient.builder()
       .region(Region.EU_WEST_3)
@@ -16,6 +20,7 @@ public class CustomerServiceE2EIT extends InfrastructureIT
     String loadBalancerUrl = getStackOutput("QuarkusCustomerManagementStack", "CustomerServiceLoadBalancerDNS");
     RestAssured.baseURI = "http://" + loadBalancerUrl;
     RestAssured.port = 80;
+    System.out.println(">>> Connecting to: " + RestAssured.baseURI + ":" + RestAssured.port);
     waitForServiceReady();
   }
 }

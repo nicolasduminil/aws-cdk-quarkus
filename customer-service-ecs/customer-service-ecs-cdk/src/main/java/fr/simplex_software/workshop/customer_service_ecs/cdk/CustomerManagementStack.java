@@ -34,7 +34,6 @@ public class CustomerManagementStack extends Stack {
     final @ConfigProperty(name = "cdk.stack-id", defaultValue = "QuarkusCustomerManagementStack") String stackId,
     final StackProps props) {
     super(scope, stackId, props);
-    initStack();
   }
 
   public void initStack() {

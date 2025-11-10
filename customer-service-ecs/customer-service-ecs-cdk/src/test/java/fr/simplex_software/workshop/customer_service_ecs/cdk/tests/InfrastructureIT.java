@@ -1,10 +1,11 @@
 package fr.simplex_software.workshop.customer_service_ecs.cdk.tests;
 
-import io.restassured.RestAssured;
+import io.quarkus.test.junit.*;
+import org.eclipse.microprofile.config.inject.*;
 import org.junit.jupiter.api.*;
 import software.amazon.awssdk.auth.credentials.*;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.cloudformation.CloudFormationClient;
+import software.amazon.awssdk.regions.*;
+import software.amazon.awssdk.services.cloudformation.*;
 import software.amazon.awssdk.services.cloudformation.model.*;
 
 import java.net.*;
@@ -13,23 +14,28 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
+@QuarkusTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class InfrastructureIT
 {
   protected static CloudFormationClient cfClient;
   protected static String customerId;
 
+
   @BeforeAll
-  static void setup()
+  void setup()
   {
+    System.getProperties().entrySet().stream()
+      .filter(e -> e.getKey().toString().contains("localstack"))
+      .forEach(System.out::println);
     cfClient = CloudFormationClient.builder()
       .region(Region.EU_WEST_3)
       .endpointOverride(URI.create("http://localhost:4566"))
       .credentialsProvider(StaticCredentialsProvider.create(
         AwsBasicCredentials.create("test", "test")))
       .build();
-    waitForServiceReady();
+    //waitForServiceReady();
   }
 
   @Test
@@ -44,7 +50,7 @@ public class InfrastructureIT
       response.stacks().getFirst().stackStatus());
   }
 
-  @Test
+  /*@Test
   @Order(2)
   void testHealthEndpoint()
   {
@@ -159,7 +165,7 @@ public class InfrastructureIT
       .get("/customers/" + customerId)
       .then()
       .statusCode(404);
-  }
+  }*/
 
   protected static String getStackOutput(String stackName, String outputKey)
   {

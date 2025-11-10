@@ -683,7 +683,7 @@
    "Properties": {
     "AllocatedStorage": "100",
     "CopyTagsToSnapshot": true,
-    "DBInstanceClass": "db.t3.micro",
+    "DBInstanceClass": "db.t3.large",
     "DBName": "customers",
     "DBSubnetGroupName": {
      "Ref": "CustomerDatabaseSubnetGroupD1A145E3"
@@ -831,12 +831,12 @@
    "Type": "AWS::ElastiCache::ReplicationGroup",
    "Properties": {
     "AutomaticFailoverEnabled": false,
-    "CacheNodeType": "cache.t3.micro",
+    "CacheNodeType": "cache.t3.small",
     "CacheSubnetGroupName": {
      "Ref": "RedisSubnetGroup"
     },
     "Engine": "redis",
-    "NumCacheClusters": 1,
+    "NumCacheClusters": 2,
     "ReplicationGroupDescription": "Redis cache for customer service",
     "ReplicationGroupId": "customer-cache",
     "SecurityGroupIds": [
@@ -892,7 +892,7 @@
    "Type": "AWS::Logs::LogGroup",
    "Properties": {
     "LogGroupName": "/ecs/customer-service",
-    "RetentionInDays": 7,
+    "RetentionInDays": 30,
     "Tags": [
      {
       "Key": "application",
@@ -1209,7 +1209,7 @@
       ]
      }
     ],
-    "Cpu": "256",
+    "Cpu": "1024",
     "ExecutionRoleArn": {
      "Fn::GetAtt": [
       "CustomerServiceTaskDefExecutionRole2AABE999",
@@ -1217,7 +1217,7 @@
      ]
     },
     "Family": "QuarkusCustomerManagementStackCustomerServiceTaskDef691BE326",
-    "Memory": "512",
+    "Memory": "2048",
     "NetworkMode": "awsvpc",
     "RequiresCompatibilities": [
      "FARGATE"
@@ -1352,7 +1352,7 @@
      "MaximumPercent": 200,
      "MinimumHealthyPercent": 50
     },
-    "DesiredCount": 2,
+    "DesiredCount": 3,
     "EnableECSManagedTags": false,
     "HealthCheckGracePeriodSeconds": 60,
     "LaunchType": "FARGATE",
