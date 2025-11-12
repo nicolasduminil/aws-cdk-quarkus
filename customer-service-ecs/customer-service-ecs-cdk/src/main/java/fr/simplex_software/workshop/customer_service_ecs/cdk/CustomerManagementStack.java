@@ -54,6 +54,7 @@ public class CustomerManagementStack extends Stack {
       .databaseName(config.database().databaseName())
       .deletionProtection(config.database().deletionProtection())
       .removalPolicy(RemovalPolicy.DESTROY)
+      .storageEncrypted(true)
       .build();
 
     CfnSubnetGroup redisSubnetGroup = CfnSubnetGroup.Builder.create(this, "RedisSubnetGroup")

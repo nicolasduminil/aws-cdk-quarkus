@@ -704,6 +704,7 @@
      ]
     },
     "MasterUsername": "postgres",
+    "StorageEncrypted": true,
     "StorageType": "gp2",
     "Tags": [
      {
@@ -1179,20 +1180,6 @@
       ],
       "Secrets": [
        {
-        "Name": "QUARKUS_DATASOURCE_PASSWORD",
-        "ValueFrom": {
-         "Fn::Join": [
-          "",
-          [
-           {
-            "Ref": "CustomerDatabaseSecretAttachment204AEE14"
-           },
-           ":password::"
-          ]
-         ]
-        }
-       },
-       {
         "Name": "QUARKUS_DATASOURCE_USERNAME",
         "ValueFrom": {
          "Fn::Join": [
@@ -1202,6 +1189,20 @@
             "Ref": "CustomerDatabaseSecretAttachment204AEE14"
            },
            ":username::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "QUARKUS_DATASOURCE_PASSWORD",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Ref": "CustomerDatabaseSecretAttachment204AEE14"
+           },
+           ":password::"
           ]
          ]
         }
