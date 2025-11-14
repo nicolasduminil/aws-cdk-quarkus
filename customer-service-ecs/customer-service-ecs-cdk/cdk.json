@@ -8,6 +8,12 @@
   "output": "cdk.out",
   "progress": "bar",
   "ci": true,
-  "verbose": false
+  "verbose": false,
+  "acknowledgements": {
+    "@aws-cdk/aws-ecs:ecrImageRequiresPolicy": true,
+    "@aws-cdk/aws-ecs:minHealthyPercent": true,
+    "34892": true
+  },
+  "notices": false
 }
 

@@ -32,7 +32,8 @@ public class CustomerService
   {
     ValueCommands<String, Customer> cache = redisDS.value(Customer.class);
     Customer cached = cache.get("customer:" + id);
-    return Objects.requireNonNullElseGet(cached, () -> {
+    return Optional.ofNullable(cached).orElseGet(() ->
+    {
       Customer customer = Customer.findById(id);
       if (customer != null)
         cache.setex("customer:" + id, 300, customer);
@@ -43,14 +44,15 @@ public class CustomerService
   @Transactional
   public Customer update(Long id, Customer updates)
   {
-    Customer customer = Customer.findById(id);
-    if (customer != null)
-    {
-      customer.updateFrom(updates);
-      invalidateCache("customer:" + id);
-      invalidateCache("customers:all");
-    }
-    return customer;
+    return Optional.ofNullable((Customer) Customer.findById(id))
+      .map(customer ->
+      {
+        customer.updateFrom(updates);
+        invalidateCache("customer:" + id);
+        invalidateCache("customers:all");
+        return customer;
+      })
+      .orElse(null);
   }
 
   @Transactional

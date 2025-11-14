@@ -108,6 +108,7 @@ public class CustomerManagementStack extends Stack {
         .publicLoadBalancer(true)
         .healthCheckGracePeriod(Duration.seconds(config.ecs().healthCheckGracePeriodSeconds()))
         .serviceName(config.ecs().serviceName())
+        .minHealthyPercent(100)
         .build();
 
     fargateService.getTargetGroup()
@@ -117,6 +118,12 @@ public class CustomerManagementStack extends Stack {
 
     fargateService.getTaskDefinition().getExecutionRole().addManagedPolicy(
       ManagedPolicy.fromAwsManagedPolicyName("service-role/AmazonECSTaskExecutionRolePolicy"));
+    fargateService.getTaskDefinition().addToExecutionRolePolicy(PolicyStatement.Builder.create()
+      .effect(Effect.ALLOW)
+      .actions(Arrays.asList("ecr:GetAuthorizationToken", "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer", "ecr:BatchGetImage"))
+      .resources(Arrays.asList("*"))
+      .build());
 
     database.getConnections().allowFrom(fargateService.getService(), Port.tcp(5432));
     redis.allowConnectionsFrom(fargateService.getService());

@@ -1,16 +1,16 @@
 {
   "version": "48.0.0",
   "files": {
-    "1831e8e44eb422a6e90c0820e1a2fd67dd36d4b7ef5e032e333746e14a53d327": {
+    "c33abe5d27435fa168a4d07c9f09b2ce6d1f98b915c55c2e6aca69fa347e1080": {
       "displayName": "QuarkusCustomerManagementStack Template",
       "source": {
         "path": "QuarkusCustomerManagementStack.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "495913029085-eu-west-3-8e92c47e": {
+        "495913029085-eu-west-3-4a72e9f2": {
           "bucketName": "cdk-hnb659fds-assets-495913029085-eu-west-3",
-          "objectKey": "1831e8e44eb422a6e90c0820e1a2fd67dd36d4b7ef5e032e333746e14a53d327.json",
+          "objectKey": "c33abe5d27435fa168a4d07c9f09b2ce6d1f98b915c55c2e6aca69fa347e1080.json",
           "region": "eu-west-3",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::495913029085:role/cdk-hnb659fds-file-publishing-role-495913029085-eu-west-3"
         }
