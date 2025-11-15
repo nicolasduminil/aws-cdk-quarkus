@@ -1,11 +1,14 @@
 package fr.simplex_software.workshop.customer_service_ecs.tests;
 
 import io.quarkus.test.junit.QuarkusTestProfile;
+
 import java.util.Map;
 
-public class IntegrationTestProfile implements QuarkusTestProfile {
+public class IntegrationTestProfile implements QuarkusTestProfile
+{
   @Override
-  public Map<String, String> getConfigOverrides() {
+  public Map<String, String> getConfigOverrides()
+  {
     return Map.of(
       "quarkus.datasource.db-kind", "postgresql",
       "quarkus.datasource.username", "nicolas",
