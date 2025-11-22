@@ -1,1 +1,0 @@
-aws cloudformation describe-stacks --stack-name QuarkusCustomerManagementStack --region eu-west-3 --query 'Stacks[0].Outputs[?OutputKey==`CustomerServiceLoadBalancerDNS`].OutputValue' --output text

@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: customer-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-service-api-deployment
+  namespace: customer-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: customer-service-api
+  template:
+    metadata:
+      labels:
+        app: customer-service-api
+    spec:
+      containers:
+        - name: customer-service-api-container
+          image: your-account.dkr.ecr.eu-west-3.amazonaws.com/customer-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: QUARKUS_DATASOURCE_JDBC_URL
+              value: "jdbc:postgresql://your-rds-endpoint:5432/customers"
+            - name: QUARKUS_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: QUARKUS_DATASOURCE_PASSWORD
+              value: "your-password"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service-api-service
+  namespace: customer-service
+spec:
+  selector:
+    app: customer-service-api
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  type: LoadBalancer

@@ -1,0 +1,1 @@
+aws cloudformation describe-stacks --query 'Stacks[?contains(StackName, `customer`) || contains(StackName, `Customer`)].{Name:StackName,Status:StackStatus}' --output table

@@ -9,13 +9,17 @@
   <packaging>pom</packaging>
   <modules>
     <module>customer-service-ecs</module>
+    <module>customer-service-eks</module>
+    <module>customer-service-api</module>
+    <module>customer-service-cdk-common</module>
   </modules>
   <properties>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <quarkus.version>3.29.0</quarkus.version>
-    <aws-cdk.version>2.221.1</aws-cdk.version>
+    <!--aws-cdk.version>2.221.1</aws-cdk.version-->
+    <aws-cdk.version>2.225.0</aws-cdk.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -32,6 +36,41 @@
         <version>3.12.0</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>software.amazon.awscdk</groupId>
+        <artifactId>aws-cdk-lib</artifactId>
+        <version>${aws-cdk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>software.constructs</groupId>
+        <artifactId>constructs</artifactId>
+        <version>10.4.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.yaml</groupId>
+        <artifactId>snakeyaml</artifactId>
+        <version>2.5</version>
+      </dependency>
+      <dependency>
+        <groupId>software.amazon.awscdk</groupId>
+        <artifactId>cdk-lambda-layer-kubectl-v32</artifactId>
+        <version>2.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>fr.simplex-software.workshop</groupId>
+        <artifactId>customer-service-ecs-api</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>fr.simplex-software.workshop</groupId>
+        <artifactId>customer-service-ecs-cdk</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>fr.simplex-software.workshop</groupId>
+        <artifactId>customer-service-cdk-common</artifactId>
+        <version>1.0-SNAPSHOT</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -165,12 +204,25 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>io.smallrye</groupId>
+        <artifactId>jandex-maven-plugin</artifactId>
+        <version>3.2.3</version>
+        <executions>
+          <execution>
+            <id>make-index</id>
+            <goals>
+              <goal>jandex</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
-      <resources>
-        <resource>
-          <directory>src/main/resources</directory>
-          <filtering>true</filtering>
-        </resource>
-      </resources>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
   </build>
 </project>

@@ -1,1 +1,0 @@
-cdk deploy --require-approval=never --profile cdk

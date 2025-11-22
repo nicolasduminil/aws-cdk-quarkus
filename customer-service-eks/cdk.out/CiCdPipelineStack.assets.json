@@ -1,0 +1,20 @@
+{
+  "version": "48.0.0",
+  "files": {
+    "c29cd48ea63e4f1047b3b4ae03a2bff5513e25b2c95049085c59894a7b513597": {
+      "displayName": "CiCdPipelineStack Template",
+      "source": {
+        "path": "CiCdPipelineStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region-756dcdfa": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "c29cd48ea63e4f1047b3b4ae03a2bff5513e25b2c95049085c59894a7b513597.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
