@@ -11,6 +11,14 @@
   <artifactId>customer-service-eks</artifactId>
   <dependencies>
     <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-kubernetes</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-minikube</artifactId>
+    </dependency>
+    <dependency>
       <groupId>software.amazon.awscdk</groupId>
       <artifactId>aws-cdk-lib</artifactId>
     </dependency>
@@ -41,31 +49,79 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>3.3.0</version>
         <executions>
           <execution>
-            <id>deploy-to-aws</id>
+            <id>start-minikube</id>
             <phase>pre-integration-test</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
+            <goals><goal>exec</goal></goals>
+            <configuration>
+              <executable>minikube</executable>
+              <arguments>
+                <argument>start</argument>
+                <argument>--driver=docker</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>deploy-to-minikube</id>
+            <phase>pre-integration-test</phase>
+            <goals><goal>exec</goal></goals>
             <configuration>
               <executable>bash</executable>
               <arguments>
-                <argument>../customer-service-cdk-common/src/main/resources/scripts/deploy-ecr.sh</argument>
+                <argument>src/main/resources/scripts/deploy-to-minikube.sh</argument>
               </arguments>
-              <workingDirectory>${project.basedir}</workingDirectory>
-              <environmentVariables>
-                <CDK_DEFAULT_ACCOUNT>${CDK_DEFAULT_ACCOUNT}</CDK_DEFAULT_ACCOUNT>
-                <CDK_DEFAULT_REGION>${CDK_DEFAULT_REGION}</CDK_DEFAULT_REGION>
-                <CONTAINER_IMAGE_GROUP>${CONTAINER_IMAGE_GROUP}</CONTAINER_IMAGE_GROUP>
-                <CONTAINER_IMAGE_NAME>${CONTAINER_IMAGE_NAME}</CONTAINER_IMAGE_NAME>
-                <CONTAINER_PORT>${CONTAINER_PORT}</CONTAINER_PORT>
-              </environmentVariables>
+            </configuration>
+          </execution>
+          <execution>
+            <id>stop-minikube</id>
+            <phase>clean</phase>
+            <goals><goal>exec</goal></goals>
+            <configuration>
+              <executable>minikube</executable>
+              <arguments>
+                <argument>delete</argument>
+              </arguments>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>e2e</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>deploy-to-aws</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>bash</executable>
+                  <arguments>
+                    <argument>../customer-service-cdk-common/src/main/resources/scripts/deploy-ecr.sh</argument>
+                  </arguments>
+                  <workingDirectory>${project.basedir}</workingDirectory>
+                  <environmentVariables>
+                    <CDK_DEFAULT_ACCOUNT>${CDK_DEFAULT_ACCOUNT}</CDK_DEFAULT_ACCOUNT>
+                    <CDK_DEFAULT_REGION>${CDK_DEFAULT_REGION}</CDK_DEFAULT_REGION>
+                    <CONTAINER_IMAGE_GROUP>${CONTAINER_IMAGE_GROUP}</CONTAINER_IMAGE_GROUP>
+                    <CONTAINER_IMAGE_NAME>${CONTAINER_IMAGE_NAME}</CONTAINER_IMAGE_NAME>
+                    <CONTAINER_PORT>${CONTAINER_PORT}</CONTAINER_PORT>
+                  </environmentVariables>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

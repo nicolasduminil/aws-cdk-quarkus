@@ -23,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::495913029085:role/cdk-hnb659fds-deploy-role-495913029085-eu-west-3",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::495913029085:role/cdk-hnb659fds-cfn-exec-role-495913029085-eu-west-3",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-495913029085-eu-west-3/5ced94847239795936d33d901d390faf69a632b6535933264275fd28696e191f.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-495913029085-eu-west-3/9453257a01fc500af74ddd2aa4dfd65554fbeec6bad6e974307183371edbb854.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -309,20 +309,20 @@
             "type": "aws:cdk:warning",
             "data": "Proper policies need to be attached before pulling from ECR repository, or use 'fromEcrRepository'. [ack: @aws-cdk/aws-ecs:ecrImageRequiresPolicy]",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-SJcO6Z/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
-              "Annotations.addWarningV2 (/tmp/jsii-kernel-SJcO6Z/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
-              "RepositoryImage.bind (/tmp/jsii-kernel-SJcO6Z/node_modules/aws-cdk-lib/aws-ecs/lib/images/repository.js:1:1404)",
-              "new ContainerDefinition2 (/tmp/jsii-kernel-SJcO6Z/node_modules/aws-cdk-lib/aws-ecs/lib/container-definition.js:1:5998)",
-              "new ContainerDefinition2 (/tmp/jsii-kernel-SJcO6Z/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
-              "WrappedClass.addContainer (/tmp/jsii-kernel-SJcO6Z/node_modules/aws-cdk-lib/aws-ecs/lib/base/task-definition.js:1:19200)",
-              "WrappedClass.<anonymous> (/tmp/jsii-kernel-SJcO6Z/node_modules/aws-cdk-lib/core/lib/metadata-resource.js:1:2200)",
-              "new ApplicationLoadBalancedFargateService2 (/tmp/jsii-kernel-SJcO6Z/node_modules/aws-cdk-lib/aws-ecs-patterns/lib/fargate/application-load-balanced-fargate-service.js:1:4935)",
-              "new ApplicationLoadBalancedFargateService2 (/tmp/jsii-kernel-SJcO6Z/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
-              "Kernel._Kernel_create (/tmp/jsii-java-runtime5317968173904622034/lib/program.js:549:25)",
-              "Kernel.create (/tmp/jsii-java-runtime5317968173904622034/lib/program.js:219:93)",
-              "KernelHost.processRequest (/tmp/jsii-java-runtime5317968173904622034/lib/program.js:15482:36)",
-              "KernelHost.run (/tmp/jsii-java-runtime5317968173904622034/lib/program.js:15442:22)",
-              "Immediate._onImmediate (/tmp/jsii-java-runtime5317968173904622034/lib/program.js:15443:45)",
+              "Annotations.addMessage (/tmp/jsii-kernel-thGe0C/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
+              "Annotations.addWarningV2 (/tmp/jsii-kernel-thGe0C/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
+              "RepositoryImage.bind (/tmp/jsii-kernel-thGe0C/node_modules/aws-cdk-lib/aws-ecs/lib/images/repository.js:1:1404)",
+              "new ContainerDefinition2 (/tmp/jsii-kernel-thGe0C/node_modules/aws-cdk-lib/aws-ecs/lib/container-definition.js:1:5998)",
+              "new ContainerDefinition2 (/tmp/jsii-kernel-thGe0C/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
+              "WrappedClass.addContainer (/tmp/jsii-kernel-thGe0C/node_modules/aws-cdk-lib/aws-ecs/lib/base/task-definition.js:1:19200)",
+              "WrappedClass.<anonymous> (/tmp/jsii-kernel-thGe0C/node_modules/aws-cdk-lib/core/lib/metadata-resource.js:1:2200)",
+              "new ApplicationLoadBalancedFargateService2 (/tmp/jsii-kernel-thGe0C/node_modules/aws-cdk-lib/aws-ecs-patterns/lib/fargate/application-load-balanced-fargate-service.js:1:4935)",
+              "new ApplicationLoadBalancedFargateService2 (/tmp/jsii-kernel-thGe0C/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
+              "Kernel._Kernel_create (/tmp/jsii-java-runtime8716516135791774364/lib/program.js:549:25)",
+              "Kernel.create (/tmp/jsii-java-runtime8716516135791774364/lib/program.js:219:93)",
+              "KernelHost.processRequest (/tmp/jsii-java-runtime8716516135791774364/lib/program.js:15482:36)",
+              "KernelHost.run (/tmp/jsii-java-runtime8716516135791774364/lib/program.js:15442:22)",
+              "Immediate._onImmediate (/tmp/jsii-java-runtime8716516135791774364/lib/program.js:15443:45)",
               "process.processImmediate (node:internal/timers:505:21)"
             ]
           }
@@ -516,7 +516,7 @@
           },
           "@aws-cdk/aws-iam:importedRoleStackSafeDefaultPolicyName": {
             "recommendedValue": true,
-            "explanation": "Enable this feature to by default create default policy names for imported roles that depend on the stack the role is in."
+            "explanation": "Enable this feature to create default policy names for imported roles that depend on the stack the role is in."
           },
           "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": {
             "recommendedValue": true,
@@ -797,6 +797,10 @@
             "recommendedValue": true,
             "explanation": "When enabled, CDK creates and manages loggroup for the lambda function"
           },
+          "@aws-cdk/aws-elasticloadbalancingv2:networkLoadBalancerWithSecurityGroupByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, Network Load Balancer will be created with a security group by default."
+          },
           "@aws-cdk/aws-stepfunctions-tasks:httpInvokeDynamicJsonPathEndpoint": {
             "recommendedValue": true,
             "explanation": "When enabled, allows using a dynamic apiEndpoint with JSONPath format in HttpInvoke tasks.",
@@ -812,5 +816,5 @@
       }
     }
   },
-  "minimumCliVersion": "2.1032.0"
+  "minimumCliVersion": "2.1033.0"
 }

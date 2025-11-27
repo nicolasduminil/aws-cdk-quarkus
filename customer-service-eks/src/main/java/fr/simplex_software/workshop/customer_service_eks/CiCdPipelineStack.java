@@ -32,7 +32,7 @@ public class CiCdPipelineStack extends Stack
 
   public void initStack()
   {
-    Repository ecrRepo = (Repository) Repository.fromRepositoryName(this, "CustomerServiceRepo",
+    IRepository ecrRepo = Repository.fromRepositoryName(this, "CustomerServiceRepo",
       cicdConfig.repository().name());
 
     Project buildProject = Project.Builder.create(this, "CustomerServiceBuild")

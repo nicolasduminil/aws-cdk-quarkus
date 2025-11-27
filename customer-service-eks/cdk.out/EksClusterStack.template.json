@@ -1885,6 +1885,14 @@
    "Export": {
     "Name": "EksClusterStack:ExportsOutputRefEksVpc4BB427FA336B0142"
    }
+  },
+  "ExportsOutputRefCustomerServiceCluster497EB85DA206F6AE": {
+   "Value": {
+    "Ref": "CustomerServiceCluster497EB85D"
+   },
+   "Export": {
+    "Name": "EksClusterStack:ExportsOutputRefCustomerServiceCluster497EB85DA206F6AE"
+   }
   }
  },
  "Parameters": {

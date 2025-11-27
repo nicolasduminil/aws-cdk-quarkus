@@ -150,7 +150,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/2dcbc36f7ce8f2b6767bc8bf61c11f7a412d4b454a81c2ca820b5a9ec8408062.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cfffc9c0b58d2f00cc1f89aa96cd5ecbac1a1c7aff9f57b528feb9b2649d5cb7.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -697,6 +697,12 @@
             "data": "ExportsOutputRefEksVpc4BB427FA336B0142"
           }
         ],
+        "/EksClusterStack/Exports/Output{\"Ref\":\"CustomerServiceCluster497EB85D\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefCustomerServiceCluster497EB85DA206F6AE"
+          }
+        ],
         "/EksClusterStack/BootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",
@@ -733,7 +739,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/12638e9a8de13f10aa55fa73ae17e09b78c29dad281ccdfdda5e5c1190d53ec8.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e05d58efb5d9c21ea2eb5b2172e5dc48b092204c01121a9d9b36df2a573f762e.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -746,6 +752,7 @@
         }
       },
       "dependencies": [
+        "EksClusterStack",
         "CiCdPipelineStack-Test.assets"
       ],
       "metadata": {
@@ -764,16 +771,130 @@
             ]
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServiceRepo/Resource": [
+        "/CiCdPipelineStack-Test/CustomerServiceBuild/Role/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "CustomerServiceRepoA8BDC2CA"
+            "data": "CustomerServiceBuildRole4EFFF279"
           }
         ],
-        "/CiCdPipelineStack-Test/TestBucket/Resource": [
+        "/CiCdPipelineStack-Test/CustomerServiceBuild/Role/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "TestBucket560B80BC"
+            "data": "CustomerServiceBuildRoleDefaultPolicy5E7E9D5D"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServiceBuild/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServiceBuild0A9B7C30"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServiceDeploy/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServiceDeployRole1EC55471"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServiceDeploy/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServiceDeployRoleDefaultPolicy883E1F6B"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServiceDeploy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServiceDeploy4C86B9CA"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "V1 pipeline type is implicitly selected when `pipelineType` is not set. If you want to use V2 type, set `PipelineType.V2`. [ack: @aws-cdk/aws-codepipeline:unspecifiedPipelineType]",
+            "trace": [
+              "Annotations.addMessage (/tmp/jsii-kernel-tP93Eq/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
+              "Annotations.addWarningV2 (/tmp/jsii-kernel-tP93Eq/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
+              "new Pipeline2 (/tmp/jsii-kernel-tP93Eq/node_modules/aws-cdk-lib/aws-codepipeline/lib/pipeline.js:1:11800)",
+              "new Pipeline2 (/tmp/jsii-kernel-tP93Eq/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
+              "Kernel._Kernel_create (/tmp/jsii-java-runtime1309061184960669309/lib/program.js:549:25)",
+              "Kernel.create (/tmp/jsii-java-runtime1309061184960669309/lib/program.js:219:93)",
+              "KernelHost.processRequest (/tmp/jsii-java-runtime1309061184960669309/lib/program.js:15482:36)",
+              "KernelHost.run (/tmp/jsii-java-runtime1309061184960669309/lib/program.js:15442:22)",
+              "Immediate._onImmediate (/tmp/jsii-java-runtime1309061184960669309/lib/program.js:15443:45)",
+              "process.processImmediate (node:internal/timers:505:21)"
+            ]
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/ArtifactsBucketEncryptionKey/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineArtifactsBucketEncryptionKeyF352DD27"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/ArtifactsBucketEncryptionKeyAlias/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineArtifactsBucketEncryptionKeyAlias58653EEA"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/ArtifactsBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineArtifactsBucketDBD1FB0B"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/ArtifactsBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineArtifactsBucketPolicyA58586D0"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineRole5A5B3D0C"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineRoleDefaultPolicy5D067B31"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineB3195C39"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/Source/GitHub_Source/WebhookResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineSourceGitHubSourceWebhookResourceCF3BBB86"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/Build/Build/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineBuildCodePipelineActionRoleC3F20548"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/Build/Build/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineBuildCodePipelineActionRoleDefaultPolicy07DDB046"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/Deploy/Deploy/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineDeployCodePipelineActionRoleC75C2A2F"
+          }
+        ],
+        "/CiCdPipelineStack-Test/CustomerServicePipeline/Deploy/Deploy/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServicePipelineDeployCodePipelineActionRoleDefaultPolicyA8D980A8"
           }
         ],
         "/CiCdPipelineStack-Test/CDKMetadata/Default": [

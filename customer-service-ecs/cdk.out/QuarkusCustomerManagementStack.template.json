@@ -1126,24 +1126,6 @@
      {
       "Environment": [
        {
-        "Name": "QUARKUS_DATASOURCE_JDBC_URL",
-        "Value": {
-         "Fn::Join": [
-          "",
-          [
-           "jdbc:postgresql://",
-           {
-            "Fn::GetAtt": [
-             "DatabaseCustomerDatabaseC464F3A1",
-             "Endpoint.Address"
-            ]
-           },
-           ":5432/customers"
-          ]
-         ]
-        }
-       },
-       {
         "Name": "QUARKUS_REDIS_HOSTS",
         "Value": {
          "Fn::Join": [
@@ -1157,6 +1139,24 @@
             ]
            },
            ":6379"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "QUARKUS_DATASOURCE_JDBC_URL",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "jdbc:postgresql://",
+           {
+            "Fn::GetAtt": [
+             "DatabaseCustomerDatabaseC464F3A1",
+             "Endpoint.Address"
+            ]
+           },
+           ":5432/customers"
           ]
          ]
         }
@@ -1484,7 +1484,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/31S227bMAz9lr4r2uJ9QS5dkaHYDLvoa0HLrMtFkQyRSlAY/vfBVuwY2bAnHh4eUrwo01m21usHuPDK1MeVpUp3pYA5KrjwW4cm091ra9Tu3b3mO5XHypIpY+VQBu6GCh8FX6CyeONv3IbZGwIh72bxAB4P+WB+gjyB4AU+VR7oDIK3wgcnGBzOgtTJ1duIgPk4oRNVoomB5PMp+NiOPfyXOLgmIPNf/ONI9wotsJAB84G6myeaaxXYWjLjQCPXq1Cz7vYgUAHjwbGAM6ju0vbbJTGpSzQhDbvfTpm94pHlEzhoMKQmkjCZFwgNymIDs+A+0is0rLudjSwYBt0Ev0NoYLgRH/f4To6mC90z3gmQw7DgrrklhjOZdPUEe2V9w7p79s08+ITHVt5akOGorDftvMZnD/UW7DB7fVf6egvroa5GBbnmnOnu39khvbfwlzpiQXfVTHgRT6ub2164vSI46a7w6YePNveWzPglE+p7VSD7GNI+fkVpo/TqB5zhS7bWX/W3h99MtArRCZ1QF8n+Ab1Nuj+GAwAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/31S227bMAz9lr4rWudhH5BLV2QoNsMu+lrQMutyUSRDpBIUhv99sBU7RlbsiYeHhxQvynSWfdf3d3DmlakPK0uV7koBc1Bw5tcOTaa7l9ao7Zt7ybcqj5UlU8bKoQzcFRU+Cj5DZfHKX7k1szcEQt7N4gE87PPB/AJ5BMEzfKg80AkEr4X3TjA4nAWpk4u3FgHzfkQnqkQTA8nHY/CxHXv4L7F3TUDmf/iHke4VWmAhA+YddTdPNNcqsLVkxoFGrlehZt3tQKACxr1jAWdQ3aTtNktiUpdoQhp2t5kye8Ujy0dw0GBITSRhMs8QGpTFBmbBbaRXaFh3WxtZMAy6Cf6A0MBwIz7s8I0cTRe6ZbwTIIdhwV1ySwwnMunqCfbK+oZ19+SbefAJj628tiDDUVmv23mNTx7qDdhh9vqm9OUW1kNdjQpyzSnT3efZIb238Jc6YkF30Ux4EU+rm9teuL0iOOqu8OmHjzb3lsz4JRPqe1Ug+xjSPn5HaaP06iec4Ev2Vd/rb3d/mGgVohM6oi6S/QsZ9mqGhgMAAA=="
    },
    "Metadata": {
     "aws:cdk:path": "QuarkusCustomerManagementStack/CDKMetadata/Default"
