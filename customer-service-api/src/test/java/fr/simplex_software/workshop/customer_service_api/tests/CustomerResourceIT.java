@@ -5,8 +5,11 @@ import fr.simplex_software.workshop.customer_service_api.entity.*;
 import io.quarkus.test.junit.*;
 import jakarta.inject.*;
 import jakarta.ws.rs.core.*;
+import org.eclipse.microprofile.rest.client.*;
 import org.eclipse.microprofile.rest.client.inject.*;
 import org.junit.jupiter.api.*;
+
+import java.net.*;
 
 import static org.assertj.core.api.Assertions.*;
 
