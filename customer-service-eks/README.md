@@ -232,3 +232,30 @@ Configures cluster API server endpoint
 Merges configuration into your kubeconfig file
 
 This is a one-time setup per cluster. Once configured, kubectl remembers the connection details until you switch contexts or the cluster changes.
+
+Root Cause
+When you use cluster.addManifest() in CDK, it creates a Lambda function that applies Kubernetes resources. AWS Lambda has API rate limits, and your deployment is hitting them because:
+
+Multiple Kubernetes resources (Namespace, ServiceAccount, ConfigMap, Deployment, Service)
+
+CDK makes multiple Lambda invocations to apply each resource
+
+AWS throttles the requests when they exceed the rate limit
+
+Solutions (Ordered by Recommendation)
+Option 1: Add Delays Between Manifest Applications (Recommended)
+Modify EksClusterStack to add dependencies between manifests, forcing sequential application with natural delays:
+
+// In EksClusterStack.initStack()
+KubernetesManifest namespace = cluster.addManifest("CustomerServiceNamespace", namespaceManifest);
+KubernetesManifest serviceAccount = cluster.addManifest("CustomerServiceAccount", serviceAccountManifest);
+serviceAccount.getNode().addDependency(namespace);
+
+KubernetesManifest configMap = cluster.addManifest("CustomerServiceConfigMap", configMapManifest);
+configMap.getNode().addDependency(serviceAccount);
+
+KubernetesManifest deployment = cluster.addManifest("CustomerServiceDeployment", deploymentManifest);
+deployment.getNode().addDependency(configMap);
+
+KubernetesManifest service = cluster.addManifest("CustomerServiceService", serviceManifest);
+service.getNode().addDependency(deployment)

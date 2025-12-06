@@ -1,5 +1,7 @@
 package fr.simplex_software.workshop.customer_service_eks;
 
+import fr.simplex_software.workshop.cdk.common.config.*;
+import fr.simplex_software.workshop.cdk.common.stacks.*;
 import io.quarkus.runtime.*;
 import jakarta.enterprise.context.*;
 import jakarta.inject.*;
@@ -16,6 +18,7 @@ public class CustomerManagementEksApp implements QuarkusApplication
   CiCdPipelineStack ciCdPipelineStack;
   @Inject
   MonitoringStack monitoringStack;
+
 
   @Override
   public int run(String... args) throws Exception

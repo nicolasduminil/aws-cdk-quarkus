@@ -3,13 +3,13 @@
   "RedisSubnetGroup": {
    "Type": "AWS::ElastiCache::SubnetGroup",
    "Properties": {
-    "Description": "Subnet group for Redis cluster",
+    "Description": "Subnet group for Redis",
     "SubnetIds": [
      {
-      "Fn::ImportValue": "EksClusterStack:ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273"
+      "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273"
      },
      {
-      "Fn::ImportValue": "EksClusterStack:ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0"
+      "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0"
      }
     ],
     "Tags": [
@@ -27,7 +27,7 @@
     "aws:cdk:path": "DatabaseStack/RedisSubnetGroup"
    }
   },
-  "CustomerRedisSecurityGroupC6C70331": {
+  "CustomerCacheSecurityGroup60570E42": {
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
     "GroupDescription": "Security group for Redis cluster customer-cache",
@@ -51,14 +51,14 @@
      }
     ],
     "VpcId": {
-     "Fn::ImportValue": "EksClusterStack:ExportsOutputRefEksVpc4BB427FA336B0142"
+     "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpc4BB427FA336B0142"
     }
    },
    "Metadata": {
-    "aws:cdk:path": "DatabaseStack/CustomerRedis/SecurityGroup/Resource"
+    "aws:cdk:path": "DatabaseStack/CustomerCache/SecurityGroup/Resource"
    }
   },
-  "CustomerRedisReplicationGroup30E24C22": {
+  "CustomerCacheReplicationGroupE25E3BDD": {
    "Type": "AWS::ElastiCache::ReplicationGroup",
    "Properties": {
     "AutomaticFailoverEnabled": false,
@@ -73,7 +73,7 @@
     "SecurityGroupIds": [
      {
       "Fn::GetAtt": [
-       "CustomerRedisSecurityGroupC6C70331",
+       "CustomerCacheSecurityGroup60570E42",
        "GroupId"
       ]
      }
@@ -90,19 +90,19 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "DatabaseStack/CustomerRedis/ReplicationGroup"
+    "aws:cdk:path": "DatabaseStack/CustomerCache/ReplicationGroup"
    }
   },
-  "CustomerDBSubnetGroup3BE51C6A": {
+  "CustomerDatabaseSubnetGroupD1A145E3": {
    "Type": "AWS::RDS::DBSubnetGroup",
    "Properties": {
-    "DBSubnetGroupDescription": "Subnet group for CustomerDB database",
+    "DBSubnetGroupDescription": "Subnet group for CustomerDatabase database",
     "SubnetIds": [
      {
-      "Fn::ImportValue": "EksClusterStack:ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273"
+      "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273"
      },
      {
-      "Fn::ImportValue": "EksClusterStack:ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0"
+      "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0"
      }
     ],
     "Tags": [
@@ -117,13 +117,13 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "DatabaseStack/CustomerDB/SubnetGroup/Default"
+    "aws:cdk:path": "DatabaseStack/CustomerDatabase/SubnetGroup/Default"
    }
   },
-  "CustomerDBSecurityGroupAD10E1EC": {
+  "CustomerDatabaseSecurityGroupC606C631": {
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
-    "GroupDescription": "Security group for CustomerDB database",
+    "GroupDescription": "Security group for CustomerDatabase database",
     "SecurityGroupEgress": [
      {
       "CidrIp": "0.0.0.0/0",
@@ -142,14 +142,14 @@
      }
     ],
     "VpcId": {
-     "Fn::ImportValue": "EksClusterStack:ExportsOutputRefEksVpc4BB427FA336B0142"
+     "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpc4BB427FA336B0142"
     }
    },
    "Metadata": {
-    "aws:cdk:path": "DatabaseStack/CustomerDB/SecurityGroup/Resource"
+    "aws:cdk:path": "DatabaseStack/CustomerDatabase/SecurityGroup/Resource"
    }
   },
-  "DatabaseStackCustomerDBSecretB2A4EEE23fdaad7efa858a3daf9490cf0a702aeb": {
+  "DatabaseStackCustomerDatabaseSecret5EA3F3DE3fdaad7efa858a3daf9490cf0a702aeb": {
    "Type": "AWS::SecretsManager::Secret",
    "Properties": {
     "Description": {
@@ -183,25 +183,25 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "DatabaseStack/CustomerDB/Secret/Resource"
+    "aws:cdk:path": "DatabaseStack/CustomerDatabase/Secret/Resource"
    }
   },
-  "CustomerDBSecretAttachmentF9184874": {
+  "CustomerDatabaseSecretAttachment204AEE14": {
    "Type": "AWS::SecretsManager::SecretTargetAttachment",
    "Properties": {
     "SecretId": {
-     "Ref": "DatabaseStackCustomerDBSecretB2A4EEE23fdaad7efa858a3daf9490cf0a702aeb"
+     "Ref": "DatabaseStackCustomerDatabaseSecret5EA3F3DE3fdaad7efa858a3daf9490cf0a702aeb"
     },
     "TargetId": {
-     "Ref": "CustomerDB5FCC9C1F"
+     "Ref": "CustomerDatabase306E9FF5"
     },
     "TargetType": "AWS::RDS::DBInstance"
    },
    "Metadata": {
-    "aws:cdk:path": "DatabaseStack/CustomerDB/Secret/Attachment/Resource"
+    "aws:cdk:path": "DatabaseStack/CustomerDatabase/Secret/Attachment/Resource"
    }
   },
-  "CustomerDB5FCC9C1F": {
+  "CustomerDatabase306E9FF5": {
    "Type": "AWS::RDS::DBInstance",
    "Properties": {
     "AllocatedStorage": "100",
@@ -209,18 +209,18 @@
     "DBInstanceClass": "db.t3.micro",
     "DBName": "customers",
     "DBSubnetGroupName": {
-     "Ref": "CustomerDBSubnetGroup3BE51C6A"
+     "Ref": "CustomerDatabaseSubnetGroupD1A145E3"
     },
     "DeletionProtection": false,
     "Engine": "postgres",
-    "EngineVersion": "15",
+    "EngineVersion": "17.6",
     "MasterUserPassword": {
      "Fn::Join": [
       "",
       [
        "{{resolve:secretsmanager:",
        {
-        "Ref": "DatabaseStackCustomerDBSecretB2A4EEE23fdaad7efa858a3daf9490cf0a702aeb"
+        "Ref": "DatabaseStackCustomerDatabaseSecret5EA3F3DE3fdaad7efa858a3daf9490cf0a702aeb"
        },
        ":SecretString:password::}}"
       ]
@@ -242,7 +242,7 @@
     "VPCSecurityGroups": [
      {
       "Fn::GetAtt": [
-       "CustomerDBSecurityGroupAD10E1EC",
+       "CustomerDatabaseSecurityGroupC606C631",
        "GroupId"
       ]
      }
@@ -251,13 +251,13 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "DatabaseStack/CustomerDB/Resource"
+    "aws:cdk:path": "DatabaseStack/CustomerDatabase/Resource"
    }
   },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12Oy4oCQQxFv8V9dbTLL/ABMrO0Zy/pGLXG7iiVtCJF/btgoairC+eeG+LB+xrqEV61ou2x6kILqTGko8OrbhJ3qBYI6cCQFjtphlbYVvE0nN1iJ2s+d4HQwkkeLDsmD6lhGmKw28v7ANnFrUJaomGLyj+ihkLsvm4v5+/gaTdMka30z2V2+qDao+CeY/m0iCX+MO7ZZmZIh57F3Ev4bnLO7hcvOPY1TGA6+tcQqjiIhZ5hXfIOmlSxaTUBAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12O0WoCQQxFv8X32dSO+AGtQtHHXd8lG6NO3Y3LJKvIMP8uOCitTxfOPTfEg/dzmE7wqhXtTlUXWkiNIZ0cXnWbuEO1QEhHhrTYSzO2wvYTz+PgFnupeegCoYWzPFh2TB5SwzTGYLeX9w9kF3cKaYmGLSqvRA2F2L3dXn7/BU+7YYpspX8us9MH1R4FDxzLp0UsscF4YPsyQzr2LOZewnuTc3ZrvOCH/4QpzCa/GkIVR7HQM9Ql72a42bw1AQAA"
    },
    "Metadata": {
     "aws:cdk:path": "DatabaseStack/CDKMetadata/Default"

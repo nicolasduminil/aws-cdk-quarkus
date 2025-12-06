@@ -38,6 +38,12 @@
       <groupId>fr.simplex-software.workshop</groupId>
       <artifactId>customer-service-cdk-common</artifactId>
     </dependency>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>customer-service-cdk-common</artifactId>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>

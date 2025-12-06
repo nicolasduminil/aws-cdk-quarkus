@@ -1,20 +1,6 @@
 {
   "version": "48.0.0",
   "files": {
-    "7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200": {
-      "displayName": "EksClusterStack/Custom::VpcRestrictDefaultSGCustomResourceProvider Code",
-      "source": {
-        "path": "asset.7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200",
-        "packaging": "zip"
-      },
-      "destinations": {
-        "current_account-current_region-2561d6a5": {
-          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200.zip",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
-        }
-      }
-    },
     "6094cb0ff874f89ab5ab24fb6b9417df0fdeb6966645f90c88ec1d7e28130112": {
       "displayName": "KubectlLayer/Code",
       "source": {
@@ -113,30 +99,30 @@
         }
       }
     },
-    "939f25aaadbb75ce7b217f33ca76342dfc17ca076751f5b17e6a8d573ebf3c58": {
+    "4d4b2e6b65af6214ab16707154bacc8abf4e0256ba1caebada55761aa19ce112": {
       "displayName": "@aws-cdk--aws-eks.KubectlProvider Nested Stack Template",
       "source": {
         "path": "EksClusterStackawscdkawseksKubectlProvider68DDEDDD.nested.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "current_account-current_region-59430019": {
+        "current_account-current_region-42d6eebf": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "939f25aaadbb75ce7b217f33ca76342dfc17ca076751f5b17e6a8d573ebf3c58.json",
+          "objectKey": "4d4b2e6b65af6214ab16707154bacc8abf4e0256ba1caebada55761aa19ce112.json",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }
     },
-    "cfffc9c0b58d2f00cc1f89aa96cd5ecbac1a1c7aff9f57b528feb9b2649d5cb7": {
+    "d1b5df4bbed80e1a2c276052d1bd1dee3d51015e96afabcae5e458f3dd5432af": {
       "displayName": "EksClusterStack Template",
       "source": {
         "path": "EksClusterStack.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "current_account-current_region-f30ed6a5": {
+        "current_account-current_region-efdd087e": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "cfffc9c0b58d2f00cc1f89aa96cd5ecbac1a1c7aff9f57b528feb9b2649d5cb7.json",
+          "objectKey": "d1b5df4bbed80e1a2c276052d1bd1dee3d51015e96afabcae5e458f3dd5432af.json",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }

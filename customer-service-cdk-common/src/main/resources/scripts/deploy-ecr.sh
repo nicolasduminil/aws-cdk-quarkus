@@ -8,5 +8,5 @@ echo ">>> Tagging and pushing existing image..."
 docker tag $CONTAINER_IMAGE_GROUP/$CONTAINER_IMAGE_NAME:1.0-SNAPSHOT $registry/$CONTAINER_IMAGE_GROUP/$CONTAINER_IMAGE_NAME:latest
 docker push $registry/$CONTAINER_IMAGE_GROUP/$CONTAINER_IMAGE_NAME:latest
 echo ">>> Deploying full infrastructure..."
-cdk deploy --all --require-approval never
+cdk deploy --all --require-approval never --outputs-file cdk-outputs.json
 echo ">>> Deployment finished !"

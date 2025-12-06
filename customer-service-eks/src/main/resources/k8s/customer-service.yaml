@@ -4,14 +4,10 @@ metadata:
   name: customer-service
 ---
 apiVersion: v1
-kind: Secret
+kind: ServiceAccount
 metadata:
-  name: db-credentials
+  name: customer-service-sa
   namespace: customer-service
-type: Opaque
-stringData:
-  username: postgres
-  password: ${DB_PASSWORD}  # Replace via script or use AWS Secrets Manager
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -30,24 +26,12 @@ spec:
     spec:
       containers:
         - name: customer-service-api-container
-          image: ${CDK_DEFAULT_ACCOUNT}.dkr.ecr.${CDK_DEFAULT_REGION}.amazonaws.com/customers-api:1.0-SNAPSHOT
+          image: @CDK_DEFAULT_ACCOUNT@.dkr.ecr.@CDK_DEFAULT_REGION@.amazonaws.com/@CONTAINER_IMAGE_GROUP@/@CONTAINER_IMAGE_NAME@
           ports:
             - containerPort: 8080
-          env:
-            - name: QUARKUS_DATASOURCE_JDBC_URL
-              value: "jdbc:postgresql://${RDS_ENDPOINT}:5432/customers"
-            - name: QUARKUS_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: db-credentials
-                  key: usernam
-            - name: QUARKUS_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-credentials
-                  key: password
-            - name: QUARKUS_REDIS_HOSTS
-              value: "redis://${REDIS_ENDPOINT}:6379"
+          envFrom:
+            - configMapRef:
+                name: customer-service-config
 ---
 apiVersion: v1
 kind: Service

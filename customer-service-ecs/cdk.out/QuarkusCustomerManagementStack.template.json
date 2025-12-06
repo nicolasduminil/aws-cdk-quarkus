@@ -1126,24 +1126,6 @@
      {
       "Environment": [
        {
-        "Name": "QUARKUS_DATASOURCE_JDBC_URL",
-        "Value": {
-         "Fn::Join": [
-          "",
-          [
-           "jdbc:postgresql://",
-           {
-            "Fn::GetAtt": [
-             "DatabaseCustomerDatabaseC464F3A1",
-             "Endpoint.Address"
-            ]
-           },
-           ":5432/customers"
-          ]
-         ]
-        }
-       },
-       {
         "Name": "QUARKUS_REDIS_HOSTS",
         "Value": {
          "Fn::Join": [
@@ -1157,6 +1139,24 @@
             ]
            },
            ":6379"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "QUARKUS_DATASOURCE_JDBC_URL",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "jdbc:postgresql://",
+           {
+            "Fn::GetAtt": [
+             "DatabaseCustomerDatabaseC464F3A1",
+             "Endpoint.Address"
+            ]
+           },
+           ":5432/customers"
           ]
          ]
         }
@@ -1183,20 +1183,6 @@
       ],
       "Secrets": [
        {
-        "Name": "QUARKUS_DATASOURCE_PASSWORD",
-        "ValueFrom": {
-         "Fn::Join": [
-          "",
-          [
-           {
-            "Ref": "DatabaseCustomerDatabaseSecretAttachment3292035D"
-           },
-           ":password::"
-          ]
-         ]
-        }
-       },
-       {
         "Name": "QUARKUS_DATASOURCE_USERNAME",
         "ValueFrom": {
          "Fn::Join": [
@@ -1206,6 +1192,20 @@
             "Ref": "DatabaseCustomerDatabaseSecretAttachment3292035D"
            },
            ":username::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "QUARKUS_DATASOURCE_PASSWORD",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Ref": "DatabaseCustomerDatabaseSecretAttachment3292035D"
+           },
+           ":password::"
           ]
          ]
         }

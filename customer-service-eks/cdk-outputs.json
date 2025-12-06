@@ -1,0 +1,14 @@
+{
+  "VpcStack": {
+    "ExportsOutputRefEksVpc4BB427FA336B0142": "vpc-01f257acb360f3b44",
+    "ExportsOutputRefEksVpcPublicSubnet2Subnet756C2CF701725B9C": "subnet-06485b2eee3833a17",
+    "ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0": "subnet-08e8115137fe4c74f",
+    "ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273": "subnet-04e58749ac79a9706",
+    "ExportsOutputRefEksVpcPublicSubnet1SubnetD58F89DF4375B9FF": "subnet-0c9d471d211d12232"
+  },
+  "EksClusterStack": {
+    "ExportsOutputRefCustomerServiceCluster497EB85DA206F6AE": "customer-service-cluster",
+    "CustomerServiceClusterConfigCommand87D77138": "aws eks update-kubeconfig --name customer-service-cluster --region eu-west-3 --role-arn arn:aws:iam::495913029085:role/cdk-*-cfn-exec-role-*",
+    "CustomerServiceClusterGetTokenCommand477F4390": "aws eks get-token --cluster-name customer-service-cluster --region eu-west-3 --role-arn arn:aws:iam::495913029085:role/cdk-*-cfn-exec-role-*"
+  }
+}

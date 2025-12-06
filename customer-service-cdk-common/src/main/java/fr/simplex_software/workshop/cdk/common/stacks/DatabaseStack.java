@@ -2,6 +2,7 @@ package fr.simplex_software.workshop.cdk.common.stacks;
 
 import fr.simplex_software.workshop.cdk.common.config.*;
 import fr.simplex_software.workshop.cdk.common.constructs.*;
+import jakarta.enterprise.context.*;
 import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.ec2.*;
 import software.amazon.awscdk.services.elasticache.*;
@@ -50,6 +51,11 @@ public class DatabaseStack extends Stack
       .deletionProtection(config.database().deletionProtection())
       .removalPolicy(RemovalPolicy.DESTROY)
       .storageEncrypted(true)
+      .build();
+
+    CfnOutput.Builder.create(this, "DatabaseSecretArn")
+      .value(database.getSecret().getSecretArn())
+      .exportName("DatabaseSecretArn")
       .build();
   }
 

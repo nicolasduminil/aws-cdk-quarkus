@@ -1,0 +1,1037 @@
+{
+ "Resources": {
+  "EksVpc4BB427FA": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/Resource"
+   }
+  },
+  "EksVpcPublicSubnet1SubnetD58F89DF": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.0.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc/PublicSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EksVpc4BB427FA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PublicSubnet1/Subnet"
+   }
+  },
+  "EksVpcPublicSubnet1RouteTableA2778FB8": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc/PublicSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EksVpc4BB427FA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PublicSubnet1/RouteTable"
+   }
+  },
+  "EksVpcPublicSubnet1RouteTableAssociation87981DA4": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "EksVpcPublicSubnet1RouteTableA2778FB8"
+    },
+    "SubnetId": {
+     "Ref": "EksVpcPublicSubnet1SubnetD58F89DF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "EksVpcPublicSubnet1DefaultRouteD34282A5": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "EksVpcIGWF47619EF"
+    },
+    "RouteTableId": {
+     "Ref": "EksVpcPublicSubnet1RouteTableA2778FB8"
+    }
+   },
+   "DependsOn": [
+    "EksVpcVPCGW2FA008A1"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "EksVpcPublicSubnet1EIP34F968E2": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc/PublicSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PublicSubnet1/EIP"
+   }
+  },
+  "EksVpcPublicSubnet1NATGatewayE7F93D77": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "EksVpcPublicSubnet1EIP34F968E2",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "EksVpcPublicSubnet1SubnetD58F89DF"
+    },
+    "Tags": [
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc/PublicSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ]
+   },
+   "DependsOn": [
+    "EksVpcPublicSubnet1DefaultRouteD34282A5",
+    "EksVpcPublicSubnet1RouteTableAssociation87981DA4"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PublicSubnet1/NATGateway"
+   }
+  },
+  "EksVpcPublicSubnet2Subnet756C2CF7": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.64.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc/PublicSubnet2"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EksVpc4BB427FA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PublicSubnet2/Subnet"
+   }
+  },
+  "EksVpcPublicSubnet2RouteTable57185A3D": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc/PublicSubnet2"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EksVpc4BB427FA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PublicSubnet2/RouteTable"
+   }
+  },
+  "EksVpcPublicSubnet2RouteTableAssociationA0339F94": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "EksVpcPublicSubnet2RouteTable57185A3D"
+    },
+    "SubnetId": {
+     "Ref": "EksVpcPublicSubnet2Subnet756C2CF7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PublicSubnet2/RouteTableAssociation"
+   }
+  },
+  "EksVpcPublicSubnet2DefaultRouteC7BFDEF0": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "EksVpcIGWF47619EF"
+    },
+    "RouteTableId": {
+     "Ref": "EksVpcPublicSubnet2RouteTable57185A3D"
+    }
+   },
+   "DependsOn": [
+    "EksVpcVPCGW2FA008A1"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PublicSubnet2/DefaultRoute"
+   }
+  },
+  "EksVpcPrivateSubnet1SubnetDC5B4B59": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.128.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "kubernetes.io/role/internal-elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc/PrivateSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EksVpc4BB427FA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PrivateSubnet1/Subnet"
+   }
+  },
+  "EksVpcPrivateSubnet1RouteTable1DCC4CD9": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "kubernetes.io/role/internal-elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc/PrivateSubnet1"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EksVpc4BB427FA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PrivateSubnet1/RouteTable"
+   }
+  },
+  "EksVpcPrivateSubnet1RouteTableAssociationAA0DA95E": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "EksVpcPrivateSubnet1RouteTable1DCC4CD9"
+    },
+    "SubnetId": {
+     "Ref": "EksVpcPrivateSubnet1SubnetDC5B4B59"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PrivateSubnet1/RouteTableAssociation"
+   }
+  },
+  "EksVpcPrivateSubnet1DefaultRouteB9511F58": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "EksVpcPublicSubnet1NATGatewayE7F93D77"
+    },
+    "RouteTableId": {
+     "Ref": "EksVpcPrivateSubnet1RouteTable1DCC4CD9"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PrivateSubnet1/DefaultRoute"
+   }
+  },
+  "EksVpcPrivateSubnet2SubnetAED55795": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.192.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "kubernetes.io/role/internal-elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc/PrivateSubnet2"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EksVpc4BB427FA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PrivateSubnet2/Subnet"
+   }
+  },
+  "EksVpcPrivateSubnet2RouteTable77AEC3A7": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "kubernetes.io/role/internal-elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc/PrivateSubnet2"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EksVpc4BB427FA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PrivateSubnet2/RouteTable"
+   }
+  },
+  "EksVpcPrivateSubnet2RouteTableAssociation58668E4B": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "EksVpcPrivateSubnet2RouteTable77AEC3A7"
+    },
+    "SubnetId": {
+     "Ref": "EksVpcPrivateSubnet2SubnetAED55795"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PrivateSubnet2/RouteTableAssociation"
+   }
+  },
+  "EksVpcPrivateSubnet2DefaultRoute5334FF92": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "EksVpcPublicSubnet1NATGatewayE7F93D77"
+    },
+    "RouteTableId": {
+     "Ref": "EksVpcPrivateSubnet2RouteTable77AEC3A7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/PrivateSubnet2/DefaultRoute"
+   }
+  },
+  "EksVpcIGWF47619EF": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "environment",
+      "Value": "development"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/EksVpc"
+     },
+     {
+      "Key": "project",
+      "Value": "Customer Management on EKS with CI/CD"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/IGW"
+   }
+  },
+  "EksVpcVPCGW2FA008A1": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "EksVpcIGWF47619EF"
+    },
+    "VpcId": {
+     "Ref": "EksVpc4BB427FA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/VPCGW"
+   }
+  },
+  "EksVpcRestrictDefaultSecurityGroupCustomResource14153A86": {
+   "Type": "Custom::VpcRestrictDefaultSG",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+      "Arn"
+     ]
+    },
+    "DefaultSecurityGroupId": {
+     "Fn::GetAtt": [
+      "EksVpc4BB427FA",
+      "DefaultSecurityGroup"
+     ]
+    },
+    "Account": {
+     "Ref": "AWS::AccountId"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/EksVpc/RestrictDefaultSecurityGroupCustomResource/Default"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Effect": "Allow",
+         "Action": [
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:AuthorizeSecurityGroupEgress",
+          "ec2:RevokeSecurityGroupIngress",
+          "ec2:RevokeSecurityGroupEgress"
+         ],
+         "Resource": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:",
+             {
+              "Ref": "AWS::Partition"
+             },
+             ":ec2:",
+             {
+              "Ref": "AWS::Region"
+             },
+             ":",
+             {
+              "Ref": "AWS::AccountId"
+             },
+             ":security-group/",
+             {
+              "Fn::GetAtt": [
+               "EksVpc4BB427FA",
+               "DefaultSecurityGroup"
+              ]
+             }
+            ]
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs22.x",
+    "Description": "Lambda function for removing all inbound/outbound rules from the VPC default security group"
+   },
+   "DependsOn": [
+    "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200",
+    "aws:asset:property": "Code"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/3WOwWrDMBBEvyV3WU0V+gGuKSU9FGGXXMta2aTb2KugXdmUkH8vJiU69TQzb4dlnHXuya5XMEsV9qdqoN5eOoVwMjDLJwZnL7tzMM2Bd74xPvcDhS73jLqw4tqYFT+gH7DwwmqRGAiUIt/Li3nZ+kXeQV9BcYYf4xNNoFgeb1kxMd4LtyV/qVaF8DUi69W0KDGngKbJonEs8cD/nHyKE+0xPYOgqUVQO4Uj8fFq3mCCB/do13az+haiKmVWGtG2N/0F8xGItzgBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Outputs": {
+  "ExportsOutputRefEksVpc4BB427FA336B0142": {
+   "Value": {
+    "Ref": "EksVpc4BB427FA"
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputRefEksVpc4BB427FA336B0142"
+   }
+  },
+  "ExportsOutputRefEksVpcPublicSubnet1SubnetD58F89DF4375B9FF": {
+   "Value": {
+    "Ref": "EksVpcPublicSubnet1SubnetD58F89DF"
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputRefEksVpcPublicSubnet1SubnetD58F89DF4375B9FF"
+   }
+  },
+  "ExportsOutputRefEksVpcPublicSubnet2Subnet756C2CF701725B9C": {
+   "Value": {
+    "Ref": "EksVpcPublicSubnet2Subnet756C2CF7"
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputRefEksVpcPublicSubnet2Subnet756C2CF701725B9C"
+   }
+  },
+  "ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273": {
+   "Value": {
+    "Ref": "EksVpcPrivateSubnet1SubnetDC5B4B59"
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273"
+   }
+  },
+  "ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0": {
+   "Value": {
+    "Ref": "EksVpcPrivateSubnet2SubnetAED55795"
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

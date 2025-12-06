@@ -48,10 +48,10 @@
      ],
      "SubnetIds": [
       {
-       "Ref": "referencetoEksClusterStackEksVpcPrivateSubnet1Subnet648520C4Ref"
+       "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273"
       },
       {
-       "Ref": "referencetoEksClusterStackEksVpcPrivateSubnet2SubnetA9E2B0C6Ref"
+       "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0"
       }
      ]
     }
@@ -243,10 +243,10 @@
      ],
      "SubnetIds": [
       {
-       "Ref": "referencetoEksClusterStackEksVpcPrivateSubnet1Subnet648520C4Ref"
+       "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273"
       },
       {
-       "Ref": "referencetoEksClusterStackEksVpcPrivateSubnet2SubnetA9E2B0C6Ref"
+       "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0"
       }
      ]
     }
@@ -554,12 +554,6 @@
    "Type": "String"
   },
   "referencetoEksClusterStackCustomerServiceClusterKubectlHandlerRole93638210Arn": {
-   "Type": "String"
-  },
-  "referencetoEksClusterStackEksVpcPrivateSubnet1Subnet648520C4Ref": {
-   "Type": "String"
-  },
-  "referencetoEksClusterStackEksVpcPrivateSubnet2SubnetA9E2B0C6Ref": {
    "Type": "String"
   },
   "referencetoEksClusterStackCustomerServiceClusterDDCDB24FClusterSecurityGroupId": {
