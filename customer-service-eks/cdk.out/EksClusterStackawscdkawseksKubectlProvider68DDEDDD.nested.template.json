@@ -39,22 +39,7 @@
       "Value": "Customer Management on EKS with CI/CD"
      }
     ],
-    "Timeout": 900,
-    "VpcConfig": {
-     "SecurityGroupIds": [
-      {
-       "Ref": "referencetoEksClusterStackCustomerServiceClusterDDCDB24FClusterSecurityGroupId"
-      }
-     ],
-     "SubnetIds": [
-      {
-       "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273"
-      },
-      {
-       "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0"
-      }
-     ]
-    }
+    "Timeout": 900
    },
    "Metadata": {
     "aws:cdk:path": "EksClusterStack/@aws-cdk--aws-eks.KubectlProvider/Handler/Resource",
@@ -106,18 +91,6 @@
          "Ref": "AWS::Partition"
         },
         ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-       ]
-      ]
-     },
-     {
-      "Fn::Join": [
-       "",
-       [
-        "arn:",
-        {
-         "Ref": "AWS::Partition"
-        },
-        ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
        ]
       ]
      }
@@ -234,22 +207,7 @@
       "Value": "Customer Management on EKS with CI/CD"
      }
     ],
-    "Timeout": 900,
-    "VpcConfig": {
-     "SecurityGroupIds": [
-      {
-       "Ref": "referencetoEksClusterStackCustomerServiceClusterDDCDB24FClusterSecurityGroupId"
-      }
-     ],
-     "SubnetIds": [
-      {
-       "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273"
-      },
-      {
-       "Fn::ImportValue": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0"
-      }
-     ]
-    }
+    "Timeout": 900
    },
    "DependsOn": [
     "ProviderframeworkonEventServiceRoleDefaultPolicy48CD2133",
@@ -554,9 +512,6 @@
    "Type": "String"
   },
   "referencetoEksClusterStackCustomerServiceClusterKubectlHandlerRole93638210Arn": {
-   "Type": "String"
-  },
-  "referencetoEksClusterStackCustomerServiceClusterDDCDB24FClusterSecurityGroupId": {
    "Type": "String"
   }
  }

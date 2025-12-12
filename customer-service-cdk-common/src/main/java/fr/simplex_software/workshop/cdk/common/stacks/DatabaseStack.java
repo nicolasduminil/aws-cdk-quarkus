@@ -53,6 +53,18 @@ public class DatabaseStack extends Stack
       .storageEncrypted(true)
       .build();
 
+    this.database.getConnections().allowFrom(
+      Peer.ipv4(vpc.getVpcCidrBlock()),
+      Port.tcp(5432),
+      "Allow VPC connections to database"
+    );
+
+    this.redis.getSecurityGroup().addIngressRule(
+      Peer.ipv4(vpc.getVpcCidrBlock()),
+      Port.tcp(6379),
+      "Allow VPC connections to Redis"
+    );
+
     CfnOutput.Builder.create(this, "DatabaseSecretArn")
       .value(database.getSecret().getSecretArn())
       .exportName("DatabaseSecretArn")

@@ -31,10 +31,6 @@
       <artifactId>cdk-lambda-layer-kubectl-v32</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.yaml</groupId>
-      <artifactId>snakeyaml</artifactId>
-    </dependency>
-    <dependency>
       <groupId>fr.simplex-software.workshop</groupId>
       <artifactId>customer-service-cdk-common</artifactId>
     </dependency>
@@ -128,6 +124,7 @@
                   <environmentVariables>
                     <CDK_DEFAULT_ACCOUNT>${CDK_DEFAULT_ACCOUNT}</CDK_DEFAULT_ACCOUNT>
                     <CDK_DEFAULT_REGION>${CDK_DEFAULT_REGION}</CDK_DEFAULT_REGION>
+                    <CDK_DEFAULT_USER>${CDK_DEFAULT_USER}</CDK_DEFAULT_USER>
                     <CONTAINER_IMAGE_GROUP>${CONTAINER_IMAGE_GROUP}</CONTAINER_IMAGE_GROUP>
                     <CONTAINER_IMAGE_NAME>${CONTAINER_IMAGE_NAME}</CONTAINER_IMAGE_NAME>
                     <CONTAINER_PORT>${CONTAINER_PORT}</CONTAINER_PORT>

@@ -1,0 +1,258 @@
+The error means kubectl can't authenticate to the EKS cluster. This happens because:
+
+Your IAM user doesn't have access to the cluster yet
+
+The cluster uses API authentication mode but your user isn't mapped
+
+Your EksClusterStack uses AuthenticationMode.API_AND_CONFIG_MAP and calls addAuthMapping(), but that only works during cluster creation. After deployment, you need to grant access via EKS API.
+
+Add this to your deploy-to-aws.sh before kubectl cluster-info:
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+set -e
+
+../customer-service-cdk-common/src/main/resources/scripts/deploy-ecr.sh
+
+echo ">>> Granting cluster access to current user..."
+aws eks create-access-entry \
+  --cluster-name customer-service-cluster \
+  --principal-arn arn:aws:iam::${CDK_DEFAULT_ACCOUNT}:user/${CDK_DEFAULT_USER} \
+  --region ${CDK_DEFAULT_REGION} 2>&1 | grep -v "ResourceInUseException" || true
+
+aws eks associate-access-policy \
+  --cluster-name customer-service-cluster \
+  --principal-arn arn:aws:iam::${CDK_DEFAULT_ACCOUNT}:user/${CDK_DEFAULT_USER} \
+  --access-scope type=cluster \
+  --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy \
+  --region ${CDK_DEFAULT_REGION} 2>&1 | grep -v "ResourceInUseException" || true
+
+echo ">>> Updating kubeconfig..."
+aws eks update-kubeconfig --region $CDK_DEFAULT_REGION --name customer-service-cluster
+
+echo ">>> Waiting for cluster to be ready..."
+kubectl cluster-info
+
+echo ">>> Verifying namespace exists..."
+kubectl get namespace customer-service || kubectl create namespace customer-service
+
+echo ">>> Retrieving database password from Secrets Manager..."
+SECRET_ARN=$(jq -r '.DatabaseStack.DatabaseSecretArn' cdk-outputs.json)
+DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id $SECRET_ARN --region $CDK_DEFAULT_REGION --query SecretString --output text | jq -r .password)
+
+echo ">>> Creating Kubernetes secret with database password..."
+kubectl create secret generic db-credentials \
+  --from-literal=DB_PASSWORD="$DB_PASSWORD" \
+  -n customer-service --dry-run=client -o yaml | kubectl apply -f -
+
+echo ">>> Applying Kubernetes manifests..."
+kubectl apply -f target/classes/k8s/customer-service.yaml
+
+echo ">>> Waiting for Fargate profile to provision pods..."
+kubectl wait --for=condition=ready pod -l app=customer-service-api -n customer-service --timeout=300s || true
+
+echo ">>> Checking deployment status..."
+kubectl get pods -n customer-service
+kubectl get svc -n customer-service
+
+echo ">>> Deployment complete!"
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+You still need kubectl for inspection and debugging, just not for deployment. Keep it and use it after CDK deploys:
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+set -e
+
+../customer-service-cdk-common/src/main/resources/scripts/deploy-ecr.sh
+
+echo ">>> CDK deployment complete. Setting up kubectl access..."
+
+echo ">>> Granting cluster access to current user..."
+aws eks create-access-entry \
+  --cluster-name customer-service-cluster \
+  --principal-arn arn:aws:iam::${CDK_DEFAULT_ACCOUNT}:user/${CDK_DEFAULT_USER} \
+  --region ${CDK_DEFAULT_REGION} 2>&1 | grep -v "ResourceInUseException" || true
+
+aws eks associate-access-policy \
+  --cluster-name customer-service-cluster \
+  --principal-arn arn:aws:iam::${CDK_DEFAULT_ACCOUNT}:user/${CDK_DEFAULT_USER} \
+  --access-scope type=cluster \
+  --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy \
+  --region ${CDK_DEFAULT_REGION} 2>&1 | grep -v "ResourceInUseException" || true
+
+echo ">>> Updating kubeconfig..."
+aws eks update-kubeconfig --region $CDK_DEFAULT_REGION --name customer-service-cluster
+
+echo ">>> Checking deployment status..."
+kubectl get pods -n customer-service
+kubectl get svc -n customer-service
+kubectl get nodes
+
+echo ">>> Deployment complete!"
+echo ">>> Use 'kubectl get pods -n customer-service' to monitor pods"
+echo ">>> Use 'kubectl logs <pod-name> -n customer-service' to view logs"
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get the LoadBalancer URL from AWS and test it:
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+set -e
+
+../customer-service-cdk-common/src/main/resources/scripts/deploy-ecr.sh
+
+echo ">>> Deployment complete! Waiting for LoadBalancer..."
+sleep 60
+
+echo ">>> Getting LoadBalancer URL..."
+LB_URL=$(aws elbv2 describe-load-balancers --region $CDK_DEFAULT_REGION \
+  --query 'LoadBalancers[?contains(LoadBalancerName,`customer`)].DNSName' --output text)
+
+if [ -z "$LB_URL" ]; then
+  echo ">>> LoadBalancer not ready yet. Check AWS Console."
+  exit 0
+fi
+
+echo ">>> LoadBalancer URL: http://$LB_URL"
+
+echo ">>> Testing API health endpoint..."
+curl -f http://$LB_URL/q/health || echo "API not ready yet"
+
+echo ">>> Testing customer endpoints..."
+curl -X POST http://$LB_URL/customers \
+  -H "Content-Type: application/json" \
+  -d '{"firstName":"John","lastName":"Doe","email":"john@example.com"}' || echo "API not ready yet"
+
+curl http://$LB_URL/customers || echo "API not ready yet"
+
+echo ">>> API URL: http://$LB_URL"
+echo ">>> Test with: curl http://$LB_URL/customers"
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+To come back to my initial code, the fact that kubectl can't authenticate with the EKS cluster has anything to do with the fact of using AuthenticationMode.API_AND_CONFIG_MAP and calling  addAuthMapping() ? Is there something else to do such that kubectl could authenticate ?
+
+
+
+
+1. CONFIG_MAP (legacy, default)
+
+Uses Kubernetes aws-auth ConfigMap to store IAM user/role mappings
+
+Only the cluster creator (or mastersRole) can access initially
+
+You must explicitly add other users via cluster.getAwsAuth().addUserMapping()
+
+Your problem: You used mastersRole with AccountRootPrincipal(), which only grants access to the AWS account root, not your IAM user
+
+2. API (modern)
+
+Uses AWS EKS API to manage access entries
+
+Can add users via AWS Console or aws eks create-access-entry CLI
+
+Doesn't use ConfigMap
+
+3. API_AND_CONFIG_MAP (hybrid)
+
+Supports both methods
+
+Allows gradual migration from old to new
+
+Correct! With API mode, you don't need addUserMapping() anymore.
+
+Key Differences
+CONFIG_MAP mode (current):
+
+Uses aws-auth ConfigMap for access control
+
+Requires explicit addUserMapping() for each IAM user/role
+
+Legacy approach
+
+API mode:
+
+Uses AWS IAM directly for cluster access
+
+IAM principals with appropriate policies can access automatically
+
+No aws-auth ConfigMap needed
+
+Modern, recommended approach
+
+To Switch to API Mode
+Change your createCluster() method:
+
+private void createCluster()
+{
+  cluster = FargateCluster.Builder.create(this, "CustomerServiceCluster")
+    .clusterName("customer-service-cluster")
+    .version(KubernetesVersion.V1_34)
+    .vpc(vpc)
+    .kubectlLayer(new KubectlV32Layer(this, "KubectlLayer"))
+    .authenticationMode(AuthenticationMode.API)  // Add this
+    .outputClusterName(true)
+    .endpointAccess(EndpointAccess.PUBLIC)
+    .vpcSubnets(List.of(SubnetSelection.builder()
+      .subnetType(SubnetType.PRIVATE_WITH_EGRESS)
+      .build()))
+    .build();
+
+  // Remove the addUserMapping() call entirely
+}
+
+Copy
+java
+IAM Access with API Mode
+Your IAM user "nicolas" will need this policy to access the cluster:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": [
+      "eks:DescribeCluster",
+      "eks:ListClusters",
+      "eks:AccessKubernetesApi"
+    ],
+    "Resource": "arn:aws:eks:eu-west-3:495913029085:cluster/customer-service-cluster"
+  }]
+}
+
+Copy
+json
+Then grant Kubernetes permissions via access entries (CDK handles this automatically for the creator principal).
+
+Note: You'll need to delete and recreate the cluster to change authentication mode - it can't be modified on existing clusters.
+
+Pod Status Analysis:
+✅ Health: Both pods are 1/1 Running - fully healthy
+✅ Distribution: Pods are on different Fargate nodes (load distributed)
+✅ Network: Each pod has unique IP addresses (10.0.216.7, 10.0.163.145)
+✅ Age: One pod is 13m old, one is 2m35s old (shows recent pod replacement)
+
+Infrastructure Insights:
+Fargate Nodes: fargate-ip-10-0-216-7 and fargate-ip-10-0-163-145
+
+Priority: system-node-critical (high priority scheduling)
+
+Availability Zones: Different subnets (10.0.216.x vs 10.0.163.x) = high availability
+
+Recent Activity (Events):
+Pod Creation: New pod created 2m36s ago (likely from your high-availability demo)
+
+Image Pull: Successfully pulled 182MB container image in 5.3 seconds
+
+Container Lifecycle: Created → Started in ~1 second (fast startup)
+
+What This Tells You:
+High Availability: Pods distributed across different AZs/subnets
+
+Self-Healing: Recent pod replacement shows Kubernetes auto-recovery
+
+Performance: Fast image pulls and container startup times
+
+Scalability: Clean pod distribution for load balancing
+
+This output confirms your EKS cluster is operating optimally with proper fault tolerance and performance! 🚀
+

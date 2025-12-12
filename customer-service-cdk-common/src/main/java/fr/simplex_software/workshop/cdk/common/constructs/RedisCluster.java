@@ -38,6 +38,11 @@ public class RedisCluster extends Construct
     return replicationGroup.getAttrPrimaryEndPointAddress();
   }
 
+  public ISecurityGroup getSecurityGroup()
+  {
+    return this.securityGroup;
+  }
+
   public void allowConnectionsFrom(IConnectable source)
   {
     securityGroup.addIngressRule(

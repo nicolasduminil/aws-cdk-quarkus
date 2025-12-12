@@ -967,22 +967,6 @@
     "Name": "VpcStack:ExportsOutputRefEksVpc4BB427FA336B0142"
    }
   },
-  "ExportsOutputRefEksVpcPublicSubnet1SubnetD58F89DF4375B9FF": {
-   "Value": {
-    "Ref": "EksVpcPublicSubnet1SubnetD58F89DF"
-   },
-   "Export": {
-    "Name": "VpcStack:ExportsOutputRefEksVpcPublicSubnet1SubnetD58F89DF4375B9FF"
-   }
-  },
-  "ExportsOutputRefEksVpcPublicSubnet2Subnet756C2CF701725B9C": {
-   "Value": {
-    "Ref": "EksVpcPublicSubnet2Subnet756C2CF7"
-   },
-   "Export": {
-    "Name": "VpcStack:ExportsOutputRefEksVpcPublicSubnet2Subnet756C2CF701725B9C"
-   }
-  },
   "ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273": {
    "Value": {
     "Ref": "EksVpcPrivateSubnet1SubnetDC5B4B59"
@@ -997,6 +981,17 @@
    },
    "Export": {
     "Name": "VpcStack:ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0"
+   }
+  },
+  "ExportsOutputFnGetAttEksVpc4BB427FACidrBlock8523CCEF": {
+   "Value": {
+    "Fn::GetAtt": [
+     "EksVpc4BB427FA",
+     "CidrBlock"
+    ]
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputFnGetAttEksVpc4BB427FACidrBlock8523CCEF"
    }
   }
  },

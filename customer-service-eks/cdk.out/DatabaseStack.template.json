@@ -40,6 +40,17 @@
       "ToPort": 86
      }
     ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": {
+       "Fn::ImportValue": "VpcStack:ExportsOutputFnGetAttEksVpc4BB427FACidrBlock8523CCEF"
+      },
+      "Description": "Allow VPC connections to Redis",
+      "FromPort": 6379,
+      "IpProtocol": "tcp",
+      "ToPort": 6379
+     }
+    ],
     "Tags": [
      {
       "Key": "environment",
@@ -131,6 +142,17 @@
       "IpProtocol": "-1"
      }
     ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": {
+       "Fn::ImportValue": "VpcStack:ExportsOutputFnGetAttEksVpc4BB427FACidrBlock8523CCEF"
+      },
+      "Description": "Allow VPC connections to database",
+      "FromPort": 5432,
+      "IpProtocol": "tcp",
+      "ToPort": 5432
+     }
+    ],
     "Tags": [
      {
       "Key": "environment",
@@ -212,6 +234,7 @@
      "Ref": "CustomerDatabaseSubnetGroupD1A145E3"
     },
     "DeletionProtection": false,
+    "EnableIAMDatabaseAuthentication": true,
     "Engine": "postgres",
     "EngineVersion": "17.6",
     "MasterUserPassword": {
@@ -257,12 +280,63 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12O0WoCQQxFv8X32dSO+AGtQtHHXd8lG6NO3Y3LJKvIMP8uOCitTxfOPTfEg/dzmE7wqhXtTlUXWkiNIZ0cXnWbuEO1QEhHhrTYSzO2wvYTz+PgFnupeegCoYWzPFh2TB5SwzTGYLeX9w9kF3cKaYmGLSqvRA2F2L3dXn7/BU+7YYpspX8us9MH1R4FDxzLp0UsscF4YPsyQzr2LOZewnuTc3ZrvOCH/4QpzCa/GkIVR7HQM9Ql72a42bw1AQAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12O0WoCQQxFv8X32dRO8QOsQmlfCm7fJRujju7GZZKpyDD/XuqgtD5dOPfcEA/ez2A6wbM2tDk2feggt4Z0dHjWdeYe1QIh7RnyYitt6oTtLZ7S6BZbWfHYB0ILJ7my4pg85JYpxWCXu/cPFBc3CnmJhh0qv4saCrF7uL18/QtudssU2Wp/WxanV6oDCu441k+rWOML445tboa0H1jM3YXHppTf7jPZmKy4D/zGJ/8MU3iZHDSEJiaxMDCsav4AYTShVT8BAAA="
    },
    "Metadata": {
     "aws:cdk:path": "DatabaseStack/CDKMetadata/Default"
    },
    "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "DatabaseSecretArn": {
+   "Value": {
+    "Ref": "CustomerDatabaseSecretAttachment204AEE14"
+   },
+   "Export": {
+    "Name": "DatabaseSecretArn"
+   }
+  },
+  "ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CustomerCacheReplicationGroupE25E3BDD",
+     "PrimaryEndPoint.Address"
+    ]
+   },
+   "Export": {
+    "Name": "DatabaseStack:ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053"
+   }
+  },
+  "ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CustomerDatabase306E9FF5",
+     "Endpoint.Address"
+    ]
+   },
+   "Export": {
+    "Name": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B"
+   }
+  },
+  "ExportsOutputFnGetAttCustomerDatabase306E9FF5DbiResourceId2CBA69C0": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CustomerDatabase306E9FF5",
+     "DbiResourceId"
+    ]
+   },
+   "Export": {
+    "Name": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5DbiResourceId2CBA69C0"
+   }
+  },
+  "ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8": {
+   "Value": {
+    "Ref": "CustomerDatabaseSecretAttachment204AEE14"
+   },
+   "Export": {
+    "Name": "DatabaseStack:ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8"
+   }
   }
  },
  "Conditions": {

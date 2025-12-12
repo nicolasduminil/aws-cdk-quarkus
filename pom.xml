@@ -47,11 +47,6 @@
         <version>10.4.2</version>
       </dependency>
       <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>2.5</version>
-      </dependency>
-      <dependency>
         <groupId>software.amazon.awscdk</groupId>
         <artifactId>cdk-lambda-layer-kubectl-v32</artifactId>
         <version>2.1.0</version>
