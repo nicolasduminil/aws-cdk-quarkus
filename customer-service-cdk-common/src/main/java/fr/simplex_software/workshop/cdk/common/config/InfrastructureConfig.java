@@ -9,6 +9,7 @@ public interface InfrastructureConfig
   DatabaseConfig database();
   RedisConfig redis();
   LoggingConfig logging();
+  EksConfig eks();
 
   interface VpcConfig
   {
@@ -52,5 +53,23 @@ public interface InfrastructureConfig
     String retentionDays();
     @WithDefault("service")
     String streamPrefix();
+  }
+
+  interface EksConfig
+  {
+    @WithDefault("customer-service")
+    String namespace();
+
+    @WithDefault("customer-service-account")
+    String serviceAccountName();
+
+    @WithDefault("customer-service-cluster")
+    String clusterName();
+
+    @WithDefault("customer-service-fargate-profile")
+    String fargateProfileName();
+
+    @WithDefault("customer-service-config")
+    String configMapName();
   }
 }

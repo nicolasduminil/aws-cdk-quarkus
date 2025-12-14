@@ -31,6 +31,11 @@
       <artifactId>cdk-lambda-layer-kubectl-v32</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>2.2</version>
+    </dependency>
+    <dependency>
       <groupId>fr.simplex-software.workshop</groupId>
       <artifactId>customer-service-cdk-common</artifactId>
     </dependency>

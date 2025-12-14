@@ -602,6 +602,36 @@
     "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/fargate-profile-default/Resource/Default"
    }
   },
+  "CustomerServiceClustermanifestCustomerServiceNamespace625A21E9": {
+   "Type": "Custom::AWSCDK-EKS-KubernetesResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "awscdkawseksKubectlProviderNestedStackawscdkawseksKubectlProviderNestedStackResourceA7AEBA6B",
+      "Outputs.EksClusterStackawscdkawseksKubectlProviderframeworkonEvent2FB72184Arn"
+     ]
+    },
+    "Manifest": "[{\"metadata\":{\"name\":\"customer-service\",\"labels\":{\"aws.cdk.eks/prune-c8891d5c003fb7c2a8f601a5086286731a4d534e16\":\"\"}},\"apiVersion\":\"v1\",\"kind\":\"Namespace\"}]",
+    "ClusterName": {
+     "Ref": "CustomerServiceCluster497EB85D"
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "CustomerServiceClusterCreationRole77CB6F15",
+      "Arn"
+     ]
+    },
+    "PruneLabel": "aws.cdk.eks/prune-c8891d5c003fb7c2a8f601a5086286731a4d534e16"
+   },
+   "DependsOn": [
+    "CustomerServiceClusterKubectlReadyBarrierBD21D8A3"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/manifest-CustomerServiceNamespace/Resource/Default"
+   }
+  },
   "CustomerServiceClusterfargateprofileCustomerServiceProfilePodExecutionRoleBB2447F5": {
    "Type": "AWS::IAM::Role",
    "Properties": {
@@ -631,9 +661,6 @@
       ]
      },
      {
-      "Ref": "FargateLoggingPolicy72BB406A"
-     },
-     {
       "Fn::Join": [
        "",
        [
@@ -641,7 +668,7 @@
         {
          "Ref": "AWS::Partition"
         },
-        ":iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+        ":iam::aws:policy/CloudWatchLogsFullAccess"
        ]
       ]
      }
@@ -716,63 +743,6 @@
     "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/fargate-profile-CustomerServiceProfile/Resource/Default"
    }
   },
-  "CustomerServiceClustermanifestCustomerServiceNamespace625A21E9": {
-   "Type": "Custom::AWSCDK-EKS-KubernetesResource",
-   "Properties": {
-    "ServiceToken": {
-     "Fn::GetAtt": [
-      "awscdkawseksKubectlProviderNestedStackawscdkawseksKubectlProviderNestedStackResourceA7AEBA6B",
-      "Outputs.EksClusterStackawscdkawseksKubectlProviderframeworkonEvent2FB72184Arn"
-     ]
-    },
-    "Manifest": "[{\"metadata\":{\"name\":\"customer-service\",\"labels\":{\"aws.cdk.eks/prune-c8891d5c003fb7c2a8f601a5086286731a4d534e16\":\"\"}},\"apiVersion\":\"v1\",\"kind\":\"Namespace\"}]",
-    "ClusterName": {
-     "Ref": "CustomerServiceCluster497EB85D"
-    },
-    "RoleArn": {
-     "Fn::GetAtt": [
-      "CustomerServiceClusterCreationRole77CB6F15",
-      "Arn"
-     ]
-    },
-    "PruneLabel": "aws.cdk.eks/prune-c8891d5c003fb7c2a8f601a5086286731a4d534e16"
-   },
-   "DependsOn": [
-    "CustomerServiceClusterKubectlReadyBarrierBD21D8A3"
-   ],
-   "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/manifest-CustomerServiceNamespace/Resource/Default"
-   }
-  },
-  "CustomerServiceClusterOpenIdConnectProvider53152C36": {
-   "Type": "Custom::AWSCDKOpenIdConnectProvider",
-   "Properties": {
-    "ServiceToken": {
-     "Fn::GetAtt": [
-      "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderHandlerF2C543E0",
-      "Arn"
-     ]
-    },
-    "ClientIDList": [
-     "sts.amazonaws.com"
-    ],
-    "Url": {
-     "Fn::GetAtt": [
-      "CustomerServiceCluster497EB85D",
-      "OpenIdConnectIssuerUrl"
-     ]
-    },
-    "RejectUnauthorized": false,
-    "CodeHash": "62fa02efcaa700e1c247e1d3cc2aa0cd07a0808a9a3e3d2230e51f57a02233fb"
-   },
-   "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/OpenIdConnectProvider/Resource/Default"
-   }
-  },
   "CustomerServiceClusterCustomerServiceAccountConditionJson867FF853": {
    "Type": "Custom::AWSCDKCfnJson",
    "Properties": {
@@ -814,7 +784,7 @@
          }
         ]
        },
-       ":sub\":\"system:serviceaccount:customer-service:sa-customer-service\"}"
+       ":sub\":\"system:serviceaccount:customer-service:customer-service-account\"}"
       ]
      ]
     }
@@ -871,6 +841,70 @@
     "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/CustomerServiceAccount/Role/Resource"
    }
   },
+  "CustomerServiceClusterCustomerServiceAccountRoleDefaultPolicy468A67E1": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "rds-db:connect",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":rds-db:",
+          {
+           "Ref": "AWS::Region"
+          },
+          ":",
+          {
+           "Ref": "AWS::AccountId"
+          },
+          ":dbuser:",
+          {
+           "Fn::ImportValue": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5DbiResourceId2CBA69C0"
+          },
+          "/{{resolve:secretsmanager:",
+          {
+           "Fn::ImportValue": "DatabaseStack:ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8"
+          },
+          ":SecretString:username::}}"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "DatabaseStack:ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CustomerServiceClusterCustomerServiceAccountRoleDefaultPolicy468A67E1",
+    "Roles": [
+     {
+      "Ref": "CustomerServiceClusterCustomerServiceAccountRole2FC15923"
+     }
+    ]
+   },
+   "DependsOn": [
+    "CustomerServiceClustermanifestCustomerServiceNamespace625A21E9"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/CustomerServiceAccount/Role/DefaultPolicy/Resource"
+   }
+  },
   "CustomerServiceClusterCustomerServiceAccountmanifestCustomerServiceAccountServiceAccountResource8EF55F7E": {
    "Type": "Custom::AWSCDK-EKS-KubernetesResource",
    "Properties": {
@@ -884,10 +918,10 @@
      "Fn::Join": [
       "",
       [
-       "[{\"apiVersion\":\"v1\",\"kind\":\"ServiceAccount\",\"metadata\":{\"name\":\"sa-customer-service\",\"namespace\":\"customer-service\",\"labels\":{\"aws.cdk.eks/prune-c8973f3aa9feb22189472a72e7f6d6f3cac9cdd3a5\":\"\",\"app.kubernetes.io/name\":\"sa-customer-service\"},\"annotations\":{\"eks.amazonaws.com/role-arn\":\"",
+       "[{\"apiVersion\":\"v1\",\"kind\":\"ServiceAccount\",\"metadata\":{\"name\":\"customer-service-account\",\"namespace\":\"customer-service\",\"labels\":{\"aws.cdk.eks/prune-c8973f3aa9feb22189472a72e7f6d6f3cac9cdd3a5\":\"\",\"app.kubernetes.io/name\":\"customer-service-account\"},\"annotations\":{\"eks.amazonaws.com/role-arn\":\"",
        {
         "Fn::GetAtt": [
-         "ServiceAccountRoleE318E4CB",
+         "CustomerServiceClusterCustomerServiceAccountRole2FC15923",
          "Arn"
         ]
        },
@@ -916,6 +950,33 @@
     "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/CustomerServiceAccount/manifest-CustomerServiceAccountServiceAccountResource/Resource/Default"
    }
   },
+  "CustomerServiceClusterOpenIdConnectProvider53152C36": {
+   "Type": "Custom::AWSCDKOpenIdConnectProvider",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderHandlerF2C543E0",
+      "Arn"
+     ]
+    },
+    "ClientIDList": [
+     "sts.amazonaws.com"
+    ],
+    "Url": {
+     "Fn::GetAtt": [
+      "CustomerServiceCluster497EB85D",
+      "OpenIdConnectIssuerUrl"
+     ]
+    },
+    "RejectUnauthorized": false,
+    "CodeHash": "62fa02efcaa700e1c247e1d3cc2aa0cd07a0808a9a3e3d2230e51f57a02233fb"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/OpenIdConnectProvider/Resource/Default"
+   }
+  },
   "CustomerServiceClustermanifestCustomerServiceConfigMap91624860": {
    "Type": "Custom::AWSCDK-EKS-KubernetesResource",
    "Properties": {
@@ -929,7 +990,7 @@
      "Fn::Join": [
       "",
       [
-       "[{\"data\":{\"QUARKUS_DATASOURCE_USERNAME\":\"postgres\",\"QUARKUS_REDIS_HOSTS\":\"redis://",
+       "[{\"metadata\":{\"name\":\"customer-service-config\",\"namespace\":\"customer-service\",\"labels\":{\"aws.cdk.eks/prune-c8a52a93f185131f09e5ca91ba9cedde6e74139623\":\"\"}},\"apiVersion\":\"v1\",\"kind\":\"ConfigMap\",\"data\":{\"QUARKUS_DATASOURCE_USERNAME\":\"postgres\",\"QUARKUS_REDIS_HOSTS\":\"redis://",
        {
         "Fn::ImportValue": "DatabaseStack:ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053"
        },
@@ -937,7 +998,7 @@
        {
         "Fn::ImportValue": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B"
        },
-       ":5432/customers\"},\"metadata\":{\"namespace\":\"customer-service\",\"name\":\"customer-service-config\",\"labels\":{\"aws.cdk.eks/prune-c8a52a93f185131f09e5ca91ba9cedde6e74139623\":\"\"}},\"apiVersion\":\"v1\",\"kind\":\"ConfigMap\"}]"
+       ":5432/customers\"}}]"
       ]
      ]
     },
@@ -955,6 +1016,7 @@
    "DependsOn": [
     "CustomerServiceClusterCustomerServiceAccountConditionJson867FF853",
     "CustomerServiceClusterCustomerServiceAccountmanifestCustomerServiceAccountServiceAccountResource8EF55F7E",
+    "CustomerServiceClusterCustomerServiceAccountRoleDefaultPolicy468A67E1",
     "CustomerServiceClusterCustomerServiceAccountRole2FC15923",
     "CustomerServiceClusterKubectlReadyBarrierBD21D8A3"
    ],
@@ -964,7 +1026,7 @@
     "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/manifest-CustomerServiceConfigMap/Resource/Default"
    }
   },
-  "CustomerServiceClustermanifestCustomerServiceDeployment02CF9109": {
+  "CustomerServiceClustermanifestCustomerService0EE9305BA": {
    "Type": "Custom::AWSCDK-EKS-KubernetesResource",
    "Properties": {
     "ServiceToken": {
@@ -973,7 +1035,7 @@
       "Outputs.EksClusterStackawscdkawseksKubectlProviderframeworkonEvent2FB72184Arn"
      ]
     },
-    "Manifest": "[{\"metadata\":{\"namespace\":\"customer-service\",\"name\":\"customer-service-api-deployment\",\"labels\":{\"aws.cdk.eks/prune-c860378906531ba6e4530f0c6430dfd738f4076376\":\"\"}},\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"spec\":{\"selector\":{\"matchLabels\":{\"app\":\"customer-service-api\"}},\"replicas\":2,\"template\":{\"spec\":{\"serviceAccountName\":\"sa-customer-service\",\"containers\":[{\"ports\":[{\"containerPort\":8080}],\"envFrom\":[{\"configMapRef\":{\"name\":\"customer-service-config\"}},{\"secretRef\":{\"name\":\"db-credentials\"}}],\"image\":\"495913029085.dkr.ecr.eu-west-3.amazonaws.com/nicolasduminil/customers-api:latest\",\"name\":\"customer-service-api-container\"}]},\"metadata\":{\"labels\":{\"app\":\"customer-service-api\"}}}}}]",
+    "Manifest": "[{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"customer-service-api-deployment\",\"namespace\":\"customer-service\",\"labels\":{\"aws.cdk.eks/prune-c80beddad564c9e8cb9cc132edee8fbb335e829314\":\"\"}},\"spec\":{\"replicas\":2,\"selector\":{\"matchLabels\":{\"app\":\"customer-service-api\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"customer-service-api\"}},\"spec\":{\"serviceAccountName\":\"customer-service-account\",\"containers\":[{\"name\":\"customer-service-api-container\",\"image\":\"495913029085.dkr.ecr.eu-west-3.amazonaws.com/nicolasduminil/customers-api\",\"imagePullPolicy\":\"Always\",\"ports\":[{\"containerPort\":8080}],\"envFrom\":[{\"configMapRef\":{\"name\":\"customer-service-config\"}},{\"secretRef\":{\"name\":\"db-credentials\"}}]}]}}}}]",
     "ClusterName": {
      "Ref": "CustomerServiceCluster497EB85D"
     },
@@ -983,7 +1045,7 @@
       "Arn"
      ]
     },
-    "PruneLabel": "aws.cdk.eks/prune-c860378906531ba6e4530f0c6430dfd738f4076376"
+    "PruneLabel": "aws.cdk.eks/prune-c80beddad564c9e8cb9cc132edee8fbb335e829314"
    },
    "DependsOn": [
     "CustomerServiceClusterKubectlReadyBarrierBD21D8A3",
@@ -992,10 +1054,10 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/manifest-CustomerServiceDeployment/Resource/Default"
+    "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/manifest-CustomerService-0/Resource/Default"
    }
   },
-  "CustomerServiceClustermanifestCustomerServiceApiService01C987D0": {
+  "CustomerServiceClustermanifestCustomerService1FA8ADEFF": {
    "Type": "Custom::AWSCDK-EKS-KubernetesResource",
    "Properties": {
     "ServiceToken": {
@@ -1004,7 +1066,7 @@
       "Outputs.EksClusterStackawscdkawseksKubectlProviderframeworkonEvent2FB72184Arn"
      ]
     },
-    "Manifest": "[{\"metadata\":{\"namespace\":\"customer-service\",\"annotations\":{\"service.beta.kubernetes.io/aws-load-balancer-scheme\":\"internet-facing\",\"service.beta.kubernetes.io/aws-load-balancer-type\":\"external\",\"service.beta.kubernetes.io/aws-load-balancer-nlb-target-type\":\"ip\"},\"name\":\"customer-service-api-service\",\"labels\":{\"aws.cdk.eks/prune-c8d501449a2a2a4e27aae385d7001887dae563cb55\":\"\"}},\"apiVersion\":\"v1\",\"kind\":\"Service\",\"spec\":{\"type\":\"LoadBalancer\",\"selector\":{\"app\":\"customer-service-api\"},\"ports\":[{\"targetPort\":8080,\"port\":80,\"protocol\":\"TCP\"}]}}]",
+    "Manifest": "[{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"name\":\"customer-service-api-service\",\"namespace\":\"customer-service\",\"annotations\":{\"service.beta.kubernetes.io/aws-load-balancer-type\":\"external\",\"service.beta.kubernetes.io/aws-load-balancer-nlb-target-type\":\"ip\",\"service.beta.kubernetes.io/aws-load-balancer-scheme\":\"internet-facing\"},\"labels\":{\"aws.cdk.eks/prune-c8ce4e97cd6236690cbd94f9e7c45f1059df89b0aa\":\"\"}},\"spec\":{\"selector\":{\"app\":\"customer-service-api\"},\"ports\":[{\"port\":80,\"targetPort\":8080,\"protocol\":\"TCP\"}],\"type\":\"LoadBalancer\"}}]",
     "ClusterName": {
      "Ref": "CustomerServiceCluster497EB85D"
     },
@@ -1014,16 +1076,16 @@
       "Arn"
      ]
     },
-    "PruneLabel": "aws.cdk.eks/prune-c8d501449a2a2a4e27aae385d7001887dae563cb55"
+    "PruneLabel": "aws.cdk.eks/prune-c8ce4e97cd6236690cbd94f9e7c45f1059df89b0aa"
    },
    "DependsOn": [
     "CustomerServiceClusterKubectlReadyBarrierBD21D8A3",
-    "CustomerServiceClustermanifestCustomerServiceDeployment02CF9109"
+    "CustomerServiceClustermanifestCustomerService0EE9305BA"
    ],
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/manifest-CustomerServiceApiService/Resource/Default"
+    "aws:cdk:path": "EksClusterStack/CustomerServiceCluster/manifest-CustomerService-1/Resource/Default"
    }
   },
   "awscdkawseksClusterResourceProviderNestedStackawscdkawseksClusterResourceProviderNestedStackResource9827C454": {
@@ -1125,123 +1187,6 @@
     "aws:asset:property": "TemplateURL"
    }
   },
-  "FargateLoggingPolicy72BB406A": {
-   "Type": "AWS::IAM::ManagedPolicy",
-   "Properties": {
-    "Description": "",
-    "Path": "/",
-    "PolicyDocument": {
-     "Statement": [
-      {
-       "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:DescribeLogStreams",
-        "logs:PutLogEvents"
-       ],
-       "Effect": "Allow",
-       "Resource": "*"
-      }
-     ],
-     "Version": "2012-10-17"
-    }
-   },
-   "Metadata": {
-    "aws:cdk:path": "EksClusterStack/FargateLoggingPolicy/Resource"
-   }
-  },
-  "ConditionJson7698FD65": {
-   "Type": "Custom::AWSCDKCfnJson",
-   "Properties": {
-    "ServiceToken": {
-     "Fn::GetAtt": [
-      "AWSCDKCfnUtilsProviderCustomResourceProviderHandlerCF82AA57",
-      "Arn"
-     ]
-    },
-    "Value": {
-     "Fn::Join": [
-      "",
-      [
-       "{\"",
-       {
-        "Fn::GetAtt": [
-         "CustomerServiceCluster497EB85D",
-         "OpenIdConnectIssuer"
-        ]
-       },
-       ":aud\":\"sts.amazonaws.com\",\"",
-       {
-        "Fn::GetAtt": [
-         "CustomerServiceCluster497EB85D",
-         "OpenIdConnectIssuer"
-        ]
-       },
-       ":sub\":\"system:serviceaccount:customer-service:sa-customer-service\"}"
-      ]
-     ]
-    }
-   },
-   "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "aws:cdk:path": "EksClusterStack/ConditionJson/Resource/Default"
-   }
-  },
-  "AWSCDKCfnUtilsProviderCustomResourceProviderRoleFE0EE867": {
-   "Type": "AWS::IAM::Role",
-   "Properties": {
-    "AssumeRolePolicyDocument": {
-     "Version": "2012-10-17",
-     "Statement": [
-      {
-       "Action": "sts:AssumeRole",
-       "Effect": "Allow",
-       "Principal": {
-        "Service": "lambda.amazonaws.com"
-       }
-      }
-     ]
-    },
-    "ManagedPolicyArns": [
-     {
-      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-     }
-    ]
-   },
-   "Metadata": {
-    "aws:cdk:path": "EksClusterStack/AWSCDKCfnUtilsProviderCustomResourceProvider/Role"
-   }
-  },
-  "AWSCDKCfnUtilsProviderCustomResourceProviderHandlerCF82AA57": {
-   "Type": "AWS::Lambda::Function",
-   "Properties": {
-    "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-     },
-     "S3Key": "c398d076c966a47ee4ef862fbaf5ea530bf035b867a0195292c99f77b323ed80.zip"
-    },
-    "Timeout": 900,
-    "MemorySize": 128,
-    "Handler": "__entrypoint__.handler",
-    "Role": {
-     "Fn::GetAtt": [
-      "AWSCDKCfnUtilsProviderCustomResourceProviderRoleFE0EE867",
-      "Arn"
-     ]
-    },
-    "Runtime": "nodejs22.x"
-   },
-   "DependsOn": [
-    "AWSCDKCfnUtilsProviderCustomResourceProviderRoleFE0EE867"
-   ],
-   "Metadata": {
-    "aws:cdk:path": "EksClusterStack/AWSCDKCfnUtilsProviderCustomResourceProvider/Handler",
-    "aws:asset:path": "asset.c398d076c966a47ee4ef862fbaf5ea530bf035b867a0195292c99f77b323ed80",
-    "aws:asset:property": "Code"
-   }
-  },
   "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderRole517FED65": {
    "Type": "AWS::IAM::Role",
    "Properties": {
@@ -1317,116 +1262,64 @@
     "aws:asset:property": "Code"
    }
   },
-  "ServiceAccountRoleE318E4CB": {
+  "AWSCDKCfnUtilsProviderCustomResourceProviderRoleFE0EE867": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
      "Statement": [
       {
-       "Action": "sts:AssumeRoleWithWebIdentity",
-       "Condition": {
-        "StringEquals": {
-         "Fn::GetAtt": [
-          "ConditionJson7698FD65",
-          "Value"
-         ]
-        }
-       },
+       "Action": "sts:AssumeRole",
        "Effect": "Allow",
        "Principal": {
-        "Federated": {
-         "Ref": "CustomerServiceClusterOpenIdConnectProvider53152C36"
-        }
+        "Service": "lambda.amazonaws.com"
        }
       }
-     ],
-     "Version": "2012-10-17"
+     ]
     },
-    "Tags": [
+    "ManagedPolicyArns": [
      {
-      "Key": "environment",
-      "Value": "development"
-     },
-     {
-      "Key": "project",
-      "Value": "Customer Management on EKS with CI/CD"
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
      }
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "EksClusterStack/ServiceAccountRole/Resource"
+    "aws:cdk:path": "EksClusterStack/AWSCDKCfnUtilsProviderCustomResourceProvider/Role"
    }
   },
-  "ServiceAccountRoleDefaultPolicyB485EAC4": {
-   "Type": "AWS::IAM::Policy",
+  "AWSCDKCfnUtilsProviderCustomResourceProviderHandlerCF82AA57": {
+   "Type": "AWS::Lambda::Function",
    "Properties": {
-    "PolicyDocument": {
-     "Statement": [
-      {
-       "Action": "rds-db:connect",
-       "Effect": "Allow",
-       "Resource": {
-        "Fn::Join": [
-         "",
-         [
-          "arn:",
-          {
-           "Ref": "AWS::Partition"
-          },
-          ":rds-db:",
-          {
-           "Ref": "AWS::Region"
-          },
-          ":",
-          {
-           "Ref": "AWS::AccountId"
-          },
-          ":dbuser:",
-          {
-           "Fn::ImportValue": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5DbiResourceId2CBA69C0"
-          },
-          "/{{resolve:secretsmanager:",
-          {
-           "Fn::ImportValue": "DatabaseStack:ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8"
-          },
-          ":SecretString:username::}}"
-         ]
-        ]
-       }
-      },
-      {
-       "Action": [
-        "secretsmanager:DescribeSecret",
-        "secretsmanager:GetSecretValue"
-       ],
-       "Effect": "Allow",
-       "Resource": {
-        "Fn::ImportValue": "DatabaseStack:ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8"
-       }
-      },
-      {
-       "Action": "elasticache:DescribeCacheClusters",
-       "Effect": "Allow",
-       "Resource": "*"
-      }
-     ],
-     "Version": "2012-10-17"
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "c398d076c966a47ee4ef862fbaf5ea530bf035b867a0195292c99f77b323ed80.zip"
     },
-    "PolicyName": "ServiceAccountRoleDefaultPolicyB485EAC4",
-    "Roles": [
-     {
-      "Ref": "ServiceAccountRoleE318E4CB"
-     }
-    ]
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "AWSCDKCfnUtilsProviderCustomResourceProviderRoleFE0EE867",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs22.x"
    },
+   "DependsOn": [
+    "AWSCDKCfnUtilsProviderCustomResourceProviderRoleFE0EE867"
+   ],
    "Metadata": {
-    "aws:cdk:path": "EksClusterStack/ServiceAccountRole/DefaultPolicy/Resource"
+    "aws:cdk:path": "EksClusterStack/AWSCDKCfnUtilsProviderCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.c398d076c966a47ee4ef862fbaf5ea530bf035b867a0195292c99f77b323ed80",
+    "aws:asset:property": "Code"
    }
   },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WRQW/CMAyFfwv3NECr3QeVNg2GqKjEFbmp22VNExQ7Rajqf59KmYDTe362LPlzLPs4fpOLGVwoUmUTGV3IPmdQjYALnXpKTkCETHI1iqBEroNqkNdAKAy0RQkyrew3XNEf0ZN2VmBDsv8AXwNjagIxerENBXqLjJQBqx9xb2feVdrgU3sHVldILPZntF9l6qxFxZl3nS7Rixx9pxWulHLB8iA0tLI/OIMirexNM2e0uo7l3e3AQo3lI38JBoEqln2OKnjN10/vwnkcegmGQdzuzxlqbWtxQHLBKxRpIHbto6zss0+dLTWPSNLK7gOfA49uQ1MycX5d8X/oyHcQS7mYvd9/M59oR2ZEHTWhQMUm6pJYbid/TOLbGwaxgQ7m8VIuZDL7Ja0jHyzrFuVh0j/s0qtP9wEAAA=="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WQQWvCQBCFf4v3yaoJvVcDLdUWgwGvMtlM7DbJruzMRiTkv5cYS/X03syDYd4Xqz6OX9RihheOdFlHjSlUnwvqGvDCx56TIzKTsFqNApyoddA1yRqZoMG2KFGllf3EK/kDeTbOAtWs+jf0JxRKm8BCHrahIG9JiDMU/Q33OPOuMg09xF9oTUUskJPvjKaV1i5Ygd2Z7EeZOmtJS+ZdZ0ryAxhsVb93DUFa2ZtmrjH6Oo6TG4B0rPqcdPBGru/ehfOYPi2GAW4Fc8GTsSfYE7vgNUEaWFz7P1b20afOlkbGzmlld0HOQUa34WkzgXw+8ff6CHCApVrMXu/w5xPOqBlZRnUoSEsTdUmstpM/JPGN8wAb7HAeL9VCJbMfNibywYppSe0n/QWpiCwZ2AEAAA=="
    },
    "Metadata": {
     "aws:cdk:path": "EksClusterStack/CDKMetadata/Default"

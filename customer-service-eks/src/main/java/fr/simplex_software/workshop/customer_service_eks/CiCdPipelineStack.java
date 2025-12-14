@@ -23,7 +23,7 @@ public class CiCdPipelineStack extends Stack
   public CiCdPipelineStack(App app, EksClusterStack eksStack,
     InfrastructureConfig config, CiCdConfig cicdConfig)
   {
-    super(app, "CiCdPipelineStack-Test");
+    super(app, "CiCdPipelineStack");
     this.eksStack = eksStack;
     this.cicdConfig = cicdConfig;
     addDependency(eksStack);
@@ -66,6 +66,7 @@ public class CiCdPipelineStack extends Stack
       .repo(cicdConfig.github().repo())
       .oauthToken(SecretValue.secretsManager(cicdConfig.github().tokenSecret()))
       .output(Artifact.artifact("source"))
+      .trigger(GitHubTrigger.WEBHOOK)
       .build();
 
     CodeBuildAction buildAction = CodeBuildAction.Builder.create()

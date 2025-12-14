@@ -5,50 +5,48 @@ import org.junit.jupiter.api.*;
 
 public class CustomerServiceE2EIT extends AbstractCustomerServiceE2E
 {
+  private static Process portForwardProcess;
+
   @BeforeAll
-  static void setup()
+  static void setup() throws Exception
   {
-    String endpoint = getKubernetesLoadBalancer();
-    configureEndpoint(endpoint);
+    startPortForward();
+    configureEndpoint("localhost:8080");
     waitForServiceReady();
   }
 
-  private static String getKubernetesLoadBalancer()
+  @AfterAll
+  static void teardown()
   {
-    try
+    if (portForwardProcess != null && portForwardProcess.isAlive())
     {
-      System.out.println(">>> Waiting for service to be created...");
-      Process waitProcess = new ProcessBuilder(
-        "kubectl", "wait", "--for=condition=Available",
-        "service/customer-service-api-service",
-        "-n", "customer-service",
-        "--timeout=300s"
-      ).inheritIO().start();
-      waitProcess.waitFor();
-      System.out.println(">>> Waiting for LoadBalancer hostname...");
-      for (int i = 0; i < 60; i++)
-      {
-        Process process = new ProcessBuilder(
-          "kubectl", "get", "service", "customer-service-api-service",
-          "-n", "customer-service",
-          "-o", "jsonpath={.status.loadBalancer.ingress[0].hostname}"
-        ).start();
-        String output = new String(process.getInputStream().readAllBytes()).trim();
-        process.waitFor();
-        if (!output.isEmpty())
-        {
-          System.out.println(">>> LoadBalancer ready: " + output);
-          return output;
-        }
-        System.out.println(">>> Attempt " + (i + 1) + "/60 - LoadBalancer not ready yet...");
-        Thread.sleep(5000);
-      }
-      throw new RuntimeException("### LoadBalancer hostname not available after 5 minutes");
-    }
-    catch (Exception e)
-    {
-      throw new RuntimeException("### Failed to execute kubectl: " + e.getMessage());
+      portForwardProcess.destroy();
+      System.out.println(">>> Port-forward stopped");
     }
   }
-}
 
+  private static void startPortForward() throws Exception
+  {
+    System.out.println(">>> Waiting for deployment to be ready...");
+    Process waitProcess = new ProcessBuilder(
+      "kubectl", "wait", "--for=condition=Available",
+      "deployment/customer-service-api-deployment",
+      "-n", "customer-service",
+      "--timeout=300s"
+    ).start();
+
+    if (waitProcess.waitFor() != 0)
+      throw new RuntimeException("### Deployment not available");
+
+    System.out.println(">>> Starting port-forward...");
+    portForwardProcess = new ProcessBuilder(
+      "kubectl", "port-forward",
+      "deployment/customer-service-api-deployment",
+      "8080:8080",
+      "-n", "customer-service"
+    ).start();
+
+    Thread.sleep(3000);
+    System.out.println(">>> Port-forward established on localhost:8080");
+  }
+}

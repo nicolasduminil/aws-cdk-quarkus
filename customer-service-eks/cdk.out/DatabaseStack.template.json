@@ -297,6 +297,25 @@
     "Name": "DatabaseSecretArn"
    }
   },
+  "ExportsOutputFnGetAttCustomerDatabase306E9FF5DbiResourceId2CBA69C0": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CustomerDatabase306E9FF5",
+     "DbiResourceId"
+    ]
+   },
+   "Export": {
+    "Name": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5DbiResourceId2CBA69C0"
+   }
+  },
+  "ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8": {
+   "Value": {
+    "Ref": "CustomerDatabaseSecretAttachment204AEE14"
+   },
+   "Export": {
+    "Name": "DatabaseStack:ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8"
+   }
+  },
   "ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053": {
    "Value": {
     "Fn::GetAtt": [
@@ -317,25 +336,6 @@
    },
    "Export": {
     "Name": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B"
-   }
-  },
-  "ExportsOutputFnGetAttCustomerDatabase306E9FF5DbiResourceId2CBA69C0": {
-   "Value": {
-    "Fn::GetAtt": [
-     "CustomerDatabase306E9FF5",
-     "DbiResourceId"
-    ]
-   },
-   "Export": {
-    "Name": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5DbiResourceId2CBA69C0"
-   }
-  },
-  "ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8": {
-   "Value": {
-    "Ref": "CustomerDatabaseSecretAttachment204AEE14"
-   },
-   "Export": {
-    "Name": "DatabaseStack:ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8"
    }
   }
  },

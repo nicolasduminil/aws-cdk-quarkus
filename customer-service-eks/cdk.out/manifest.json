@@ -275,7 +275,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1001e761409a8e3ce5ee901e7704a4149c16297ad64712b9283d1a16a369c032.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d5ddbeca3a9e8841f7d4b9511b744b784a200d5d34c5750b4353f4c0a949e3c2.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -392,6 +392,12 @@
             "data": "CustomerServiceClusterfargateprofiledefault9E5B98E0"
           }
         ],
+        "/EksClusterStack/CustomerServiceCluster/manifest-CustomerServiceNamespace/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServiceClustermanifestCustomerServiceNamespace625A21E9"
+          }
+        ],
         "/EksClusterStack/CustomerServiceCluster/fargate-profile-CustomerServiceProfile/PodExecutionRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -402,18 +408,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServiceClusterfargateprofileCustomerServiceProfileD10B881C"
-          }
-        ],
-        "/EksClusterStack/CustomerServiceCluster/manifest-CustomerServiceNamespace/Resource/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomerServiceClustermanifestCustomerServiceNamespace625A21E9"
-          }
-        ],
-        "/EksClusterStack/CustomerServiceCluster/OpenIdConnectProvider/Resource/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomerServiceClusterOpenIdConnectProvider53152C36"
           }
         ],
         "/EksClusterStack/CustomerServiceCluster/CustomerServiceAccount/ConditionJson/Resource/Default": [
@@ -428,10 +422,22 @@
             "data": "CustomerServiceClusterCustomerServiceAccountRole2FC15923"
           }
         ],
+        "/EksClusterStack/CustomerServiceCluster/CustomerServiceAccount/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServiceClusterCustomerServiceAccountRoleDefaultPolicy468A67E1"
+          }
+        ],
         "/EksClusterStack/CustomerServiceCluster/CustomerServiceAccount/manifest-CustomerServiceAccountServiceAccountResource/Resource/Default": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServiceClusterCustomerServiceAccountmanifestCustomerServiceAccountServiceAccountResource8EF55F7E"
+          }
+        ],
+        "/EksClusterStack/CustomerServiceCluster/OpenIdConnectProvider/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomerServiceClusterOpenIdConnectProvider53152C36"
           }
         ],
         "/EksClusterStack/CustomerServiceCluster/manifest-CustomerServiceConfigMap/Resource/Default": [
@@ -440,16 +446,16 @@
             "data": "CustomerServiceClustermanifestCustomerServiceConfigMap91624860"
           }
         ],
-        "/EksClusterStack/CustomerServiceCluster/manifest-CustomerServiceDeployment/Resource/Default": [
+        "/EksClusterStack/CustomerServiceCluster/manifest-CustomerService-0/Resource/Default": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "CustomerServiceClustermanifestCustomerServiceDeployment02CF9109"
+            "data": "CustomerServiceClustermanifestCustomerService0EE9305BA"
           }
         ],
-        "/EksClusterStack/CustomerServiceCluster/manifest-CustomerServiceApiService/Resource/Default": [
+        "/EksClusterStack/CustomerServiceCluster/manifest-CustomerService-1/Resource/Default": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "CustomerServiceClustermanifestCustomerServiceApiService01C987D0"
+            "data": "CustomerServiceClustermanifestCustomerService1FA8ADEFF"
           }
         ],
         "/EksClusterStack/@aws-cdk--aws-eks.ClusterResourceProvider/NodeProxyAgentLayer/Resource": [
@@ -674,36 +680,6 @@
             "data": "awscdkawseksKubectlProviderNestedStackawscdkawseksKubectlProviderNestedStackResourceA7AEBA6B"
           }
         ],
-        "/EksClusterStack/FargateLoggingPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "FargateLoggingPolicy72BB406A"
-          }
-        ],
-        "/EksClusterStack/ConditionJson/Resource/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ConditionJson7698FD65"
-          }
-        ],
-        "/EksClusterStack/AWSCDKCfnUtilsProviderCustomResourceProvider": [
-          {
-            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
-            "data": true
-          }
-        ],
-        "/EksClusterStack/AWSCDKCfnUtilsProviderCustomResourceProvider/Role": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AWSCDKCfnUtilsProviderCustomResourceProviderRoleFE0EE867"
-          }
-        ],
-        "/EksClusterStack/AWSCDKCfnUtilsProviderCustomResourceProvider/Handler": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AWSCDKCfnUtilsProviderCustomResourceProviderHandlerCF82AA57"
-          }
-        ],
         "/EksClusterStack/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider": [
           {
             "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
@@ -722,16 +698,22 @@
             "data": "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderHandlerF2C543E0"
           }
         ],
-        "/EksClusterStack/ServiceAccountRole/Resource": [
+        "/EksClusterStack/AWSCDKCfnUtilsProviderCustomResourceProvider": [
           {
-            "type": "aws:cdk:logicalId",
-            "data": "ServiceAccountRoleE318E4CB"
+            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+            "data": true
           }
         ],
-        "/EksClusterStack/ServiceAccountRole/DefaultPolicy/Resource": [
+        "/EksClusterStack/AWSCDKCfnUtilsProviderCustomResourceProvider/Role": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ServiceAccountRoleDefaultPolicyB485EAC4"
+            "data": "AWSCDKCfnUtilsProviderCustomResourceProviderRoleFE0EE867"
+          }
+        ],
+        "/EksClusterStack/AWSCDKCfnUtilsProviderCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWSCDKCfnUtilsProviderCustomResourceProviderHandlerCF82AA57"
           }
         ],
         "/EksClusterStack/CDKMetadata/Default": [
@@ -788,7 +770,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6286beb514be6b820f793455873047f9ba34258d2ad979b71bbd35ec85c1e483.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/8962c22c9b7153dc89da30dddc87580a9966016aecc0d99ff61ceebc8c5de622.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -886,18 +868,6 @@
             "data": "CDKMetadataAvailable"
           }
         ],
-        "/DatabaseStack/Exports/Output{\"Fn::GetAtt\":[\"CustomerCacheReplicationGroupE25E3BDD\",\"PrimaryEndPoint.Address\"]}": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053"
-          }
-        ],
-        "/DatabaseStack/Exports/Output{\"Fn::GetAtt\":[\"CustomerDatabase306E9FF5\",\"Endpoint.Address\"]}": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B"
-          }
-        ],
         "/DatabaseStack/Exports/Output{\"Fn::GetAtt\":[\"CustomerDatabase306E9FF5\",\"DbiResourceId\"]}": [
           {
             "type": "aws:cdk:logicalId",
@@ -908,6 +878,18 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8"
+          }
+        ],
+        "/DatabaseStack/Exports/Output{\"Fn::GetAtt\":[\"CustomerCacheReplicationGroupE25E3BDD\",\"PrimaryEndPoint.Address\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053"
+          }
+        ],
+        "/DatabaseStack/Exports/Output{\"Fn::GetAtt\":[\"CustomerDatabase306E9FF5\",\"Endpoint.Address\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B"
           }
         ],
         "/DatabaseStack/BootstrapVersion": [
@@ -925,19 +907,19 @@
       },
       "displayName": "DatabaseStack"
     },
-    "CiCdPipelineStack-Test.assets": {
+    "CiCdPipelineStack.assets": {
       "type": "cdk:asset-manifest",
       "properties": {
-        "file": "CiCdPipelineStack-Test.assets.json",
+        "file": "CiCdPipelineStack.assets.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
       }
     },
-    "CiCdPipelineStack-Test": {
+    "CiCdPipelineStack": {
       "type": "aws:cloudformation:stack",
       "environment": "aws://unknown-account/unknown-region",
       "properties": {
-        "templateFile": "CiCdPipelineStack-Test.template.json",
+        "templateFile": "CiCdPipelineStack.template.json",
         "terminationProtection": false,
         "tags": {
           "environment": "development",
@@ -946,11 +928,11 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e05d58efb5d9c21ea2eb5b2172e5dc48b092204c01121a9d9b36df2a573f762e.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/70106c302cf31dc7448f6377e0fb983c1495fceaca9da91b86c8fa3048e1903d.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
-          "CiCdPipelineStack-Test.assets"
+          "CiCdPipelineStack.assets"
         ],
         "lookupRole": {
           "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
@@ -960,10 +942,10 @@
       },
       "dependencies": [
         "EksClusterStack",
-        "CiCdPipelineStack-Test.assets"
+        "CiCdPipelineStack.assets"
       ],
       "metadata": {
-        "/CiCdPipelineStack-Test": [
+        "/CiCdPipelineStack": [
           {
             "type": "aws:cdk:stack-tags",
             "data": [
@@ -978,158 +960,158 @@
             ]
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServiceBuild/Role/Resource": [
+        "/CiCdPipelineStack/CustomerServiceBuild/Role/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServiceBuildRole4EFFF279"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServiceBuild/Role/DefaultPolicy/Resource": [
+        "/CiCdPipelineStack/CustomerServiceBuild/Role/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServiceBuildRoleDefaultPolicy5E7E9D5D"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServiceBuild/Resource": [
+        "/CiCdPipelineStack/CustomerServiceBuild/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServiceBuild0A9B7C30"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServiceDeploy/Role/Resource": [
+        "/CiCdPipelineStack/CustomerServiceDeploy/Role/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServiceDeployRole1EC55471"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServiceDeploy/Role/DefaultPolicy/Resource": [
+        "/CiCdPipelineStack/CustomerServiceDeploy/Role/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServiceDeployRoleDefaultPolicy883E1F6B"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServiceDeploy/Resource": [
+        "/CiCdPipelineStack/CustomerServiceDeploy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServiceDeploy4C86B9CA"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline": [
+        "/CiCdPipelineStack/CustomerServicePipeline": [
           {
             "type": "aws:cdk:warning",
             "data": "V1 pipeline type is implicitly selected when `pipelineType` is not set. If you want to use V2 type, set `PipelineType.V2`. [ack: @aws-cdk/aws-codepipeline:unspecifiedPipelineType]",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-b5eLtk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
-              "Annotations.addWarningV2 (/tmp/jsii-kernel-b5eLtk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
-              "new Pipeline2 (/tmp/jsii-kernel-b5eLtk/node_modules/aws-cdk-lib/aws-codepipeline/lib/pipeline.js:1:11800)",
-              "new Pipeline2 (/tmp/jsii-kernel-b5eLtk/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
-              "Kernel._Kernel_create (/tmp/jsii-java-runtime2956876616108841653/lib/program.js:549:25)",
-              "Kernel.create (/tmp/jsii-java-runtime2956876616108841653/lib/program.js:219:93)",
-              "KernelHost.processRequest (/tmp/jsii-java-runtime2956876616108841653/lib/program.js:15482:36)",
-              "KernelHost.run (/tmp/jsii-java-runtime2956876616108841653/lib/program.js:15442:22)",
-              "Immediate._onImmediate (/tmp/jsii-java-runtime2956876616108841653/lib/program.js:15443:45)",
+              "Annotations.addMessage (/tmp/jsii-kernel-4VaEvS/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
+              "Annotations.addWarningV2 (/tmp/jsii-kernel-4VaEvS/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
+              "new Pipeline2 (/tmp/jsii-kernel-4VaEvS/node_modules/aws-cdk-lib/aws-codepipeline/lib/pipeline.js:1:11800)",
+              "new Pipeline2 (/tmp/jsii-kernel-4VaEvS/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
+              "Kernel._Kernel_create (/tmp/jsii-java-runtime11713658615271632189/lib/program.js:549:25)",
+              "Kernel.create (/tmp/jsii-java-runtime11713658615271632189/lib/program.js:219:93)",
+              "KernelHost.processRequest (/tmp/jsii-java-runtime11713658615271632189/lib/program.js:15482:36)",
+              "KernelHost.run (/tmp/jsii-java-runtime11713658615271632189/lib/program.js:15442:22)",
+              "Immediate._onImmediate (/tmp/jsii-java-runtime11713658615271632189/lib/program.js:15443:45)",
               "process.processImmediate (node:internal/timers:485:21)"
             ]
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/ArtifactsBucketEncryptionKey/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/ArtifactsBucketEncryptionKey/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineArtifactsBucketEncryptionKeyF352DD27"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/ArtifactsBucketEncryptionKeyAlias/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/ArtifactsBucketEncryptionKeyAlias/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineArtifactsBucketEncryptionKeyAlias58653EEA"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/ArtifactsBucket/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/ArtifactsBucket/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineArtifactsBucketDBD1FB0B"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/ArtifactsBucket/Policy/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/ArtifactsBucket/Policy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineArtifactsBucketPolicyA58586D0"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/Role/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/Role/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineRole5A5B3D0C"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/Role/DefaultPolicy/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/Role/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineRoleDefaultPolicy5D067B31"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineB3195C39"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/Source/GitHub_Source/WebhookResource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/Source/GitHub_Source/WebhookResource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineSourceGitHubSourceWebhookResourceCF3BBB86"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/Build/Build/CodePipelineActionRole/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/Build/Build/CodePipelineActionRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineBuildCodePipelineActionRoleC3F20548"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/Build/Build/CodePipelineActionRole/DefaultPolicy/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/Build/Build/CodePipelineActionRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineBuildCodePipelineActionRoleDefaultPolicy07DDB046"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/Deploy/Deploy/CodePipelineActionRole/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/Deploy/Deploy/CodePipelineActionRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineDeployCodePipelineActionRoleC75C2A2F"
           }
         ],
-        "/CiCdPipelineStack-Test/CustomerServicePipeline/Deploy/Deploy/CodePipelineActionRole/DefaultPolicy/Resource": [
+        "/CiCdPipelineStack/CustomerServicePipeline/Deploy/Deploy/CodePipelineActionRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomerServicePipelineDeployCodePipelineActionRoleDefaultPolicyA8D980A8"
           }
         ],
-        "/CiCdPipelineStack-Test/CDKMetadata/Default": [
+        "/CiCdPipelineStack/CDKMetadata/Default": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CDKMetadata"
           }
         ],
-        "/CiCdPipelineStack-Test/CDKMetadata/Condition": [
+        "/CiCdPipelineStack/CDKMetadata/Condition": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CDKMetadataAvailable"
           }
         ],
-        "/CiCdPipelineStack-Test/BootstrapVersion": [
+        "/CiCdPipelineStack/BootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BootstrapVersion"
           }
         ],
-        "/CiCdPipelineStack-Test/CheckBootstrapVersion": [
+        "/CiCdPipelineStack/CheckBootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CheckBootstrapVersion"
           }
         ]
       },
-      "displayName": "CiCdPipelineStack-Test"
+      "displayName": "CiCdPipelineStack"
     },
     "MonitoringStack.assets": {
       "type": "cdk:asset-manifest",

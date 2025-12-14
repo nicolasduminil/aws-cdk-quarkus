@@ -50,6 +50,7 @@ public interface CiCdConfig
       @WithDefault("Deploy")
       String deploy();
     }
+
     interface ActionNames
     {
       @WithDefault("GitHub_Source")

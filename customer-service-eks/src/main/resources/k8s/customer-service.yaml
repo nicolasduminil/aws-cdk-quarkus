@@ -13,10 +13,11 @@ spec:
       labels:
         app: customer-service-api
     spec:
-      serviceAccountName: sa-customer-service
+      serviceAccountName: customer-service-account
       containers:
         - name: customer-service-api-container
           image: @CDK_DEFAULT_ACCOUNT@.dkr.ecr.@CDK_DEFAULT_REGION@.amazonaws.com/@CONTAINER_IMAGE_GROUP@/@CONTAINER_IMAGE_NAME@
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           envFrom:
