@@ -10,6 +10,8 @@ import software.amazon.awscdk.services.codebuild.*;
 import software.amazon.awscdk.services.codepipeline.*;
 import software.amazon.awscdk.services.codepipeline.actions.*;
 import software.amazon.awscdk.services.ecr.*;
+import software.amazon.awscdk.services.eks.*;
+import software.amazon.awscdk.services.iam.*;
 
 import java.util.*;
 
@@ -29,7 +31,6 @@ public class CiCdPipelineStack extends Stack
     addDependency(eksStack);
   }
 
-
   public void initStack()
   {
     IRepository ecrRepo = Repository.fromRepositoryName(this, "CustomerServiceRepo",
@@ -47,6 +48,7 @@ public class CiCdPipelineStack extends Stack
       .buildSpec(BuildSpec.fromAsset(cicdConfig.build().buildSpecPath()))
       .build();
 
+    ecrRepo.grantPullPush(buildProject);
 
     Project deployProject = Project.Builder.create(this, "CustomerServiceDeploy")
       .environment(BuildEnvironment.builder()
@@ -59,6 +61,10 @@ public class CiCdPipelineStack extends Stack
         .build())
       .buildSpec(BuildSpec.fromAsset(cicdConfig.build().deploySpecPath()))
       .build();
+
+    deployProject.getRole().addManagedPolicy(
+      ManagedPolicy.fromAwsManagedPolicyName("AmazonEKSClusterPolicy"));
+    eksStack.getCluster().getRole().grantAssumeRole(deployProject.getRole());
 
     GitHubSourceAction sourceAction = GitHubSourceAction.Builder.create()
       .actionName(cicdConfig.pipeline().actions().source())
