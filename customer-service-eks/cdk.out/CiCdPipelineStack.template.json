@@ -194,7 +194,7 @@
           {
            "Ref": "AWS::AccountId"
           },
-          ":repository/cdk.cicd.repository.name=nicolasduminil/customers-api"
+          ":repository/nicolasduminil/customers-api"
          ]
         ]
        }
@@ -323,7 +323,7 @@
           {
            "Ref": "AWS::URLSuffix"
           },
-          "/cdk.cicd.repository.name=nicolasduminil/customers-api"
+          "/nicolasduminil/customers-api"
          ]
         ]
        }
@@ -1085,7 +1085,7 @@
             {
              "Ref": "AWS::URLSuffix"
             },
-            "/cdk.cicd.repository.name=nicolasduminil/customers-api\"}]"
+            "/nicolasduminil/customers-api\"}]"
            ]
           ]
          }
