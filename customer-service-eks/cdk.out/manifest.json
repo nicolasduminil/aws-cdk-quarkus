@@ -275,7 +275,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b3d786c231886ec60f4efe6e3dc7fb8324123381d7ab30056b41a281d65d2a07.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fabede8c3c9a4ac88b417ae168df4f08ad127848e87adff8006b8f6bec8e5d57.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -934,7 +934,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4da404e59b923a927b36d33c17f7e63de6caabcea3b113124d6fff99cb00978a.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9189838fe89dc0c42f51516109a9bed2006036d6ff001092cfa2b70e48790ef2.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -1007,15 +1007,15 @@
             "type": "aws:cdk:warning",
             "data": "V1 pipeline type is implicitly selected when `pipelineType` is not set. If you want to use V2 type, set `PipelineType.V2`. [ack: @aws-cdk/aws-codepipeline:unspecifiedPipelineType]",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-n49kFj/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
-              "Annotations.addWarningV2 (/tmp/jsii-kernel-n49kFj/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
-              "new Pipeline2 (/tmp/jsii-kernel-n49kFj/node_modules/aws-cdk-lib/aws-codepipeline/lib/pipeline.js:1:11800)",
-              "new Pipeline2 (/tmp/jsii-kernel-n49kFj/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
-              "Kernel._Kernel_create (/tmp/jsii-java-runtime1143085465020740270/lib/program.js:549:25)",
-              "Kernel.create (/tmp/jsii-java-runtime1143085465020740270/lib/program.js:219:93)",
-              "KernelHost.processRequest (/tmp/jsii-java-runtime1143085465020740270/lib/program.js:15482:36)",
-              "KernelHost.run (/tmp/jsii-java-runtime1143085465020740270/lib/program.js:15442:22)",
-              "Immediate._onImmediate (/tmp/jsii-java-runtime1143085465020740270/lib/program.js:15443:45)",
+              "Annotations.addMessage (/tmp/jsii-kernel-nGEZ5r/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
+              "Annotations.addWarningV2 (/tmp/jsii-kernel-nGEZ5r/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
+              "new Pipeline2 (/tmp/jsii-kernel-nGEZ5r/node_modules/aws-cdk-lib/aws-codepipeline/lib/pipeline.js:1:11800)",
+              "new Pipeline2 (/tmp/jsii-kernel-nGEZ5r/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
+              "Kernel._Kernel_create (/tmp/jsii-java-runtime15803382740823610110/lib/program.js:549:25)",
+              "Kernel.create (/tmp/jsii-java-runtime15803382740823610110/lib/program.js:219:93)",
+              "KernelHost.processRequest (/tmp/jsii-java-runtime15803382740823610110/lib/program.js:15482:36)",
+              "KernelHost.run (/tmp/jsii-java-runtime15803382740823610110/lib/program.js:15442:22)",
+              "Immediate._onImmediate (/tmp/jsii-java-runtime15803382740823610110/lib/program.js:15443:45)",
               "process.processImmediate (node:internal/timers:485:21)"
             ]
           }

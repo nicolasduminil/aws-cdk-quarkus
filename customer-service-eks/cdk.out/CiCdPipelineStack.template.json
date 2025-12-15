@@ -194,7 +194,7 @@
           {
            "Ref": "AWS::AccountId"
           },
-          ":repository/customer-api"
+          ":repository/cdk.cicd.repository.name=nicolasduminil/customers-api"
          ]
         ]
        }
@@ -306,13 +306,6 @@
      "ComputeType": "BUILD_GENERAL1_SMALL",
      "EnvironmentVariables": [
       {
-       "Name": "AWS_ACCOUNT_ID",
-       "Type": "PLAINTEXT",
-       "Value": {
-        "Ref": "AWS::AccountId"
-       }
-      },
-      {
        "Name": "IMAGE_URI",
        "Type": "PLAINTEXT",
        "Value": {
@@ -330,9 +323,16 @@
           {
            "Ref": "AWS::URLSuffix"
           },
-          "/customer-api"
+          "/cdk.cicd.repository.name=nicolasduminil/customers-api"
          ]
         ]
+       }
+      },
+      {
+       "Name": "AWS_ACCOUNT_ID",
+       "Type": "PLAINTEXT",
+       "Value": {
+        "Ref": "AWS::AccountId"
        }
       }
      ],
@@ -1085,7 +1085,7 @@
             {
              "Ref": "AWS::URLSuffix"
             },
-            "/customer-api\"}]"
+            "/cdk.cicd.repository.name=nicolasduminil/customers-api\"}]"
            ]
           ]
          }
