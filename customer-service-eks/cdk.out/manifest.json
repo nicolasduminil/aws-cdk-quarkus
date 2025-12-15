@@ -275,7 +275,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9c3cf488afaf5c19940c73bb9b50d30ee7a6e9bf8f42a6eed92d86bf6c78baac.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/100c963d8df8cf1583e02d27cb1c0099b7496f96db1e3e6b48fe6d89e5f3d54d.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -776,7 +776,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/8962c22c9b7153dc89da30dddc87580a9966016aecc0d99ff61ceebc8c5de622.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/69b0750f3c353a030aad53440c70e6e5d2f1602da9339c98871df69dff5cda16.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -886,16 +886,16 @@
             "data": "ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8"
           }
         ],
-        "/DatabaseStack/Exports/Output{\"Fn::GetAtt\":[\"CustomerCacheReplicationGroupE25E3BDD\",\"PrimaryEndPoint.Address\"]}": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053"
-          }
-        ],
         "/DatabaseStack/Exports/Output{\"Fn::GetAtt\":[\"CustomerDatabase306E9FF5\",\"Endpoint.Address\"]}": [
           {
             "type": "aws:cdk:logicalId",
             "data": "ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B"
+          }
+        ],
+        "/DatabaseStack/Exports/Output{\"Fn::GetAtt\":[\"CustomerCacheReplicationGroupE25E3BDD\",\"PrimaryEndPoint.Address\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053"
           }
         ],
         "/DatabaseStack/BootstrapVersion": [
@@ -934,7 +934,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b9af9a2466b7cc84ba8d26962afb386b29a21a2512ab243c580638498836f7b5.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d8f0aceb583e4bd66e4dd98773cd955dddf7719b12d84036a193ffad50ddd9cc.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -1007,15 +1007,15 @@
             "type": "aws:cdk:warning",
             "data": "V1 pipeline type is implicitly selected when `pipelineType` is not set. If you want to use V2 type, set `PipelineType.V2`. [ack: @aws-cdk/aws-codepipeline:unspecifiedPipelineType]",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-Vmf27K/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
-              "Annotations.addWarningV2 (/tmp/jsii-kernel-Vmf27K/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
-              "new Pipeline2 (/tmp/jsii-kernel-Vmf27K/node_modules/aws-cdk-lib/aws-codepipeline/lib/pipeline.js:1:11800)",
-              "new Pipeline2 (/tmp/jsii-kernel-Vmf27K/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
-              "Kernel._Kernel_create (/tmp/jsii-java-runtime4404614670208805673/lib/program.js:549:25)",
-              "Kernel.create (/tmp/jsii-java-runtime4404614670208805673/lib/program.js:219:93)",
-              "KernelHost.processRequest (/tmp/jsii-java-runtime4404614670208805673/lib/program.js:15482:36)",
-              "KernelHost.run (/tmp/jsii-java-runtime4404614670208805673/lib/program.js:15442:22)",
-              "Immediate._onImmediate (/tmp/jsii-java-runtime4404614670208805673/lib/program.js:15443:45)",
+              "Annotations.addMessage (/tmp/jsii-kernel-tu3bSr/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
+              "Annotations.addWarningV2 (/tmp/jsii-kernel-tu3bSr/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
+              "new Pipeline2 (/tmp/jsii-kernel-tu3bSr/node_modules/aws-cdk-lib/aws-codepipeline/lib/pipeline.js:1:11800)",
+              "new Pipeline2 (/tmp/jsii-kernel-tu3bSr/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
+              "Kernel._Kernel_create (/tmp/jsii-java-runtime8064497101175189546/lib/program.js:549:25)",
+              "Kernel.create (/tmp/jsii-java-runtime8064497101175189546/lib/program.js:219:93)",
+              "KernelHost.processRequest (/tmp/jsii-java-runtime8064497101175189546/lib/program.js:15482:36)",
+              "KernelHost.run (/tmp/jsii-java-runtime8064497101175189546/lib/program.js:15442:22)",
+              "Immediate._onImmediate (/tmp/jsii-java-runtime8064497101175189546/lib/program.js:15443:45)",
               "process.processImmediate (node:internal/timers:485:21)"
             ]
           }
