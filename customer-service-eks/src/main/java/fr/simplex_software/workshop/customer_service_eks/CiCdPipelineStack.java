@@ -62,6 +62,10 @@ public class CiCdPipelineStack extends Stack
       .actions(List.of("ecr:GetAuthorizationToken"))
       .resources(List.of("*"))
       .build());
+    buildProject.addToRolePolicy(PolicyStatement.Builder.create()
+      .actions(List.of("secretsmanager:GetSecretValue"))
+      .resources(List.of("arn:aws:secretsmanager:eu-west-3:" + this.getAccount() + ":secret:redhat-registry-credentials-*"))
+      .build());
 
     Project deployProject = Project.Builder.create(this, "CustomerServiceDeploy")
       .environment(BuildEnvironment.builder()

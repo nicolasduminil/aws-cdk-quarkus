@@ -205,6 +205,22 @@
        "Resource": "*"
       },
       {
+       "Action": "secretsmanager:GetSecretValue",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:aws:secretsmanager:eu-west-3:",
+          {
+           "Ref": "AWS::AccountId"
+          },
+          ":secret:redhat-registry-credentials-*"
+         ]
+        ]
+       }
+      },
+      {
        "Action": [
         "s3:Abort*",
         "s3:DeleteObject*",
@@ -344,7 +360,7 @@
         {
          "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
         },
-        "/2b90b6115e1a283d2cfcc6ce5b9e604f6c7a1813e3f554a7e09ab3f878c51eff.yaml"
+        "/1c0de26482b45bdbb4040f50a0e4a59c04cd2fc6081707e7511cb29f3f52886d.yaml"
        ]
       ]
      },
