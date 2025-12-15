@@ -142,7 +142,7 @@ public abstract class AbstractCustomerServiceE2E
   protected static void waitForServiceReady()
   {
     System.out.println(">>> Waiting for service to be ready...");
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < 60; i++)
       try
       {
         given().when().get("/q/health").then().statusCode(200);
@@ -162,6 +162,6 @@ public abstract class AbstractCustomerServiceE2E
           throw new RuntimeException(ie);
         }
       }
-    throw new RuntimeException("Service did not become ready within 5 minutes");
+    throw new RuntimeException("Service did not become ready within 10 minutes");
   }
 }

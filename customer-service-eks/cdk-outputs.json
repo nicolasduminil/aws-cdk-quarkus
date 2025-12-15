@@ -1,19 +1,20 @@
 {
   "VpcStack": {
-    "ExportsOutputRefEksVpc4BB427FA336B0142": "vpc-006e61a237e8d5e01",
-    "ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0": "subnet-0621d0a18664f02f0",
+    "ExportsOutputRefEksVpc4BB427FA336B0142": "vpc-0a504c0c4562e0df5",
+    "ExportsOutputRefEksVpcPrivateSubnet2SubnetAED557957B12CFC0": "subnet-03017aa46937f959e",
     "ExportsOutputFnGetAttEksVpc4BB427FACidrBlock8523CCEF": "10.0.0.0/16",
-    "ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273": "subnet-078a4ac08498588b0"
+    "ExportsOutputRefEksVpcPrivateSubnet1SubnetDC5B4B59DBC53273": "subnet-06d6e9239f7a8798b"
   },
   "DatabaseStack": {
     "ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053": "customer-cache.qvrli8.ng.0001.euw3.cache.amazonaws.com",
-    "ExportsOutputFnGetAttCustomerDatabase306E9FF5DbiResourceId2CBA69C0": "db-ZNCLWDYP2BJGPQB2EJOJAYEKEE",
-    "ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8": "arn:aws:secretsmanager:eu-west-3:495913029085:secret:DatabaseStackCustomerDataba-Kcv6SwvFw8CC-8u2avx",
-    "ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B": "databasestack-customerdatabase306e9ff5-ydquixdfkimk.c9gccseo2c8v.eu-west-3.rds.amazonaws.com",
-    "DatabaseSecretArn": "arn:aws:secretsmanager:eu-west-3:495913029085:secret:DatabaseStackCustomerDataba-Kcv6SwvFw8CC-8u2avx"
+    "ExportsOutputFnGetAttCustomerDatabase306E9FF5DbiResourceId2CBA69C0": "db-3IG3YSOCJ7QOX7C6UGLJJN2KZM",
+    "ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8": "arn:aws:secretsmanager:eu-west-3:495913029085:secret:DatabaseStackCustomerDataba-3Jc6gh3xBX89-8GkjK0",
+    "ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B": "databasestack-customerdatabase306e9ff5-hrnigbqsnx86.c9gccseo2c8v.eu-west-3.rds.amazonaws.com",
+    "DatabaseSecretArn": "arn:aws:secretsmanager:eu-west-3:495913029085:secret:DatabaseStackCustomerDataba-3Jc6gh3xBX89-8GkjK0"
   },
   "EksClusterStack": {
     "CustomerServiceClusterClusterName067A88B6": "customer-service-cluster",
-    "ExportsOutputRefCustomerServiceCluster497EB85DA206F6AE": "customer-service-cluster"
+    "ExportsOutputRefCustomerServiceCluster497EB85DA206F6AE": "customer-service-cluster",
+    "ExportsOutputFnGetAttCustomerServiceClusterRoleB6D74166Arn792A5937": "arn:aws:iam::495913029085:role/EksClusterStack-CustomerServiceClusterRoleB6D74166-F1PdBX9uIGoD"
   }
 }

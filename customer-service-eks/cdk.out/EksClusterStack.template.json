@@ -1607,6 +1607,17 @@
     "Ref": "CustomerServiceCluster497EB85D"
    }
   },
+  "ExportsOutputFnGetAttCustomerServiceClusterRoleB6D74166Arn792A5937": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CustomerServiceClusterRoleB6D74166",
+     "Arn"
+    ]
+   },
+   "Export": {
+    "Name": "EksClusterStack:ExportsOutputFnGetAttCustomerServiceClusterRoleB6D74166Arn792A5937"
+   }
+  },
   "ExportsOutputRefCustomerServiceCluster497EB85DA206F6AE": {
    "Value": {
     "Ref": "CustomerServiceCluster497EB85D"

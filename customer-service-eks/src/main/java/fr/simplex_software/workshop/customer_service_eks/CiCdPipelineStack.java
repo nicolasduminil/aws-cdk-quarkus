@@ -49,6 +49,10 @@ public class CiCdPipelineStack extends Stack
       .build();
 
     ecrRepo.grantPullPush(buildProject);
+    buildProject.addToRolePolicy(PolicyStatement.Builder.create()
+      .actions(List.of("ecr:GetAuthorizationToken"))
+      .resources(List.of("*"))
+      .build());
 
     Project deployProject = Project.Builder.create(this, "CustomerServiceDeploy")
       .environment(BuildEnvironment.builder()
@@ -89,6 +93,9 @@ public class CiCdPipelineStack extends Stack
       .environmentVariables(Map.of(
         "IMAGE_URI", BuildEnvironmentVariable.builder()
           .value(ecrRepo.getRepositoryUri())
+          .build(),
+        "AWS_ACCOUNT_ID", BuildEnvironmentVariable.builder()
+          .value(this.getAccount())
           .build()
       ))
       .build();

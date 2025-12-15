@@ -275,7 +275,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d5ddbeca3a9e8841f7d4b9511b744b784a200d5d34c5750b4353f4c0a949e3c2.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9bab22940178d0d2ae0d9c69b966590b7d577ac5040902e38f68721f660efe05.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -728,6 +728,12 @@
             "data": "CDKMetadataAvailable"
           }
         ],
+        "/EksClusterStack/Exports/Output{\"Fn::GetAtt\":[\"CustomerServiceClusterRoleB6D74166\",\"Arn\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttCustomerServiceClusterRoleB6D74166Arn792A5937"
+          }
+        ],
         "/EksClusterStack/Exports/Output{\"Ref\":\"CustomerServiceCluster497EB85D\"}": [
           {
             "type": "aws:cdk:logicalId",
@@ -928,7 +934,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/70106c302cf31dc7448f6377e0fb983c1495fceaca9da91b86c8fa3048e1903d.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/8908301241b4bfd33e22b6f13865f5ad30157a5e829608bd1efd889400593fca.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -1001,15 +1007,15 @@
             "type": "aws:cdk:warning",
             "data": "V1 pipeline type is implicitly selected when `pipelineType` is not set. If you want to use V2 type, set `PipelineType.V2`. [ack: @aws-cdk/aws-codepipeline:unspecifiedPipelineType]",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-4VaEvS/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
-              "Annotations.addWarningV2 (/tmp/jsii-kernel-4VaEvS/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
-              "new Pipeline2 (/tmp/jsii-kernel-4VaEvS/node_modules/aws-cdk-lib/aws-codepipeline/lib/pipeline.js:1:11800)",
-              "new Pipeline2 (/tmp/jsii-kernel-4VaEvS/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
-              "Kernel._Kernel_create (/tmp/jsii-java-runtime11713658615271632189/lib/program.js:549:25)",
-              "Kernel.create (/tmp/jsii-java-runtime11713658615271632189/lib/program.js:219:93)",
-              "KernelHost.processRequest (/tmp/jsii-java-runtime11713658615271632189/lib/program.js:15482:36)",
-              "KernelHost.run (/tmp/jsii-java-runtime11713658615271632189/lib/program.js:15442:22)",
-              "Immediate._onImmediate (/tmp/jsii-java-runtime11713658615271632189/lib/program.js:15443:45)",
+              "Annotations.addMessage (/tmp/jsii-kernel-cmDsAO/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2066)",
+              "Annotations.addWarningV2 (/tmp/jsii-kernel-cmDsAO/node_modules/aws-cdk-lib/core/lib/annotations.js:1:984)",
+              "new Pipeline2 (/tmp/jsii-kernel-cmDsAO/node_modules/aws-cdk-lib/aws-codepipeline/lib/pipeline.js:1:11800)",
+              "new Pipeline2 (/tmp/jsii-kernel-cmDsAO/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:681)",
+              "Kernel._Kernel_create (/tmp/jsii-java-runtime8144115036783127892/lib/program.js:549:25)",
+              "Kernel.create (/tmp/jsii-java-runtime8144115036783127892/lib/program.js:219:93)",
+              "KernelHost.processRequest (/tmp/jsii-java-runtime8144115036783127892/lib/program.js:15482:36)",
+              "KernelHost.run (/tmp/jsii-java-runtime8144115036783127892/lib/program.js:15442:22)",
+              "Immediate._onImmediate (/tmp/jsii-java-runtime8144115036783127892/lib/program.js:15443:45)",
               "process.processImmediate (node:internal/timers:485:21)"
             ]
           }
