@@ -611,7 +611,7 @@
       "Outputs.EksClusterStackawscdkawseksKubectlProviderframeworkonEvent2FB72184Arn"
      ]
     },
-    "Manifest": "[{\"kind\":\"Namespace\",\"metadata\":{\"name\":\"customer-service\",\"labels\":{\"aws.cdk.eks/prune-c8891d5c003fb7c2a8f601a5086286731a4d534e16\":\"\"}},\"apiVersion\":\"v1\"}]",
+    "Manifest": "[{\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"customer-service\",\"labels\":{\"aws.cdk.eks/prune-c8891d5c003fb7c2a8f601a5086286731a4d534e16\":\"\"}},\"kind\":\"Namespace\"}]",
     "ClusterName": {
      "Ref": "CustomerServiceCluster497EB85D"
     },
@@ -990,15 +990,15 @@
      "Fn::Join": [
       "",
       [
-       "[{\"kind\":\"ConfigMap\",\"data\":{\"QUARKUS_DATASOURCE_JDBC_URL\":\"jdbc:postgresql://",
-       {
-        "Fn::ImportValue": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B"
-       },
-       ":5432/customers\",\"QUARKUS_DATASOURCE_USERNAME\":\"postgres\",\"QUARKUS_REDIS_HOSTS\":\"redis://",
+       "[{\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"customer-service-config\",\"namespace\":\"customer-service\",\"labels\":{\"aws.cdk.eks/prune-c8a52a93f185131f09e5ca91ba9cedde6e74139623\":\"\"}},\"data\":{\"QUARKUS_REDIS_HOSTS\":\"redis://",
        {
         "Fn::ImportValue": "DatabaseStack:ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053"
        },
-       ":6379\"},\"metadata\":{\"namespace\":\"customer-service\",\"name\":\"customer-service-config\",\"labels\":{\"aws.cdk.eks/prune-c8a52a93f185131f09e5ca91ba9cedde6e74139623\":\"\"}},\"apiVersion\":\"v1\"}]"
+       ":6379\",\"QUARKUS_DATASOURCE_USERNAME\":\"postgres\",\"QUARKUS_DATASOURCE_JDBC_URL\":\"jdbc:postgresql://",
+       {
+        "Fn::ImportValue": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B"
+       },
+       ":5432/customers\"},\"kind\":\"ConfigMap\"}]"
       ]
      ]
     },

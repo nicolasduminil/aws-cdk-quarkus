@@ -306,6 +306,13 @@
      "ComputeType": "BUILD_GENERAL1_SMALL",
      "EnvironmentVariables": [
       {
+       "Name": "AWS_ACCOUNT_ID",
+       "Type": "PLAINTEXT",
+       "Value": {
+        "Ref": "AWS::AccountId"
+       }
+      },
+      {
        "Name": "IMAGE_URI",
        "Type": "PLAINTEXT",
        "Value": {
@@ -326,13 +333,6 @@
           "/customer-api"
          ]
         ]
-       }
-      },
-      {
-       "Name": "AWS_ACCOUNT_ID",
-       "Type": "PLAINTEXT",
-       "Value": {
-        "Ref": "AWS::AccountId"
        }
       }
      ],
@@ -360,7 +360,7 @@
         {
          "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
         },
-        "/1c0de26482b45bdbb4040f50a0e4a59c04cd2fc6081707e7511cb29f3f52886d.yaml"
+        "/a51341eeea0e3ec79f683f36c52c5245630579d6d2f94f0069160b57d3bb48b4.yaml"
        ]
       ]
      },
