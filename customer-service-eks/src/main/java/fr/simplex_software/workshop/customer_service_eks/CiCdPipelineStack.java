@@ -44,6 +44,15 @@ public class CiCdPipelineStack extends Stack
       .environment(BuildEnvironment.builder()
         .buildImage(LinuxBuildImage.STANDARD_7_0)
         .privileged(true)
+        .environmentVariables(Map.of(
+          "IMAGE_URI", BuildEnvironmentVariable.builder()
+            .value(ecrRepo.getRepositoryUri())
+            .build(),
+          "AWS_ACCOUNT_ID", BuildEnvironmentVariable.builder()
+            .value(this.getAccount())
+            .build()
+        ))
+
         .build())
       .buildSpec(BuildSpec.fromAsset(cicdConfig.build().buildSpecPath()))
       .build();
@@ -93,9 +102,6 @@ public class CiCdPipelineStack extends Stack
       .environmentVariables(Map.of(
         "IMAGE_URI", BuildEnvironmentVariable.builder()
           .value(ecrRepo.getRepositoryUri())
-          .build(),
-        "AWS_ACCOUNT_ID", BuildEnvironmentVariable.builder()
-          .value(this.getAccount())
           .build()
       ))
       .build();

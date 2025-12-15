@@ -194,7 +194,7 @@
           {
            "Ref": "AWS::AccountId"
           },
-          ":repository/customer-service"
+          ":repository/customer-api"
          ]
         ]
        }
@@ -288,6 +288,38 @@
     },
     "Environment": {
      "ComputeType": "BUILD_GENERAL1_SMALL",
+     "EnvironmentVariables": [
+      {
+       "Name": "AWS_ACCOUNT_ID",
+       "Type": "PLAINTEXT",
+       "Value": {
+        "Ref": "AWS::AccountId"
+       }
+      },
+      {
+       "Name": "IMAGE_URI",
+       "Type": "PLAINTEXT",
+       "Value": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Ref": "AWS::AccountId"
+          },
+          ".dkr.ecr.",
+          {
+           "Ref": "AWS::Region"
+          },
+          ".",
+          {
+           "Ref": "AWS::URLSuffix"
+          },
+          "/customer-api"
+         ]
+        ]
+       }
+      }
+     ],
      "Image": "aws/codebuild/standard:7.0",
      "ImagePullCredentialsType": "CODEBUILD",
      "PrivilegedMode": true,
@@ -1037,7 +1069,7 @@
             {
              "Ref": "AWS::URLSuffix"
             },
-            "/customer-service\"}]"
+            "/customer-api\"}]"
            ]
           ]
          }
