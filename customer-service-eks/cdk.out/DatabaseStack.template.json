@@ -316,17 +316,6 @@
     "Name": "DatabaseStack:ExportsOutputRefCustomerDatabaseSecretAttachment204AEE14A714CCA8"
    }
   },
-  "ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B": {
-   "Value": {
-    "Fn::GetAtt": [
-     "CustomerDatabase306E9FF5",
-     "Endpoint.Address"
-    ]
-   },
-   "Export": {
-    "Name": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B"
-   }
-  },
   "ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053": {
    "Value": {
     "Fn::GetAtt": [
@@ -336,6 +325,17 @@
    },
    "Export": {
     "Name": "DatabaseStack:ExportsOutputFnGetAttCustomerCacheReplicationGroupE25E3BDDPrimaryEndPointAddress02BB1053"
+   }
+  },
+  "ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CustomerDatabase306E9FF5",
+     "Endpoint.Address"
+    ]
+   },
+   "Export": {
+    "Name": "DatabaseStack:ExportsOutputFnGetAttCustomerDatabase306E9FF5EndpointAddress4259A81B"
    }
   }
  },
