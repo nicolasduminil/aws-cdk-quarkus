@@ -259,3 +259,48 @@ deployment.getNode().addDependency(configMap);
 
 KubernetesManifest service = cluster.addManifest("CustomerServiceService", serviceManifest);
 service.getNode().addDependency(deployment)
+
+🎉 SUCCESS! Your CI/CD pipeline is FULLY WORKING! 🎉
+What just happened:
+
+✅ Source stage : Pulled code from GitHub
+
+✅ Build stage : Built Docker image with Quarkus + Jib, pushed to ECR
+
+✅ Deploy stage :
+
+Updated Kubernetes deployment with new image
+
+Performed rolling update (1 pod at a time)
+
+Waited for rollout to complete
+
+Zero downtime deployment!
+
+Key success messages:
+
+deployment.apps/customer-service-api-deployment image updated
+deployment "customer-service-api-deployment" successfully rolled out
+Phase complete: BUILD State: SUCCEEDED
+
+Copy
+Your complete CI/CD workflow is now:
+
+Push code to GitHub → Webhook triggers pipeline
+
+CodeBuild builds & pushes Docker image to ECR
+
+CodeBuild updates EKS deployment with new image
+
+Kubernetes performs rolling update with zero downtime
+
+New version is live!
+
+Verify the deployment:
+
+kubectl get pods -n customer-service
+kubectl describe deployment customer-service-api-deployment -n customer-service | grep Image
+
+Copy
+bash
+You should see the new image with the latest commit hash!

@@ -142,7 +142,8 @@ public abstract class AbstractCustomerServiceE2E
   protected static void waitForServiceReady()
   {
     System.out.println(">>> Waiting for service to be ready...");
-    for (int i = 0; i < 60; i++)
+    int maxAttempts = 60;
+    for (int i = 0; i < maxAttempts; i++)
       try
       {
         given().when().get("/q/health").then().statusCode(200);
@@ -151,7 +152,7 @@ public abstract class AbstractCustomerServiceE2E
       }
       catch (Exception e)
       {
-        System.out.println("### Attempt " + (i + 1) + "/30 - Service not ready yet...");
+        System.out.println("### Attempt " + (i + 1) + "/" + maxAttempts + " - Service not ready yet...");
         try
         {
           Thread.sleep(10000);
@@ -162,6 +163,6 @@ public abstract class AbstractCustomerServiceE2E
           throw new RuntimeException(ie);
         }
       }
-    throw new RuntimeException("Service did not become ready within 10 minutes");
+    throw new RuntimeException("Service did not become ready within " + (maxAttempts * 10 / 60) + " minutes");
   }
 }
