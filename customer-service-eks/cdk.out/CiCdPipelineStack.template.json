@@ -306,6 +306,13 @@
      "ComputeType": "BUILD_GENERAL1_SMALL",
      "EnvironmentVariables": [
       {
+       "Name": "AWS_ACCOUNT_ID",
+       "Type": "PLAINTEXT",
+       "Value": {
+        "Ref": "AWS::AccountId"
+       }
+      },
+      {
        "Name": "IMAGE_URI",
        "Type": "PLAINTEXT",
        "Value": {
@@ -326,13 +333,6 @@
           "/nicolasduminil/customers-api"
          ]
         ]
-       }
-      },
-      {
-       "Name": "AWS_ACCOUNT_ID",
-       "Type": "PLAINTEXT",
-       "Value": {
-        "Ref": "AWS::AccountId"
        }
       }
      ],
@@ -592,6 +592,13 @@
        }
       },
       {
+       "Action": "eks:DescribeCluster",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "EksClusterStack:ExportsOutputFnGetAttCustomerServiceCluster497EB85DArnBA231062"
+       }
+      },
+      {
        "Action": [
         "kms:Decrypt",
         "kms:DescribeKey",
@@ -671,7 +678,7 @@
         {
          "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
         },
-        "/28236beb4efe376c13e5385f789eb8a3d52ebe348c310323d4eebe59562287ce.yaml"
+        "/a70d06a23913c562fa7bdad96e8ef5e6a63807a2e9c9a18637c7987d5002398a.yaml"
        ]
       ]
      },

@@ -82,6 +82,10 @@ public class CiCdPipelineStack extends Stack
     deployProject.getRole().addManagedPolicy(
       ManagedPolicy.fromAwsManagedPolicyName("AmazonEKSClusterPolicy"));
     eksStack.getCluster().getRole().grantAssumeRole(deployProject.getRole());
+    deployProject.addToRolePolicy(PolicyStatement.Builder.create()
+      .actions(List.of("eks:DescribeCluster"))
+      .resources(List.of(eksStack.getCluster().getClusterArn()))
+      .build());
 
     GitHubSourceAction sourceAction = GitHubSourceAction.Builder.create()
       .actionName(cicdConfig.pipeline().actions().source())
