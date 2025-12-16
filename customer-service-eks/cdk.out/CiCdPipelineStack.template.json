@@ -306,13 +306,6 @@
      "ComputeType": "BUILD_GENERAL1_SMALL",
      "EnvironmentVariables": [
       {
-       "Name": "AWS_ACCOUNT_ID",
-       "Type": "PLAINTEXT",
-       "Value": {
-        "Ref": "AWS::AccountId"
-       }
-      },
-      {
        "Name": "IMAGE_URI",
        "Type": "PLAINTEXT",
        "Value": {
@@ -333,6 +326,13 @@
           "/nicolasduminil/customers-api"
          ]
         ]
+       }
+      },
+      {
+       "Name": "AWS_ACCOUNT_ID",
+       "Type": "PLAINTEXT",
+       "Value": {
+        "Ref": "AWS::AccountId"
        }
       }
      ],
